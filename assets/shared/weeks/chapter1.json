@@ -1,0 +1,41 @@
+{
+	"storyName": "THE SkelD",
+	"difficulties": "Hard",
+	"hideFreeplay": false,
+	"weekBackground": "chapter1",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"songs": [
+		[
+			"Double-Attack",
+			"PurplePink",
+			[
+				106,
+				73,
+				253
+			]
+		],
+		[
+			"Good-Leader",
+			"Green",
+			[
+				0,
+				73,
+				53
+			]
+		]
+	],
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"hiddenUntilUnlocked": false,
+	"weekName": "Chapter1"
+}
