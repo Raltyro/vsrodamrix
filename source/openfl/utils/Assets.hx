@@ -141,8 +141,6 @@ class Assets
 
 		#if !flash
 		if (hardware && bitmap.image != null) @:privateAccess {
-			bitmap.lock();
-
 			if (bitmap.__texture == null) {
 				#if openfl_power_of_two bitmap.image.powerOfTwo = true; #end
 				bitmap.image.premultiplied = true;
@@ -152,6 +150,7 @@ class Assets
 			bitmap.disposeImage();
 			bitmap.image.data = null;
 			bitmap.image = null;
+			bitmap.lock();
 		}
 		#end
 

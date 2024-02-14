@@ -119,12 +119,12 @@ class Paths {
 
 		var bitmap = obj.bitmap;
 		if (bitmap != null) {
-			bitmap.lock();
 			if (bitmap.__texture != null) bitmap.__texture.dispose();
 			if (bitmap.image != null && bitmap.image.data != null) bitmap.image.data = null;
 			bitmap.image = null;
 			bitmap.disposeImage();
 			bitmap.dispose();
+			bitmap.unlock();
 		}
 
 		obj.persist = false; // make sure the garbage collector actually clears it up

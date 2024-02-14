@@ -113,6 +113,7 @@ class TitleState extends MusicBeatState {
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
 
+		/*
 		if (ClientPrefs.data.shaders) {
 			swagShader = new ColorSwap();
 			wiggleShader = new WiggleEffect();
@@ -123,7 +124,7 @@ class TitleState extends MusicBeatState {
 
 			logoBl.shader = swagShader.shader;
 			blob.shader = wiggleShader.shader;
-		}
+		}*/
 		FlxTween.tween(logoBl, {y: logoBl.y-20}, 2, {ease: FlxEase.sineInOut, type: PINGPONG});
 
 		if (initialized) customTransitionOut();
