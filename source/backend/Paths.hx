@@ -68,6 +68,7 @@ class Paths {
 		return false;
 	}
 
+	/*
 	public static var inBlock:Bool = false; 
 	@:noCompletion inline public static function enterGcBlock() {
 		#if cpp Gc.enterGCFreeZone(); inBlock = true;
@@ -78,6 +79,7 @@ class Paths {
 		#if cpp Gc.exitGCFreeZone(); inBlock = false;
 		#elseif hl Gc.blocking(inBlock = false); #end
 	}
+	*/
 
 	@:noCompletion inline private static function _gc() {
 		#if cpp Gc.run(true);
@@ -90,10 +92,10 @@ class Paths {
 	}
 
 	inline public static function gc(repeat:Int = 1) {
-		var _block = inBlock;
-		if (_block) exitGcBlock();
+		//var _block = inBlock;
+		//if (_block) exitGcBlock();
 		while (repeat-- > 0) _gc();
-		if (_block) enterGcBlock();
+		//if (_block) enterGcBlock();
 	}
 
 	private static var assetCompressTrack:Int = 0;
