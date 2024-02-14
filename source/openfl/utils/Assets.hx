@@ -148,7 +148,7 @@ class Assets
 			}
 			//bitmap.getSurface();
 			if (bitmap.image.data != null) {
-				#if cpp untyped __cpp__('{0}->__SetSizeExact(0)', bitmap.image.data.buffer.b); #end
+				//#if cpp untyped __cpp__('{0}->__SetSizeExact(0)', bitmap.image.data.buffer.b); #end
 				bitmap.image.data = null;
 			}
 			bitmap.disposeImage();

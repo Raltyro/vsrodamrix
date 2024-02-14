@@ -86,7 +86,7 @@ class AudioBuffer
 	}
 
 	inline private function disposeData():Void {
-		#if cpp untyped __cpp__('{0}->__SetSizeExact(0)', data.buffer.b); #end
+		//#if cpp untyped __cpp__('{0}->__SetSizeExact(0)', data.buffer.b); #end
 		data = null;
 	}
 
