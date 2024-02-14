@@ -79,7 +79,7 @@ class AudioBuffer
 			__srcBuffer = AL.createBuffer();
 			if (__srcBuffer != null) {
 				AL.bufferData(__srcBuffer, __format, data, data.length, sampleRate);
-				//data = null;
+				data = null;
 			}
 		}
 		#end

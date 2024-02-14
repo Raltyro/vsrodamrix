@@ -252,7 +252,7 @@ class NativeAudioSource {
 			lengthStreamSources++;
 			if (!threadRunning) {
 				threadRunning = true;
-				//Thread.create(sourceStreamHandler);
+				Thread.create(sourceStreamHandler);
 			}
 		}
 	}

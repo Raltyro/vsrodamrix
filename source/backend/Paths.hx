@@ -494,7 +494,7 @@ class Paths {
 
 	private static function _regSound(key:String, stream:Bool, sys:Bool):Sound {
 		stepAssetCompress();
-		return OpenFlAssets.getRawSound(key, false/*stream*/, sys);
+		return OpenFlAssets.getRawSound(key, stream, sys);
 	}
 
 	public static function regSound(key:String, stream:Bool = false):Sound {

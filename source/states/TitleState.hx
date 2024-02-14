@@ -65,7 +65,7 @@ class TitleState extends MusicBeatState {
 
 		var antialiasing = ClientPrefs.data.antialiasing;
 
-		bg = new FlxSprite();//new FlxBackdrop(Paths.image('mainmenu/checker'));
+		bg = new FlxBackdrop(Paths.image('mainmenu/checker'));
 		bg.antialiasing = antialiasing;
 		bg.velocity.set(50, 50);
 		bg.scrollFactor.set(.4, .4);
@@ -113,7 +113,6 @@ class TitleState extends MusicBeatState {
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
 
-		/*
 		if (ClientPrefs.data.shaders) {
 			swagShader = new ColorSwap();
 			wiggleShader = new WiggleEffect();
@@ -124,12 +123,12 @@ class TitleState extends MusicBeatState {
 
 			logoBl.shader = swagShader.shader;
 			blob.shader = wiggleShader.shader;
-		}*/
+		}
 		FlxTween.tween(logoBl, {y: logoBl.y-20}, 2, {ease: FlxEase.sineInOut, type: PINGPONG});
 
 		if (initialized) customTransitionOut();
 		else {
-			//if (FlxG.sound.music == null) CoolUtil.playMenuMusic();
+			if (FlxG.sound.music == null) CoolUtil.playMenuMusic();
 			initialized = true;
 			curStep = -1;
 			updateMusicBeat();

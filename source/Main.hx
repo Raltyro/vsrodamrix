@@ -164,7 +164,7 @@ class Main extends Sprite {
 
 	private function onFocus() {
 		focused = true;
-		Paths.gc(4);
+		Paths.gc();
 	}
 
 	private function onFocusLost() {
@@ -195,10 +195,11 @@ class Main extends Sprite {
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: " + e.error;
+		//errMsg += "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\n\n> Crash Handler written by: sqirra-rng";
 
-		if (!FileSystem.exists("./crash/"))
-			FileSystem.createDirectory("./crash/");
+		if (!FileSystem.exists("./crash/")) FileSystem.createDirectory("./crash/");
 
 		File.saveContent(path, errMsg + "\n");
 
