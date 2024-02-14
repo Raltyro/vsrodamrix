@@ -1,3 +1,7 @@
+// Thanks to RapperGF for letting me aware that it should queue buffer and
+// unqueue them when finished playing instead or it'll stays in memory forever
+// :33
+
 package lime._internal.backend.native;
 
 import haxe.Timer;
@@ -12,8 +16,6 @@ import lime.math.Vector4;
 import lime.media.AudioBuffer;
 import lime.media.AudioSource;
 import lime.utils.ArrayBufferView;
-import lime.utils.Int8Array;
-import lime.utils.Int16Array;
 
 import sys.thread.Thread;
 import sys.thread.Mutex;
@@ -23,6 +25,7 @@ import sys.thread.Mutex;
 @:noDebug
 #end
 @:access(lime.media.AudioBuffer)
+@:access(lime.utils.ArrayBufferView)
 class NativeAudioSource {
 	private static final STREAM_BUFFER_SIZE:Int = 16000;
 	private static final STREAM_NUM_BUFFERS:Int = 16;
@@ -92,21 +95,19 @@ class NativeAudioSource {
 
 		var vorbisFile = buffer.__srcVorbisFile;
 		if (stream = vorbisFile != null) {
-			samples = vorbisFile.pcmTotal();
-			dataLength = samples * buffer.channels * (Int64.ofInt(bitsPerSample) / 8);
-
+			dataLength = (samples = vorbisFile.pcmTotal()) * buffer.channels * (Int64.ofInt(bitsPerSample) / 8);
 			buffers = AL.genBuffers(STREAM_NUM_BUFFERS);
 			bufferDatas = new Array();
 			bufferTimeBlocks = new Array();
+
+			var constructor = bitsPerSample == 8 ? Int8 : Int16;
 			for (i in 0...STREAM_NUM_BUFFERS) {
-				if (bitsPerSample == 8) bufferDatas.push(new Int8Array(STREAM_BUFFER_SIZE));
-				else bufferDatas.push(new Int16Array(STREAM_BUFFER_SIZE));
+				bufferDatas.push(new ArrayBufferView(STREAM_BUFFER_SIZE, constructor));
 				bufferTimeBlocks.push(0);
 			}
 		}
-		else {
+		else
 			samples = ((dataLength = AL.getBufferi(buffer.__srcBuffer, AL.SIZE)) * 8) / (buffer.channels * buffer.bitsPerSample);
-		}
 	}
 
 	public function play():Void {
@@ -126,10 +127,12 @@ class NativeAudioSource {
 	}
 
 	public function stop():Void {
-		if (playing && !(disposed = handle == null) && AL.getSourcei(handle, AL.SOURCE_STATE) == AL.PLAYING)
-			AL.sourceStop(handle);
+		if (playing && !(disposed = handle == null)) {
+			if (AL.getSourcei(handle, AL.SOURCE_STATE) == AL.PLAYING) AL.sourceStop(handle);
+			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED));
+		}
 
-		bufferLoops = 0;
+		queuedBuffers = bufferLoops = 0;
 		playing = false;
 		stopStreamTimer();
 		stopTimer();
@@ -150,10 +153,10 @@ class NativeAudioSource {
 
 	private static function sourceStreamHandler():Void {
 		while (lengthStreamSources != 0) {
-			//for (source in streamSources) if (mutex.tryAcquire()) {
-			//	source.streamRun();
-			//	mutex.release();
-			//}
+			for (source in streamSources) if (mutex.tryAcquire()) {
+				source.streamRun();
+				mutex.release();
+			}
 			Sys.sleep(STREAM_TIMER_FREQUENCY / 1000);
 		}
 		threadRunning = false;
@@ -302,6 +305,7 @@ class NativeAudioSource {
 		}
 
 		loops--;
+		//if (!stream && loops > 1) AL.sourceQueueBuffer(handle, parent.buffer.__srcBuffer);
 		setCurrentTime(loopTime != null ? loopTime : 0);
 		parent.onLoop.dispatch();
 	}
@@ -310,11 +314,7 @@ class NativeAudioSource {
 	public function getCurrentTime():Float {
 		if (completed) return getLength();
 		else if (!disposed) {
-			//var time = if (stream) bufferTimeBlocks[STREAM_NUM_BUFFERS - queuedBuffers] + AL.getSourcef(handle, AL.SEC_OFFSET);
-			//else getFloat(samples) / parent.buffer.sampleRate * (AL.getSourcei(handle, AL.BYTE_OFFSET) / getFloat(dataLength));
-
-			#if (lime >= "8.2.0")
-			// [0] == realOffset, [1] == deviceOffset
+			#if (lime >= "8.2.0") // [0] == realOffset, [1] == deviceOffset
 			var value = AL.getSourcedvSOFT(handle, AL.SEC_OFFSET_LATENCY_SOFT, 2), time = value[0] - value[1];
 			#else
 			var time = AL.getSourcef(handle, AL.SEC_OFFSET);
@@ -332,11 +332,11 @@ class NativeAudioSource {
 
 	public function setCurrentTime(value:Float):Float {
 		if (disposed = (handle == null)) return value;
-
-		var total = getRealLength();
-		var time = Math.max(0, Math.min(total, value + parent.offset)), ratio = time / total;
+		var total = getRealLength(), time = Math.max(0, Math.min(total, value + parent.offset)), ratio = time / total;
 
 		if (stream) {
+			// TODO: smooth setCurrentTime for stream (dont refill buffers again)
+
 			AL.sourceStop(handle);
 			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED));
 
@@ -350,10 +350,11 @@ class NativeAudioSource {
 			#end
 		}
 		else {
-			AL.sourceStop(handle);
+			AL.sourceRewind(handle);
 			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED));
-			for (i in 0...loops) AL.sourceQueueBuffer(handle, parent.buffer.__srcBuffer);
-			AL.sourcei(handle, AL.BYTE_OFFSET, Std.int(getFloat(dataLength)* ratio));
+			AL.sourceQueueBuffer(handle, parent.buffer.__srcBuffer);
+			//if (loops > 0) AL.sourceQueueBuffer(handle, parent.buffer.__srcBuffer);
+			AL.sourcei(handle, AL.BYTE_OFFSET, Std.int(getFloat(dataLength) * ratio));
 		}
 
 		if (playing) {

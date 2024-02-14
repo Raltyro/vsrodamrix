@@ -727,12 +727,12 @@ class FlxSound extends FlxBasic
 			pitch = _pitch;
 
 			_channel.soundTransform = _transform;
-			_source.__backend.playing = true;
-			_source.offset = 0;
-			_source.currentTime = Std.int(_time);
 			_channel.__lastPeakTime = 0;
 			_channel.__leftPeak = 0;
 			_channel.__rightPeak = 0;
+			_source.__backend.playing = true;
+			_source.offset = 0;
+			_source.currentTime = Std.int(_time);
 
 			looped = looped;
 			_amplitudeTime = -1;

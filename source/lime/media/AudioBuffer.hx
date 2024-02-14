@@ -79,15 +79,10 @@ class AudioBuffer
 			__srcBuffer = AL.createBuffer();
 			if (__srcBuffer != null) {
 				AL.bufferData(__srcBuffer, __format, data, data.length, sampleRate);
-				disposeData();
+				data = null;
 			}
 		}
 		#end
-	}
-
-	inline private function disposeData():Void {
-		//#if cpp untyped __cpp__('{0}->__SetSizeExact(0)', data.buffer.b); #end
-		data = null;
 	}
 
 	public function dispose():Void
@@ -109,7 +104,7 @@ class AudioBuffer
 		if (__srcVorbisFile != null) __srcVorbisFile.clear();
 		__srcVorbisFile = null;
 		#end
-		disposeData();
+		data = null;
 	}
 
 	public static function fromBase64(base64String:String):AudioBuffer

@@ -65,7 +65,7 @@ class TitleState extends MusicBeatState {
 
 		var antialiasing = ClientPrefs.data.antialiasing;
 
-		bg = new FlxBackdrop(Paths.image('mainmenu/checker'));
+		bg = new FlxSprite();//new FlxBackdrop(Paths.image('mainmenu/checker'));
 		bg.antialiasing = antialiasing;
 		bg.velocity.set(50, 50);
 		bg.scrollFactor.set(.4, .4);
@@ -128,7 +128,7 @@ class TitleState extends MusicBeatState {
 
 		if (initialized) customTransitionOut();
 		else {
-			if (FlxG.sound.music == null) CoolUtil.playMenuMusic();
+			//if (FlxG.sound.music == null) CoolUtil.playMenuMusic();
 			initialized = true;
 			curStep = -1;
 			updateMusicBeat();

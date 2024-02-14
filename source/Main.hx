@@ -164,10 +164,12 @@ class Main extends Sprite {
 
 	private function onFocus() {
 		focused = true;
+		Paths.gc(4);
 	}
 
 	private function onFocusLost() {
 		focused = false;
+		Paths.gc(4);
 	}
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!

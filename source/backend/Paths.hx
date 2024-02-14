@@ -87,7 +87,7 @@ class Paths {
 	}
 
 	@:noCompletion inline public static function compress() {
-		#if cpp Gc.compact();
+		#if cpp Gc.run(true); Gc.compact();
 		#elseif hl Gc.major(); #end
 	}
 
@@ -121,10 +121,7 @@ class Paths {
 		if (bitmap != null) {
 			bitmap.lock();
 			if (bitmap.__texture != null) bitmap.__texture.dispose();
-			if (bitmap.image != null && bitmap.image.data != null) {
-				#if cpp untyped __cpp__('{0}->__SetSizeExact(0)', bitmap.image.data.buffer.b); #end
-				bitmap.image.data = null;
-			}
+			if (bitmap.image != null && bitmap.image.data != null) bitmap.image.data = null;
 			bitmap.image = null;
 			bitmap.disposeImage();
 			bitmap.dispose();
