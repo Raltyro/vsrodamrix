@@ -1203,10 +1203,12 @@ class PlayState extends MusicBeatState
 	function startSong():Void {
 		startingSong = false;
 		
-		var music = FlxG.sound.music = inst;
+		var music = FlxG.sound.music;
+		@:privateAccess FlxG.sound.playMusic(inst._sound, 1, false);
+		vocals.play();
+		opponentVocals.play();
 		music.onComplete = () -> finishSong();
 		vocals.pitch = opponentVocals.pitch = music.pitch = playbackRate;
-		music.volume = 1;
 		Conductor.songPosition = opponentVocals.time = vocals.time = music.time = 0;
 
 		if (startOnTime > 0) setSongTime(startOnTime - 500);
@@ -1216,11 +1218,6 @@ class PlayState extends MusicBeatState
 			music.pause();
 			vocals.pause();
 			opponentVocals.pause();
-		}
-		else {
-			music.play();
-			vocals.play();
-			opponentVocals.play();
 		}
 
 		// Song duration in a float, useful for the time left feature
@@ -1276,8 +1273,6 @@ class PlayState extends MusicBeatState
 		try {inst = FlxG.sound.load(Paths.inst(songData.song));}
 		catch(e:Dynamic) {}
 		if (inst == null) inst = FlxG.sound.list.recycle(FlxSound);
-
-		FlxG.sound.list.add(inst);
 
 		notes = new FlxTypedGroup<Note>();
 		noteGroup.add(notes);

@@ -68,19 +68,6 @@ class Paths {
 		return false;
 	}
 
-	/*
-	public static var inBlock:Bool = false; 
-	@:noCompletion inline public static function enterGcBlock() {
-		#if cpp Gc.enterGCFreeZone(); inBlock = true;
-		#elseif hl Gc.blocking(inBlock = true); #end
-	}
-
-	@:noCompletion inline public static function exitGcBlock() {
-		#if cpp Gc.exitGCFreeZone(); inBlock = false;
-		#elseif hl Gc.blocking(inBlock = false); #end
-	}
-	*/
-
 	@:noCompletion inline private static function _gc() {
 		#if cpp Gc.run(true);
 		#elseif hl Gc.major(); #end
@@ -92,15 +79,13 @@ class Paths {
 	}
 
 	inline public static function gc(repeat:Int = 1) {
-		//var _block = inBlock;
-		//if (_block) exitGcBlock();
 		while (repeat-- > 0) _gc();
-		//if (_block) enterGcBlock();
 	}
 
 	private static var assetCompressTrack:Int = 0;
 	@:noCompletion private static function stepAssetCompress():Void {
-		if (++assetCompressTrack > 6) {
+		assetCompressTrack++;
+		if (assetCompressTrack > 6) {
 			assetCompressTrack = 0;
 			gc();
 		}
@@ -484,7 +469,9 @@ class Paths {
 				decacheSound(track);
 				sound = null;
 			}
-			if (sound == null) currentTrackedSounds.set(track, sound = _regSound(file, stream, modExists));
+			if (sound == null)
+				currentTrackedSounds.set(track, sound = _regSound(#if MODS_ALLOWED track #else file #end, stream, #if MODS_ALLOWED true #else false #end));
+
 			if (sound != null) return sound;
 		}
 

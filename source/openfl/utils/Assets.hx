@@ -141,6 +141,7 @@ class Assets
 
 		#if !flash
 		if (hardware && bitmap.image != null) @:privateAccess {
+			bitmap.lock();
 			if (bitmap.__texture == null) {
 				#if openfl_power_of_two bitmap.image.powerOfTwo = true; #end
 				bitmap.image.premultiplied = true;
@@ -150,7 +151,6 @@ class Assets
 			bitmap.disposeImage();
 			bitmap.image.data = null;
 			bitmap.image = null;
-			bitmap.lock();
 		}
 		#end
 
@@ -329,23 +329,16 @@ class Assets
 		#if (lime && tools && !display)
 		key = key != null ? key : id;
 		
-		if (useCache && cache.enabled && cache.hasSound(key))
-		{
+		if (useCache && cache.enabled && cache.hasSound(key)) {
 			var sound = cache.getSound(key);
 
-			if (isValidSound(sound))
-			{
-				return sound;
-			}
+			if (isValidSound(sound)) return sound;
 		}
 
 		var sound = getRawSound(id, stream);
 
-		if (sound != null)
-		{
-			if (useCache && cache.enabled)
-				cache.setSound(key, sound);
-
+		if (sound != null) {
+			if (useCache && cache.enabled) cache.setSound(key, sound);
 			return sound;
 		}
 		#end
@@ -357,8 +350,7 @@ class Assets
 	{
 		var buffer;
 		#if (lime_vorbis && lime > "7.9.0")
-		if (stream)
-			buffer = AudioBuffer.fromVorbisFile(VorbisFile.fromFile(id));
+		if (stream) buffer = AudioBuffer.fromVorbisFile(VorbisFile.fromFile(id));
 		else
 		#end
 		#if (js && html5 && lime_howlerjs)

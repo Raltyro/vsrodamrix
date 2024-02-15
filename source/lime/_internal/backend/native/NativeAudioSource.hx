@@ -27,7 +27,7 @@ import sys.thread.Mutex;
 @:access(lime.media.AudioBuffer)
 @:access(lime.utils.ArrayBufferView)
 class NativeAudioSource {
-	private static final STREAM_BUFFER_SIZE:Int = 16000;
+	private static final STREAM_BUFFER_SIZE:Int = 8192;
 	private static final STREAM_NUM_BUFFERS:Int = 16;
 	private static final STREAM_TIMER_FREQUENCY:Int = 100;
 
@@ -36,7 +36,7 @@ class NativeAudioSource {
 	private var bufferTimeBlocks:Array<Float>;
 	private var bufferLoops:Int;
 	private var queuedBuffers:Int;
-	private var canFill:Bool;
+	private var requestBuffers:Int;
 
 	private var length:Null<Float>;
 	private var loopTime:Null<Float>;
@@ -69,16 +69,11 @@ class NativeAudioSource {
 		if (parent != null && parent.buffer != null && parent.buffer.__references != null)
 			parent.buffer.__references.remove(parent);
 
-		if (handle != null) {
-			AL.sourcei(handle, AL.BUFFER, null);
-			AL.deleteSource(handle);
-			handle = null;
-		}
+		if (handle != null) AL.deleteSource(handle);
+		handle = null;
 
-		if (buffers != null) {
-			AL.deleteBuffers(buffers);
-			buffers = null;
-		}
+		if (buffers != null) AL.deleteBuffers(buffers);
+		buffers = null;
 	}
 
 	public function init():Void {
@@ -127,12 +122,12 @@ class NativeAudioSource {
 	}
 
 	public function stop():Void {
-		if (playing && !(disposed = handle == null)) {
-			if (AL.getSourcei(handle, AL.SOURCE_STATE) == AL.PLAYING) AL.sourceStop(handle);
+		if (!(disposed = handle == null)) {
+			if (AL.getSourcei(handle, AL.SOURCE_STATE) != AL.STOPPED) AL.sourceStop(handle);
 			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED));
 		}
 
-		queuedBuffers = bufferLoops = 0;
+		requestBuffers = queuedBuffers = bufferLoops = 0;
 		playing = false;
 		stopStreamTimer();
 		stopTimer();
@@ -152,19 +147,29 @@ class NativeAudioSource {
 	private static var mutex:Mutex = new Mutex();
 
 	private static function sourceStreamHandler():Void {
+		var time = STREAM_TIMER_FREQUENCY / 1000, i = 0, n = 0;
 		while (lengthStreamSources != 0) {
-			for (source in streamSources) if (mutex.tryAcquire()) {
-				source.streamRun();
-				mutex.release();
+			i = -1;
+			try {
+				n = streamSources.length;
+				while (++i < n) streamSources[i].streamRun();
 			}
-			Sys.sleep(STREAM_TIMER_FREQUENCY / 1000);
+			catch (e) {
+				trace('Streaming Error: $e');
+				if (streamSources[i] != null) {
+					mutex.acquire();
+					streamSources[i].dispose();
+					mutex.release();
+				}
+			}
+			Sys.sleep(time);
 		}
 		threadRunning = false;
 	}
 
 	private function readVorbisFileBuffer(vorbisFile:VorbisFile, max:Int):ArrayBufferView {
 		#if lime_vorbis
-		var id = STREAM_NUM_BUFFERS - queuedBuffers, read = STREAM_NUM_BUFFERS - 1, total = 0, readMax = 0;
+		var id = STREAM_NUM_BUFFERS - (queuedBuffers = requestBuffers), read = STREAM_NUM_BUFFERS - 1, total = 0, readMax = 0;
 		var buffer = bufferDatas[id];
 		for (i in id...read) {
 			bufferTimeBlocks[i] = bufferTimeBlocks[i + 1];
@@ -173,6 +178,7 @@ class NativeAudioSource {
 		bufferTimeBlocks[read] = vorbisFile.timeTell();
 		bufferDatas[read] = buffer;
 
+		mutex.acquire();
 		while (total < STREAM_BUFFER_SIZE) {
 			if ((readMax = 4096) > (read = max - total)) readMax = read;
 			if (readMax > 0 && (read = vorbisFile.read(buffer.buffer, total, readMax)) > 0) total += read;
@@ -184,11 +190,12 @@ class NativeAudioSource {
 			}
 			else {
 				safeEnd = true;
-				buffer.buffer.fill(total, STREAM_BUFFER_SIZE - total, 0);
+				buffer.buffer.fill(total, STREAM_BUFFER_SIZE - total - 1, 0);
 				resetTimer((getLength() - getCurrentTime()) / getPitch());
 				break;
 			}
 		}
+		mutex.release();
 		return buffer;
 		#else
 		return null;
@@ -197,12 +204,11 @@ class NativeAudioSource {
 
 	private function fillBuffers(buffers:Array<ALBuffer>):Void {
 		#if lime_vorbis
+		if (parent == null || parent.buffer == null) return dispose();
+		if (buffers.length < 1) return;
+
 		var buffer = parent.buffer;
-		if (buffers.length < 1 || parent == null || buffer == null) return dispose();
-
 		var vorbisFile = buffer.__srcVorbisFile;
-		if (vorbisFile == null) return dispose();
-
 		var actualDataRate = (Int64.ofInt(bitsPerSample) / 8) * buffer.channels;
 		var position = vorbisFile.pcmTell() * actualDataRate, length = getLengthSamples() * actualDataRate;
 		if (position >= length && safeEnd) return;
@@ -212,15 +218,18 @@ class NativeAudioSource {
 			if ((size = length - position) > STREAM_BUFFER_SIZE) size = Int64.ofInt(STREAM_BUFFER_SIZE);
 			AL.bufferData(buffer, format, readVorbisFileBuffer(vorbisFile, Int64.toInt(size)), STREAM_BUFFER_SIZE, sampleRate);
 			numBuffers++;
-			if (position >= length && bufferLoops > 0) position = vorbisFile.pcmTell() * actualDataRate; else position += size;
+
 			if (safeEnd) break;
+			else if ((position += size) >= length && bufferLoops > 0) position = vorbisFile.pcmTell() * actualDataRate;
 		}
+		mutex.acquire();
 		AL.sourceQueueBuffers(handle, numBuffers, buffers);
 
 		if (playing && AL.getSourcei(handle, AL.SOURCE_STATE) == AL.STOPPED) {
 			AL.sourcePlay(handle);
 			resetTimer(Std.int((getLength() - getCurrentTime()) / getPitch()));
 		}
+		mutex.release();
 		#end
 	}
 
@@ -232,8 +241,10 @@ class NativeAudioSource {
 		var processed = AL.getSourcei(handle, AL.BUFFERS_PROCESSED);
 		if (processed > 0) {
 			fillBuffers(AL.sourceUnqueueBuffers(handle, processed));
-			if ((canFill = !canFill) && (!safeEnd || loops > 0) && (queuedBuffers = AL.getSourcei(handle, AL.BUFFERS_QUEUED)) < STREAM_NUM_BUFFERS)
-				fillBuffers([buffers[++queuedBuffers - 1]]);
+			if ((!safeEnd || loops > 0)) {
+				processed = AL.getSourcei(handle, AL.BUFFERS_QUEUED);
+				if (processed < STREAM_NUM_BUFFERS) fillBuffers([buffers[(requestBuffers = processed + 1) - 1]]);
+			}
 		}
 		#end
 	}
@@ -250,10 +261,10 @@ class NativeAudioSource {
 		if (!streamSources.contains(this)) {
 			streamSources.push(this);
 			lengthStreamSources++;
-			if (!threadRunning) {
-				threadRunning = true;
-				Thread.create(sourceStreamHandler);
-			}
+		}
+		if (!threadRunning) {
+			threadRunning = true;
+			Thread.create(sourceStreamHandler);
 		}
 	}
 
@@ -274,8 +285,8 @@ class NativeAudioSource {
 		if (!safeEnd && bufferLoops <= 0) {
 			#if lime_vorbis
 			var ranOut = false;
-			var vorbisFile = parent.buffer.__srcVorbisFile;
 			if (stream) {
+				var vorbisFile = parent.buffer.__srcVorbisFile;
 				if (vorbisFile == null) return dispose();
 				ranOut = vorbisFile.pcmTell() >= getLengthSamples() || queuedBuffers < 3;
 			}
@@ -305,7 +316,6 @@ class NativeAudioSource {
 		}
 
 		loops--;
-		//if (!stream && loops > 1) AL.sourceQueueBuffer(handle, parent.buffer.__srcBuffer);
 		setCurrentTime(loopTime != null ? loopTime : 0);
 		parent.onLoop.dispatch();
 	}
@@ -332,7 +342,9 @@ class NativeAudioSource {
 
 	public function setCurrentTime(value:Float):Float {
 		if (disposed = (handle == null)) return value;
-		var total = getRealLength(), time = Math.max(0, Math.min(total, value + parent.offset)), ratio = time / total;
+
+		var total = getRealLength();
+		var time = Math.max(0, Math.min(total, value + parent.offset)), ratio = time / total;
 
 		if (stream) {
 			// TODO: smooth setCurrentTime for stream (dont refill buffers again)
@@ -342,9 +354,11 @@ class NativeAudioSource {
 
 			#if lime_vorbis
 			var vorbisFile = parent.buffer.__srcVorbisFile;
-			if (canFill = (vorbisFile != null)) {
+			if (vorbisFile != null) {
+				// var chunk = Std.int(Math.floor(getFloat(samples) * ratio / STREAM_BUFFER_SIZE) * STREAM_BUFFER_SIZE);
 				vorbisFile.pcmSeek(Int64.fromFloat(getFloat(samples) * ratio));
-				fillBuffers(buffers.slice(0, queuedBuffers = 3));
+				fillBuffers(buffers.slice(0, requestBuffers = queuedBuffers = 3));
+				// AL.sourcei(handle, AL.SAMPLE_OFFSET, Std.int((samples * ratio) - chunk));
 				if (playing) resetStreamTimer();
 			}
 			#end
@@ -353,7 +367,6 @@ class NativeAudioSource {
 			AL.sourceRewind(handle);
 			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED));
 			AL.sourceQueueBuffer(handle, parent.buffer.__srcBuffer);
-			//if (loops > 0) AL.sourceQueueBuffer(handle, parent.buffer.__srcBuffer);
 			AL.sourcei(handle, AL.BYTE_OFFSET, Std.int(getFloat(dataLength) * ratio));
 		}
 

@@ -526,7 +526,7 @@ class FlxSound extends FlxBasic
 			if (_source == null) (_source = new AudioSource()).gain = 0;
 			_channel.__dispose();
 			_channel.__audioSource = _source;
-			if (!_channel.__isValid) SoundMixer.__registerSoundChannel(_channel);
+			SoundMixer.__registerSoundChannel(_channel);
 		}
 
 		if (_source.buffer != null) _source.dispose();
@@ -701,6 +701,7 @@ class FlxSound extends FlxBasic
 	@:allow(flixel.sound.FlxSoundGroup)
 	function updateTransform():Void
 	{
+		if (_transform == null) return;
 		_transform.volume = #if FLX_SOUND_SYSTEM (FlxG.sound.muted ? 0 : 1) * FlxG.sound.volume * #end
 			(group != null ? group.volume : 1) * _volume * _volumeAdjust;
 
@@ -732,7 +733,7 @@ class FlxSound extends FlxBasic
 			_channel.__rightPeak = 0;
 			_source.__backend.playing = true;
 			_source.offset = 0;
-			_source.currentTime = Std.int(_time);
+			_source.currentTime = _time;
 
 			looped = looped;
 			_amplitudeTime = -1;
@@ -867,7 +868,7 @@ class FlxSound extends FlxBasic
 	inline function get_volume():Float
 		return _volume;
 
-	function set_volume(Volume:Float):Float {
+	inline function set_volume(Volume:Float):Float {
 		_volume = FlxMath.bound(Volume, 0, 1);
 		updateTransform();
 		return _volume;
