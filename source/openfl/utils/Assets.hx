@@ -147,7 +147,7 @@ class Assets
 				bitmap.image.premultiplied = true;
 				bitmap.getTexture(Lib.current.stage.context3D);
 			}
-			//bitmap.getSurface();
+			bitmap.getSurface();
 			bitmap.disposeImage();
 			bitmap.image.data = null;
 			bitmap.image = null;

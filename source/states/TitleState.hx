@@ -3,7 +3,6 @@ package states;
 import openfl.Assets;
 
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.input.keyboard.FlxKey;

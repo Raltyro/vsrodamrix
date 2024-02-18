@@ -2,6 +2,7 @@ package options;
 
 import states.MainMenuState;
 import backend.StageData;
+import shaders.WiggleEffect;
 
 class OptionsState extends MusicBeatState
 {
@@ -12,6 +13,10 @@ class OptionsState extends MusicBeatState
 	public static var onPlayState:Bool = false;
 
 	function openSelectedSubstate(label:String) {
+		remove(grpOptions);
+		remove(selectorLeft);
+		remove(selectorRight);
+
 		switch(label) {
 			case 'Note Colors':
 				openSubState(new options.NotesSubState());
@@ -31,18 +36,33 @@ class OptionsState extends MusicBeatState
 	var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;
 
+	var wiggleShader:WiggleEffect;
+	var blob:FlxSprite;
+
 	override function create() {
 		#if DISCORD_ALLOWED
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.antialiasing = ClientPrefs.data.antialiasing;
-		bg.color = 0xFFea71fd;
-		bg.updateHitbox();
+		persistentUpdate = persistentDraw = true;
 
-		bg.screenCenter();
+		FlxG.camera.bgColor = 0xFF004499;
+		var antialiasing = ClientPrefs.data.antialiasing;
+
+		var bg = new FlxBackdrop(Paths.image('mainmenu/checker'));
+		bg.antialiasing = antialiasing;
+		bg.velocity.set(50, 50);
+		bg.scrollFactor.set(.4, .4);
+
+		blob = new FlxSprite(Paths.image('mainmenu/MainMenuBackBlob'));
+		blob.antialiasing = antialiasing;
+	    blob.scrollFactor.set(0, .1);
+	    blob.screenCenter();
+		blob.alpha = 0.5;
+		blob.y += 70;
+
 		add(bg);
+		add(blob);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -63,7 +83,22 @@ class OptionsState extends MusicBeatState
 		changeSelection();
 		ClientPrefs.saveSettings();
 
+		makeShaders();
 		super.create();
+	}
+
+	var shadersya:Bool = false;
+	function makeShaders() {
+		if (!shadersya && ClientPrefs.data.shaders) {
+			wiggleShader = new WiggleEffect();
+			wiggleShader.effectType = HEAT_WAVE_VERTICAL;
+			wiggleShader.waveSpeed = 1.2;
+			wiggleShader.waveFrequency = 30;
+			wiggleShader.waveAmplitude = .02;
+
+			blob.shader = wiggleShader.shader;
+			shadersya = true;
+		}
 	}
 
 	override function closeSubState() {
@@ -72,10 +107,23 @@ class OptionsState extends MusicBeatState
 		#if DISCORD_ALLOWED
 		DiscordClient.changePresence("Options Menu", null);
 		#end
+
+		add(grpOptions);
+		add(selectorLeft);
+		add(selectorRight);
+	}
+
+	override function destroy() {
+		ClientPrefs.loadPrefs();
+		FlxG.camera.bgColor = 0xFF000000;
+		super.destroy();
 	}
 
 	override function update(elapsed:Float) {
+		if (shadersya && ClientPrefs.data.shaders) wiggleShader.update(elapsed);
+
 		super.update(elapsed);
+		if (subState != null) return;
 
 		if (controls.UI_UP_P) {
 			changeSelection(-1);
@@ -120,11 +168,5 @@ class OptionsState extends MusicBeatState
 			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));
-	}
-
-	override function destroy()
-	{
-		ClientPrefs.loadPrefs();
-		super.destroy();
 	}
 }

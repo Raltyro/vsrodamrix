@@ -26,9 +26,10 @@ import sys.thread.Mutex;
 #end
 @:access(lime.media.AudioBuffer)
 @:access(lime.utils.ArrayBufferView)
+@:access(lime.media.vorbis.VorbisFile)
 class NativeAudioSource {
-	private static final STREAM_BUFFER_SIZE:Int = 8192;
-	private static final STREAM_NUM_BUFFERS:Int = 16;
+	private static final STREAM_BUFFER_SIZE:Int = 16384;
+	private static final STREAM_NUM_BUFFERS:Int = 8;
 	private static final STREAM_TIMER_FREQUENCY:Int = 100;
 
 	private var buffers:Array<ALBuffer>;
@@ -169,8 +170,11 @@ class NativeAudioSource {
 
 	private function readVorbisFileBuffer(vorbisFile:VorbisFile, max:Int):ArrayBufferView {
 		#if lime_vorbis
-		var id = STREAM_NUM_BUFFERS - (queuedBuffers = requestBuffers), read = STREAM_NUM_BUFFERS - 1, total = 0, readMax = 0;
+		var id = STREAM_NUM_BUFFERS - requestBuffers, read = STREAM_NUM_BUFFERS - 1, total = 0, readMax = 0;
 		var buffer = bufferDatas[id];
+
+		mutex.acquire();
+		queuedBuffers = requestBuffers;
 		for (i in id...read) {
 			bufferTimeBlocks[i] = bufferTimeBlocks[i + 1];
 			bufferDatas[i] = bufferDatas[i + 1];
@@ -178,18 +182,17 @@ class NativeAudioSource {
 		bufferTimeBlocks[read] = vorbisFile.timeTell();
 		bufferDatas[read] = buffer;
 
-		mutex.acquire();
 		while (total < STREAM_BUFFER_SIZE) {
 			if ((readMax = 4096) > (read = max - total)) readMax = read;
+			if (vorbisFile.handle == null) break;
 			if (readMax > 0 && (read = vorbisFile.read(buffer.buffer, total, readMax)) > 0) total += read;
-			else if (loops > bufferLoops) {
+			else if (safeEnd = (loops > bufferLoops)) {
 				if (readMax == 4096) continue;
 				bufferLoops++; vorbisFile.timeSeek((loopTime != null ? Math.max(0, loopTime / 1000) : 0) + parent.offset / 1000);
 				if ((max = (dataLength - (vorbisFile.pcmTell() * (Int64.ofInt(bitsPerSample) / 8) * parent.buffer.channels)).low) > STREAM_BUFFER_SIZE)
 					max = STREAM_BUFFER_SIZE;
 			}
 			else {
-				safeEnd = true;
 				buffer.buffer.fill(total, STREAM_BUFFER_SIZE - total - 1, 0);
 				resetTimer((getLength() - getCurrentTime()) / getPitch());
 				break;
@@ -205,7 +208,7 @@ class NativeAudioSource {
 	private function fillBuffers(buffers:Array<ALBuffer>):Void {
 		#if lime_vorbis
 		if (parent == null || parent.buffer == null) return dispose();
-		if (buffers.length < 1) return;
+		if (handle == null || buffers.length < 1) return;
 
 		var buffer = parent.buffer;
 		var vorbisFile = buffer.__srcVorbisFile;
@@ -213,10 +216,13 @@ class NativeAudioSource {
 		var position = vorbisFile.pcmTell() * actualDataRate, length = getLengthSamples() * actualDataRate;
 		if (position >= length && safeEnd) return;
 
-		var sampleRate = buffer.sampleRate, numBuffers = 0, size:Int64;
+		var sampleRate = buffer.sampleRate, numBuffers = 0, data, size:Int64;
 		for (buffer in buffers) {
 			if ((size = length - position) > STREAM_BUFFER_SIZE) size = Int64.ofInt(STREAM_BUFFER_SIZE);
-			AL.bufferData(buffer, format, readVorbisFileBuffer(vorbisFile, Int64.toInt(size)), STREAM_BUFFER_SIZE, sampleRate);
+			data = readVorbisFileBuffer(vorbisFile, Int64.toInt(size));
+
+			if (disposed) return;
+			AL.bufferData(buffer, format, data, STREAM_BUFFER_SIZE, sampleRate);
 			numBuffers++;
 
 			if (safeEnd) break;
@@ -235,15 +241,17 @@ class NativeAudioSource {
 
 	private function streamRun():Void {
 		#if lime_vorbis
-		var vorbisFile;
-		if (disposed = (handle == null) || (vorbisFile = parent.buffer.__srcVorbisFile) == null) return;
+		if (disposed = (handle == null)) return dispose();
+
+		var vorbisFile = parent.buffer.__srcVorbisFile;
+		if (vorbisFile == null) return dispose();
 
 		var processed = AL.getSourcei(handle, AL.BUFFERS_PROCESSED);
 		if (processed > 0) {
 			fillBuffers(AL.sourceUnqueueBuffers(handle, processed));
-			if ((!safeEnd || loops > 0)) {
-				processed = AL.getSourcei(handle, AL.BUFFERS_QUEUED);
-				if (processed < STREAM_NUM_BUFFERS) fillBuffers([buffers[(requestBuffers = processed + 1) - 1]]);
+			if (!safeEnd || loops > 0) {
+				if (AL.getSourcei(handle, AL.BUFFERS_QUEUED) < STREAM_NUM_BUFFERS)
+					fillBuffers([buffers[(++requestBuffers) - 1]]);
 			}
 		}
 		#end
@@ -453,3 +461,171 @@ class NativeAudioSource {
 		return position;
 	}
 }
+
+/*
+	// Stream Handler
+	private static var threadRunning:Bool = false;
+	private static var streamSources:Array<NativeAudioSource> = [];
+	private static var requestStreamSources:Array<Dynamic> = []; // NativeAudioSource, Int
+	private static var lengthStreamSources:Int = 0;
+	private static var mutex:Mutex = new Mutex();
+
+	private static var streamHandlerTimer:Timer;
+	private static var streamThread:Thread;
+
+	private static function sourceStreamThread():Void {
+		var i = 0, n = 0, source:NativeAudioSource;
+
+		while ((n = lengthStreamSources) != 0) {
+			try {
+				i = -1;
+				while (++i < n) {
+					if ((source = streamSources[i]).handle == null) continue;
+
+					var handle = source.handle, processed = AL.getSourcei(handle, AL.BUFFERS_PROCESSED);
+					if (processed > 0) {
+						source.fillBuffers(processed);
+						var queued = AL.getSourcei(handle, AL.BUFFERS_QUEUED);
+						if ((!source.safeEnd || source.loops > 0) && queued < STREAM_NUM_BUFFERS) {
+							source.requestBuffers = queued + 1;
+							source.fillBuffers(1);
+							processed++;
+						}
+					}
+
+					requestStreamSources.push(source);
+					requestStreamSources.push(processed);
+				}
+			}
+			catch (e) {
+				trace('Streaming Error: $e');
+				if (streamSources[i] != null) {
+					mutex.acquire();
+					streamSources[i].dispose();
+					mutex.release();
+				}
+			}
+
+			Thread.readMessage(true);
+		}
+
+		threadRunning = false;
+	}
+
+	private static function sourceStreamHandler():Void {
+		var source:NativeAudioSource;
+		while ((source = requestStreamSources.shift()) != null) {
+			var request:Int = requestStreamSources.shift();
+			var processed = AL.getSourcei(source.handle, AL.BUFFERS_PROCESSED);
+			var buffers = source.requestBuffers;
+
+			source.requestBuffers -= request - processed;
+			source.uploadBuffers(AL.sourceUnqueueBuffers(source.handle, processed));
+			source.requestBuffers = buffers;
+
+			if (request > processed) source.uploadBuffers(source.buffers.slice(processed + 1, request));
+		}
+
+		streamThread.sendMessage(0);
+	}
+
+	private function readVorbisFileBuffer(vorbisFile:VorbisFile, max:Int):Void {
+		#if lime_vorbis
+		var id = STREAM_NUM_BUFFERS - requestBuffers, read = STREAM_NUM_BUFFERS - 1, total = 0, readMax = 0;
+		var buffer = bufferDatas[id];
+
+		mutex.acquire();
+		queuedBuffers = requestBuffers;
+		for (i in id...read) {
+			bufferTimeBlocks[i] = bufferTimeBlocks[i + 1];
+			bufferDatas[i] = bufferDatas[i + 1];
+		}
+		bufferTimeBlocks[read] = vorbisFile.timeTell();
+		bufferDatas[read] = buffer;
+
+		while (total < STREAM_BUFFER_SIZE) {
+			if ((readMax = 4096) > (read = max - total)) readMax = read;
+			if (readMax > 0 && (read = vorbisFile.read(buffer.buffer, total, readMax)) > 0) total += read;
+			else if (loops > bufferLoops) {
+				if (readMax == 4096) continue;
+				bufferLoops++; vorbisFile.timeSeek((loopTime != null ? Math.max(0, loopTime / 1000) : 0) + parent.offset / 1000);
+				if ((max = (dataLength - (vorbisFile.pcmTell() * (Int64.ofInt(bitsPerSample) / 8) * parent.buffer.channels)).low) > STREAM_BUFFER_SIZE)
+					max = STREAM_BUFFER_SIZE;
+			}
+			else {
+				safeEnd = true;
+				buffer.buffer.fill(total, STREAM_BUFFER_SIZE - total - 1, 0);
+				resetTimer((getLength() - getCurrentTime()) / getPitch());
+				break;
+			}
+		}
+		mutex.release();
+		#end
+	}
+
+	private function fillBuffers(len:Int):Void {
+		#if lime_vorbis
+		if (parent == null || parent.buffer == null) return dispose();
+
+		var buffer = parent.buffer;
+		var vorbisFile = buffer.__srcVorbisFile;
+		var actualDataRate = (Int64.ofInt(bitsPerSample) / 8) * buffer.channels;
+		var position = vorbisFile.pcmTell() * actualDataRate, length = getLengthSamples() * actualDataRate;
+		if (position >= length && safeEnd) return;
+
+		var i = 0, size:Int64;
+		while (i++ < len) {
+			if ((size = length - position) > STREAM_BUFFER_SIZE) size = Int64.ofInt(STREAM_BUFFER_SIZE);
+			readVorbisFileBuffer(vorbisFile, Int64.toInt(size));
+
+			if (safeEnd) break;
+			else if ((position += size) >= length && bufferLoops > 0) position = vorbisFile.pcmTell() * actualDataRate;
+		}
+		#end
+	}
+
+	private function uploadBuffers(buffers:Array<ALBuffer>):Void {
+		if (parent == null || parent.buffer == null) return dispose();
+		if (buffers.length < 1) return;
+
+		var buffer = parent.buffer, sampleRate = buffer.sampleRate, numBuffers = buffers.length;
+		for (i in 0...numBuffers)
+			AL.bufferData(buffers[i], format, bufferDatas[STREAM_NUM_BUFFERS - requestBuffers - i], STREAM_BUFFER_SIZE, sampleRate);
+
+		AL.sourceQueueBuffers(handle, numBuffers, buffers);
+		if (playing && AL.getSourcei(handle, AL.SOURCE_STATE) == AL.STOPPED) {
+			AL.sourcePlay(handle);  
+			resetTimer(Std.int((getLength() - getCurrentTime()) / getPitch()));
+		}
+	}
+
+	// Timers
+	inline function stopStreamTimer():Void {
+		if (streamSources.contains(this)) {
+			streamSources.remove(this);
+			lengthStreamSources--;
+			if (lengthStreamSources <= 0) {
+				if (streamHandlerTimer != null) {
+					streamHandlerTimer.stop();
+					streamHandlerTimer = null;
+				}
+				streamThread.sendMessage(0);
+			}
+		}
+	}
+
+	private function resetStreamTimer():Void {
+		if (!streamSources.contains(this)) {
+			streamSources.push(this);
+			lengthStreamSources++;
+			if (!threadRunning) {
+				threadRunning = true;
+				streamThread = Thread.create(sourceStreamThread);
+			}
+			if (streamHandlerTimer == null) {
+				streamHandlerTimer = new Timer(STREAM_TIMER_FREQUENCY);
+				streamHandlerTimer.run = sourceStreamHandler;
+			}
+		}
+	}
+*/

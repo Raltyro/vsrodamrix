@@ -101,7 +101,10 @@ class AudioBuffer
 		__srcBuffer = null;
 		#end
 		#if lime_vorbis
-		if (__srcVorbisFile != null) __srcVorbisFile.clear();
+		if (__srcVorbisFile != null) {
+			__srcVorbisFile.clear();
+			@:privateAccess __srcVorbisFile.handle = null;
+		}
 		__srcVorbisFile = null;
 		#end
 		data = null;

@@ -2,7 +2,6 @@ package states;
 
 import lime.app.Application;
 
-import flixel.addons.display.FlxBackdrop;
 import flixel.addons.transition.FlxTransitionableState;
 import states.editors.MasterEditorMenu;
 import flixel.effects.FlxFlicker;
@@ -202,7 +201,6 @@ class MainMenuState extends MusicBeatState {
 		FlxTween.tween(FlxG.camera.scroll, {y: FlxG.height - 200}, 0.7, {ease: FlxEase.sineIn, onComplete: (_) -> {
 			FlxTransitionableState.skipNextTransIn = true;
 			MusicBeatState.switchState(new TitleState());
-			FlxG.camera.bgColor = 0xFF00000;
 		}});
 		FlxTween.tween(border, {alpha: 1}, 0.7);
 	}

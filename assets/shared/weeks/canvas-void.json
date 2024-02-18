@@ -1,0 +1,24 @@
+{
+	"storyName": "Canvas Void",
+	"difficulties": "Hard",
+	"hideFreeplay": false,
+	"weekBackground": "canvasvoid",
+	"weekBefore": "chapter1",
+	"freeplayColor": [244, 244, 248],
+	"startUnlocked": false,
+	"hideStoryMode": false,
+	"songs": [
+		[
+			"Double-Attack",
+			"PurplePink",
+			[
+				106,
+				73,
+				253
+			]
+		]
+	],
+	"weekCharacters": ["", "", ""],
+	"hiddenUntilUnlocked": false,
+	"weekName": "Chapter1"
+}
