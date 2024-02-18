@@ -1,12 +1,12 @@
 package states;
 
+#if ACHIEVEMENTS_ALLOWED
 import flixel.FlxObject;
 import flixel.util.FlxSort;
 import objects.Bar;
+import shaders.WiggleEffect;
 
-#if ACHIEVEMENTS_ALLOWED
-class AchievementsMenuState extends MusicBeatState
-{
+class AchievementsMenuState extends MusicBeatState {
 	public var curSelected:Int = 0;
 
 	public var options:Array<Dynamic> = [];
@@ -16,6 +16,7 @@ class AchievementsMenuState extends MusicBeatState
 	public var progressTxt:FlxText;
 	public var progressBar:Bar;
 
+	var wiggleShader:WiggleEffect;
 	var camFollow:FlxObject;
 
 	var MAX_PER_ROW:Int = 4;
@@ -40,13 +41,23 @@ class AchievementsMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
-		menuBG.antialiasing = ClientPrefs.data.antialiasing;
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
-		menuBG.updateHitbox();
-		menuBG.screenCenter();
-		menuBG.scrollFactor.set();
-		add(menuBG);
+		FlxG.camera.bgColor = 0xFF004499;
+		var antialiasing = ClientPrefs.data.antialiasing;
+
+		var bg = new FlxBackdrop(Paths.image('mainmenu/checker'));
+		bg.antialiasing = antialiasing;
+		bg.velocity.set(50, 50);
+		bg.scrollFactor.set(.4, .4);
+
+		var blob = new FlxSprite(Paths.image('mainmenu/MainMenuBackBlob'));
+		blob.antialiasing = antialiasing;
+	    blob.scrollFactor.set(0, .1);
+	    blob.screenCenter();
+		blob.alpha = 0.5;
+		blob.y += 70;
+
+		add(bg);
+		add(blob);
 
 		grpOptions = new FlxSpriteGroup();
 		grpOptions.scrollFactor.x = 0;
@@ -119,12 +130,27 @@ class AchievementsMenuState extends MusicBeatState
 		add(progressTxt);
 		add(descText);
 		add(nameText);
+
+		if (ClientPrefs.data.shaders) {
+			wiggleShader = new WiggleEffect();
+			wiggleShader.effectType = HEAT_WAVE_VERTICAL;
+			wiggleShader.waveSpeed = 1.2;
+			wiggleShader.waveFrequency = 30;
+			wiggleShader.waveAmplitude = .02;
+
+			blob.shader = wiggleShader.shader;
+		}
 		
 		_changeSelection();
 		super.create();
 		
 		FlxG.camera.follow(camFollow, null, 9);
 		FlxG.camera.scroll.y = -FlxG.height;
+	}
+
+	override function destroy() {
+		FlxG.camera.bgColor = 0xFF000000;
+		super.destroy();
 	}
 
 	function makeAchievement(achievement:String, data:Achievement, unlocked:Bool, mod:String = null)
@@ -148,6 +174,8 @@ class AchievementsMenuState extends MusicBeatState
 
 	var goingBack:Bool = false;
 	override function update(elapsed:Float) {
+		if (wiggleShader != null) wiggleShader.update(elapsed);
+
 		if(!goingBack && options.length > 1)
 		{
 			var add:Int = 0;

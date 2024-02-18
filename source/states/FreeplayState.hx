@@ -12,6 +12,8 @@ import substates.ResetScoreSubState;
 
 import flixel.math.FlxMath;
 
+import shaders.WiggleEffect;
+
 class FreeplayState extends MusicBeatState
 {
 	var songs:Array<SongMetadata> = [];
@@ -36,8 +38,11 @@ class FreeplayState extends MusicBeatState
 	private var iconArray:Array<HealthIcon> = [];
 
 	var bg:FlxSprite;
+	var blob:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+
+	var wiggleShader:WiggleEffect;
 
 	var missingTextBG:FlxSprite;
 	var missingText:FlxText;
@@ -88,10 +93,23 @@ class FreeplayState extends MusicBeatState
 		}
 		Mods.loadTopMod();
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.antialiasing = ClientPrefs.data.antialiasing;
+		FlxG.camera.bgColor = 0xFF004499;
+		var antialiasing = ClientPrefs.data.antialiasing;
+
+		bg = new FlxBackdrop(Paths.image('mainmenu/checker'));
+		bg.antialiasing = antialiasing;
+		bg.velocity.set(50, 50);
+		bg.scrollFactor.set(.4, .4);
+
+		blob = new FlxSprite(Paths.image('mainmenu/MainMenuBackBlob'));
+		blob.antialiasing = antialiasing;
+	    blob.scrollFactor.set(0, .1);
+	    blob.screenCenter();
+		blob.alpha = 0.5;
+		blob.y += 70;
+
 		add(bg);
-		bg.screenCenter();
+		add(blob);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -137,7 +155,6 @@ class FreeplayState extends MusicBeatState
 
 		add(scoreText);
 
-
 		missingTextBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		missingTextBG.alpha = 0.6;
 		missingTextBG.visible = false;
@@ -150,8 +167,7 @@ class FreeplayState extends MusicBeatState
 		add(missingText);
 
 		if(curSelected >= songs.length) curSelected = 0;
-		bg.color = songs[curSelected].color;
-		intendedColor = bg.color;
+		blob.color = bg.color = intendedColor = songs[curSelected].color;
 		lerpSelected = curSelected;
 
 		curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(lastDifficultyName)));
@@ -170,6 +186,16 @@ class FreeplayState extends MusicBeatState
 		
 		player = new MusicPlayer(this);
 		add(player);
+
+		if (ClientPrefs.data.shaders) {
+			wiggleShader = new WiggleEffect();
+			wiggleShader.effectType = HEAT_WAVE_VERTICAL;
+			wiggleShader.waveSpeed = 1.2;
+			wiggleShader.waveFrequency = 30;
+			wiggleShader.waveAmplitude = .02;
+
+			blob.shader = wiggleShader.shader;
+		}
 		
 		changeSelection();
 		updateTexts();
@@ -203,6 +229,8 @@ class FreeplayState extends MusicBeatState
 		}
 		lerpScore = Math.floor(FlxMath.lerp(intendedScore, lerpScore, Math.exp(-elapsed * 24)));
 		lerpRating = FlxMath.lerp(intendedRating, lerpRating, Math.exp(-elapsed * 12));
+
+		if (wiggleShader != null) wiggleShader.update(elapsed);
 
 		if (Math.abs(lerpScore - intendedScore) <= 10)
 			lerpScore = intendedScore;
@@ -480,6 +508,11 @@ class FreeplayState extends MusicBeatState
 					colorTween = null;
 				}
 			});
+			colorTween = FlxTween.color(blob, 1, blob.color, intendedColor, {
+				onComplete: function(twn:FlxTween) {
+					colorTween = null;
+				}
+			});
 		}
 
 		// selector.y = (70 * curSelected) + 30;
@@ -562,6 +595,7 @@ class FreeplayState extends MusicBeatState
 
 	override function destroy():Void
 	{
+		FlxG.camera.bgColor = 0xFF000000;
 		super.destroy();
 
 		FlxG.autoPause = ClientPrefs.data.autoPause;
