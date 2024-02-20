@@ -2,77 +2,79 @@
 	"animations": [
 		{
 			"offsets": [
-				300,
-				-290
+				0,
+				0
 			],
 			"loop": false,
 			"fps": 24,
 			"anim": "idle",
 			"indices": [],
-			"name": "PurpleIdle"
+			"name": "YellowIdle"
 		},
 		{
 			"offsets": [
-				249,
-				-299
+				-22,
+				-79
 			],
 			"loop": false,
 			"fps": 24,
 			"anim": "singLEFT",
 			"indices": [],
-			"name": "PurpleLeft"
+			"name": "YellowLeft0"
 		},
 		{
 			"offsets": [
-				128,
-				-342
-			],
-			"loop": false,
-			"fps": 24,
-			"anim": "singDOWN",
-			"indices": [],
-			"name": "PurpleDown"
-		},
-		{
-			"offsets": [
-				184,
-				-231
-			],
-			"loop": false,
-			"fps": 24,
-			"anim": "singUP",
-			"indices": [],
-			"name": "PurpleUp"
-		},
-		{
-			"offsets": [
-				148,
-				-189
+				-44,
+				-77
 			],
 			"loop": false,
 			"fps": 24,
 			"anim": "singRIGHT",
 			"indices": [],
-			"name": "PurpleRight"
+			"name": "YellowRight0"
+		},
+		{
+			"offsets": [
+				-100,
+				-53
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "YellowUp0"
+		},
+		{
+			"offsets": [
+				-52,
+				-114
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "YellowDown0"
 		}
 	],
+	"vocals_file": "yellow",
 	"no_antialiasing": false,
-	"image": "characters/Purple",
+	"image": "characters/yellow-good-leader",
 	"position": [
 		0,
 		0
 	],
-	"healthicon": "PurplePink",
-	"flip_x": false,
+	"healthicon": "yellow",
+	"flip_x": true,
 	"healthbar_colors": [
-		175,
-		102,
-		206
+		248,
+		220,
+		91
 	],
 	"camera_position": [
-		-180,
-		290
+		0,
+		90
 	],
-	"sing_duration": 6.1,
-	"scale": 1
+	"sing_duration": 4,
+	"scale": 1,
+	"_editor_isPlayer": true
 }

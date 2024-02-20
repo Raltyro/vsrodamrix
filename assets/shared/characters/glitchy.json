@@ -1,0 +1,146 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				-1
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "GlitchyIdle"
+		},
+		{
+			"offsets": [
+				2,
+				14
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "hey",
+			"indices": [],
+			"name": "GlitchyVPose"
+		},
+		{
+			"offsets": [
+				-118,
+				-2
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "dodge",
+			"indices": [],
+			"name": "GlitchyBlock"
+		},
+		{
+			"offsets": [
+				33,
+				23
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "GlitchyLeft0"
+		},
+		{
+			"offsets": [
+				-67,
+				16
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "GlitchyRight0"
+		},
+		{
+			"offsets": [
+				-2,
+				67
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "GlitchyUp0"
+		},
+		{
+			"offsets": [
+				-46,
+				120
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "GlitchyDown0"
+		},
+		{
+			"offsets": [
+				38,
+				46
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"indices": [],
+			"name": "GlitchyLeftMiss0"
+		},
+		{
+			"offsets": [
+				-64,
+				46
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"indices": [],
+			"name": "GlitchyRightMiss0"
+		},
+		{
+			"offsets": [
+				3,
+				62
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUPmiss",
+			"loop": false,
+			"name": "GlitchyUpMiss0"
+		},
+		{
+			"offsets": [
+				-38,
+				122
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"loop": false,
+			"name": "GlitchyDownMiss0"
+		}
+	],
+	"vocals_file": "glitchy",
+	"no_antialiasing": false,
+	"image": "characters/glitchy",
+	"position": [
+		-50,
+		600
+	],
+	"healthicon": "glitchy",
+	"flip_x": true,
+	"healthbar_colors": [
+		240,
+		220,
+		91
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1,
+	"_editor_isPlayer": true
+}

@@ -1,8 +1,7 @@
 {
 	"song": {
-		"player1": "bf",
-		"events": [],
-		"gfVersion": "gf",
+		"player1": "yellow-good-leader",
+		"gfVersion": "glitchy-gf",
 		"notes": [
 			{
 				"sectionNotes": [],
@@ -8444,10 +8443,9 @@
 				"mustHitSection": true
 			}
 		],
-		"player2": "dad",
-		"player3": null,
+		"player2": "green-good-leader",
 		"song": "Good Leader",
-		"stage": "stage",
+		"stage": "good-leader",
 		"needsVoices": true,
 		"bpm": 160,
 		"speed": 2.8

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="good-leader-line.png">
+	<!-- Created with Adobe Animate version 23.0.1.70 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="viewbarrier instance 10000" x="0" y="0" width="117" height="796"/>
+	<SubTexture name="viewbarrier instance 10001" x="119" y="0" width="117" height="796"/>
+	<SubTexture name="viewbarrier instance 10002" x="238" y="0" width="117" height="796"/>
+</TextureAtlas>

@@ -3,78 +3,78 @@
 		{
 			"loop": false,
 			"offsets": [
-				-5,
-				-103
+				0,
+				0
 			],
 			"anim": "idle",
 			"fps": 24,
-			"name": "PurpleIdle",
+			"name": "GreenIdle",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				-66,
-				-111
+				18,
+				1
 			],
 			"anim": "singLEFT",
 			"fps": 24,
-			"name": "PurpleLeft",
+			"name": "GreenLeft0",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				-182,
-				-145
-			],
-			"anim": "singDOWN",
-			"fps": 24,
-			"name": "PurpleDown",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-115,
-				-45
-			],
-			"anim": "singUP",
-			"fps": 24,
-			"name": "PurpleUp",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-152,
+				0,
 				0
 			],
 			"anim": "singRIGHT",
 			"fps": 24,
-			"name": "PurpleRight",
+			"name": "GreenRight0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				50,
+				91
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "GreenUp0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				-14
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "GreenDown0",
 			"indices": []
 		}
 	],
-	"vocals_file": "",
+	"vocals_file": "green",
 	"no_antialiasing": false,
-	"image": "characters/Purple",
+	"image": "characters/green-good-leader",
 	"position": [
-		-290,
-		270
+		0,
+		0
 	],
-	"healthicon": "purple",
+	"healthicon": "green",
 	"flip_x": false,
 	"healthbar_colors": [
-		79,
-		31,
-		99
+		37,
+		74,
+		46
 	],
 	"camera_position": [
-		40,
-		130
+		-20,
+		0
 	],
-	"sing_duration": 5,
+	"sing_duration": 4,
 	"scale": 1,
 	"_editor_isPlayer": false
 }

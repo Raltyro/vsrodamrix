@@ -1,0 +1,36 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "Glitchy"
+		}
+	],
+	"vocals_file": "glitchy",
+	"no_antialiasing": false,
+	"image": "characters/glitchy-gf",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "glitchy",
+	"flip_x": false,
+	"healthbar_colors": [
+		248,
+		220,
+		91
+	],
+	"camera_position": [
+		-350,
+		-100
+	],
+	"sing_duration": 4,
+	"scale": 1,
+	"_editor_isPlayer": false
+}

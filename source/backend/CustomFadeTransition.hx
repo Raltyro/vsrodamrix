@@ -1,22 +1,19 @@
 package backend;
 
-import openfl.display.BitmapData;
-
 import flixel.graphics.FlxGraphic;
 import flixel.util.FlxGradient;
 
 class CustomFadeTransition extends MusicBeatSubstate {
 	public static var finishCallback:Void->Void;
-	public static var nextCamera:FlxCamera;
+
+	public var duration:Float;
+	public var isTransIn:Bool;
+	public var scale:Float = 0;
+	public var finished:Bool = false;
 
 	var leTween:FlxTween;
-	var isTransIn:Bool;
-	var duration:Float;
 	var transBlack:FlxSprite;
 	var transGradient:FlxSprite;
-
-	var scale:Float = 0;
-	var finished:Bool = false;
 
 	public function new(duration:Float = 0.7, isTransIn:Bool = false) {
 		this.duration = duration;
@@ -33,12 +30,11 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		add(transBlack);
 
 		updateHitbox();
-
-		camera = nextCamera != null ? nextCamera : FlxG.camera;
-		nextCamera = null;
 	}
 
 	override function create() {
+		camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
+
 		super.create();
 
 		leTween = FlxTween.tween(this, {scale: 1}, duration, {
@@ -56,10 +52,8 @@ class CustomFadeTransition extends MusicBeatSubstate {
 
 	private function updateHitbox() {
 		var camera:FlxCamera = camera != null ? camera : FlxG.camera;
-		var width:Int = FlxG.width;
-		var height:Int = FlxG.height;
-		var scaleX:Float = 1;
-		var scaleY:Float = 1;
+		var width = FlxG.width, height = FlxG.height;
+		var scaleX:Float = 1, scaleY:Float = 1;
 
 		if (camera != null) {
 			width = camera.width;
@@ -67,24 +61,23 @@ class CustomFadeTransition extends MusicBeatSubstate {
 			scaleX = camera.scaleX;
 			scaleY = camera.scaleY;
 		}
-		width = Math.ceil(width / scaleX);
-		height = Math.ceil(height / scaleY);
 
-		transGradient.setGraphicSize(width, height);
+		var gradWidth = Math.ceil(width / scaleX), gradHeight = Math.ceil(height / scaleY);
+
+		transGradient.setGraphicSize(gradWidth, gradHeight);
 		transGradient.updateHitbox();
-		transGradient.y = FlxMath.remapToRange(scale, 0, 1,
-			-height,
-			height
-		);
+		transGradient.y = FlxMath.remapToRange(scale, 0, 1, -gradHeight, gradHeight) -gradHeight + height;
 
-		transBlack.setGraphicSize(width, height);
+		transBlack.setGraphicSize(gradWidth, gradHeight);
 		transBlack.updateHitbox();
-		transBlack.y = transGradient.y + (isTransIn ? height : -height);
+		transBlack.y = transGradient.y + (isTransIn ? gradHeight : -gradHeight);
+
+		transGradient.x = transBlack.x = -gradWidth + width;
 	}
 
 	override function update(elapsed:Float) {
-		super.update(elapsed);
 		updateHitbox();
+		super.update(elapsed);
 	}
 
 	override function destroy() {
@@ -98,11 +91,12 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		@:privateAccess
 		if (cachedGradient != null && cachedGradient.frameCollections != null) return cachedGradient;
 
-		var bitmap:BitmapData = FlxGradient.createGradientBitmapData(1, FlxG.height, [FlxColor.BLACK, 0x0]);
-		cachedGradient = FlxGraphic.fromBitmapData(bitmap, false, "FadeTransitionGradient");
-		cachedGradient.persist = true;
+		final key = "FadeTransitionGradient";
+		var bitmap = openfl.utils.Assets.registerBitmapData(FlxGradient.createGradientBitmapData(1, 1024, [FlxColor.BLACK, 0x0]), key, false, true);
+		(cachedGradient = FlxGraphic.fromBitmapData(bitmap, false, key)).persist = true;
+		cachedGradient.destroyOnNoUse = false;
 
-		Paths.excludeAsset("FadeTransitionGradient");
+		Paths.excludeAsset(key);
 		return cachedGradient;
 	}
 }

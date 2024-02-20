@@ -135,7 +135,7 @@ class CoolUtil {
 		@:privateAccess return FlxKey.toStringMap.get(keyCode);
 
 	inline public static function playMenuMusic() {
-		if (FlxG.sound.music == null) FlxG.sound.playMusic(Paths.music('colorSplash'), 0.8);
+		if (FlxG.sound.music == null) FlxG.sound.playMusic(Paths.music('colorSplash'), 0.9);
 		FlxG.sound.music.loopTime = 182857.14285714;
 		FlxG.sound.music.endTime = 368000;
 	}

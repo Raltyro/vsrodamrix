@@ -380,7 +380,11 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case 'stage': new states.stages.StageWeek1(); //Week 1
+			case 'stage': new states.stages.StageWeek1();
+
+			// vs rodamrix
+			case 'double-attack': new states.stages.DoubleAttackStage();
+			case 'good-leader': new states.stages.GoodLeaderStage();
 		}
 
 		if(isPixelStage) {
@@ -1237,7 +1241,7 @@ class PlayState extends MusicBeatState
 	private var noteTypes:Array<String> = [];
 	private var eventsPushed:Array<String> = [];
 	private function generateSong(dataPath:String):Void
-	{
+	@:privateAccess {
 		// FlxG.log.add(ChartParser.parse());
 		songSpeed = PlayState.SONG.speed;
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype');
@@ -1264,15 +1268,15 @@ class PlayState extends MusicBeatState
 			}
 		}
 		catch(e:Dynamic) {}
-		if (vocals == null) vocals = FlxG.sound.list.recycle(FlxSound);
-		if (opponentVocals == null) opponentVocals = FlxG.sound.list.recycle(FlxSound);
+		if (vocals == null) (vocals = FlxG.sound.list.recycle(FlxSound)).reset();
+		if (opponentVocals == null) (opponentVocals = FlxG.sound.list.recycle(FlxSound)).reset();
 
 		FlxG.sound.list.add(vocals);
 		FlxG.sound.list.add(opponentVocals);
 
 		try {inst = FlxG.sound.load(Paths.inst(songData.song));}
 		catch(e:Dynamic) {}
-		if (inst == null) inst = FlxG.sound.list.recycle(FlxSound);
+		if (inst == null) (inst = FlxG.sound.list.recycle(FlxSound)).reset();
 
 		notes = new FlxTypedGroup<Note>();
 		noteGroup.add(notes);
@@ -2891,7 +2895,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if(opponentVocals.length <= 0) vocals.volume = 1;
+		if (!opponentVocals.loaded) vocals.volume = 1;
 		strumPlayAnim(true, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
 		note.hitByOpponent = true;
 		

@@ -1,0 +1,15 @@
+{
+	"directory": "chapter1",
+	"defaultZoom": 1,
+	"stageUI": "",
+
+	"boyfriend": [611, 120],
+	"girlfriend": [1154, 437],
+	"opponent": [12, 196],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [-110, -1],
+	"camera_opponent": [190, 6],
+	"camera_girlfriend": [-300, -97],
+	"camera_speed": 1
+}

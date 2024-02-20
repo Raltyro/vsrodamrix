@@ -62,9 +62,11 @@
 	<assets path="assets/shared" />
 	<assets path="assets/songs" library="songs" />
 	<assets path="assets/videos" library="videos" if="VIDEOS_ALLOWED" />
+	<assets path="assets/week_assets" library="week_assets" rename="assets" />
 
 	<library name="videos"        preload="true" if="VIDEOS_ALLOWED" />
 	<library name="songs"         preload="true" />
+	<library name="week_assets"   preload="true" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 

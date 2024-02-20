@@ -1,66 +1,67 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
-				174,
-				-251
+				5,
+				-134
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singLEFT",
-			"fps": 24,
-			"name": "PinkLeft",
-			"indices": []
+			"indices": [],
+			"name": "PinkLeft"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				60,
-				-250
+				-109,
+				-131
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "idle",
-			"fps": 24,
-			"name": "PinkIdle",
-			"indices": []
+			"indices": [],
+			"name": "PinkIdle"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				13,
-				-171
+				-159,
+				-56
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singDOWN",
-			"fps": 24,
-			"name": "PinkDown",
-			"indices": []
+			"indices": [],
+			"name": "PinkDown"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				74,
-				-111
+				-94,
+				9
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singUP",
-			"fps": 24,
-			"name": "PinkUp",
-			"indices": []
+			"indices": [],
+			"name": "PinkUp"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				49,
-				-289
+				-100,
+				-172
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "PinkRight",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "PinkRight"
 		}
 	],
+	"vocals_file": "",
 	"no_antialiasing": false,
-	"image": "characters/Pink",
+	"image": "characters/pink",
 	"position": [
-		-120,
-		-50
+		-330,
+		250
 	],
 	"healthicon": "Pink",
 	"flip_x": false,
@@ -70,9 +71,10 @@
 		206
 	],
 	"camera_position": [
-		-90,
-		190
+		20,
+		100
 	],
 	"sing_duration": 6.1,
-	"scale": 1
+	"scale": 1,
+	"_editor_isPlayer": false
 }

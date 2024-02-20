@@ -303,7 +303,7 @@ class FlxSound extends FlxBasic
 		x = 0;
 		y = 0;
 
-		_time = 0;
+		_length = _time = 0;
 		_paused = false;
 		_volume = 1.0;
 		_volumeAdjust = 1.0;

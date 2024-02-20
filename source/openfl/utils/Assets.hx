@@ -151,6 +151,7 @@ class Assets
 			bitmap.disposeImage();
 			bitmap.image.data = null;
 			bitmap.image = null;
+			bitmap.readable = true;
 		}
 		#end
 

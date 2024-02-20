@@ -1,6 +1,6 @@
 package states.stages;
 
-import states.stages.objects.*;
+import states.stages.objects.DadBattleFog;
 import objects.Character;
 
 class StageWeek1 extends BaseStage
