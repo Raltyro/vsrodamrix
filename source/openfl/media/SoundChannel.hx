@@ -10,6 +10,7 @@ import lime.media.AudioSource;
 
 #if lime_cffi import lime._internal.backend.native.NativeAudioSource; #end
 #if lime_vorbis import lime.media.openal.AL; #end
+#end
 
 /**
 	The SoundChannel class controls a sound in an application. Every sound is
