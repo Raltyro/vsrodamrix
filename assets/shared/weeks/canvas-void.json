@@ -4,18 +4,14 @@
 	"hideFreeplay": false,
 	"weekBackground": "canvasvoid",
 	"weekBefore": "chapter1",
-	"freeplayColor": [244, 244, 248],
-	"startUnlocked": false,
+	"freeplayColor": [253, 253, 253],
+	"startUnlocked": true,
 	"hideStoryMode": false,
 	"songs": [
 		[
-			"Double-Attack",
-			"PurplePink",
-			[
-				106,
-				73,
-				253
-			]
+			"Dial it Back",
+			"Rodamrix",
+			[253, 253, 253]
 		]
 	],
 	"weekCharacters": ["", "", ""],

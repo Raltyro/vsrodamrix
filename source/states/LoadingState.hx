@@ -405,7 +405,7 @@ class LoadingState extends MusicBeatState
 							loaded++;
 							return;
 						}
-						else if (OpenFlAssets.exists(file, IMAGE))
+						else if (#if sys FileSystem.exists(file) || #end OpenFlAssets.exists(file, IMAGE))
 							bitmap = OpenFlAssets.getBitmapData(file);
 						else {
 							trace('no such image $image exists');

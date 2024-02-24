@@ -125,7 +125,7 @@ class NativeAudioSource {
 	public function stop():Void {
 		if (!(disposed = handle == null)) {
 			if (AL.getSourcei(handle, AL.SOURCE_STATE) != AL.STOPPED) AL.sourceStop(handle);
-			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED));
+			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED) + AL.getSourcei(handle, AL.BUFFERS_PROCESSED));
 		}
 
 		requestBuffers = queuedBuffers = bufferLoops = 0;

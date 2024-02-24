@@ -41,7 +41,6 @@ class AchievementsMenuState extends MusicBeatState {
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		FlxG.camera.bgColor = 0xFF004499;
 		var antialiasing = ClientPrefs.data.antialiasing;
 
 		var bg = new FlxBackdrop(Paths.image('mainmenu/checker'));
@@ -144,6 +143,7 @@ class AchievementsMenuState extends MusicBeatState {
 		_changeSelection();
 		super.create();
 		
+		FlxG.camera.bgColor = 0xFF004499;
 		FlxG.camera.follow(camFollow, null, 9);
 		FlxG.camera.scroll.y = -FlxG.height;
 	}

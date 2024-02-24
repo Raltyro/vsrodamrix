@@ -1,0 +1,80 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				2,
+				5
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "RodaIdle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-12,
+				-1
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "rodaRight",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				12,
+				11
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "RodaLeft",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-15,
+				-30
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "RodaDown",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-37,
+				36
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "RodaUp",
+			"indices": []
+		}
+	],
+	"vocals_file": "rodamrix",
+	"no_antialiasing": false,
+	"image": "characters/rodamrix",
+	"position": [
+		-30,
+		450
+	],
+	"healthicon": "rodamrix",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		255,
+		255
+	],
+	"camera_position": [
+		40,
+		-10
+	],
+	"sing_duration": 4,
+	"scale": 1,
+	"_editor_isPlayer": false
+}

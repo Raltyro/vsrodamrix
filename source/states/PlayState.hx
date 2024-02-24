@@ -385,6 +385,7 @@ class PlayState extends MusicBeatState
 			// vs rodamrix
 			case 'double-attack': new states.stages.DoubleAttackStage();
 			case 'good-leader': new states.stages.GoodLeaderStage();
+			case 'canvas-void': new states.stages.CanvasVoidStage();
 		}
 
 		if(isPixelStage) {
@@ -459,7 +460,6 @@ class PlayState extends MusicBeatState
 			if(gf != null)
 				gf.visible = false;
 		}
-		stagesFunc(function(stage:BaseStage) stage.createPost());
 
 		comboGroup = new FlxSpriteGroup();
 		add(comboGroup);
@@ -568,6 +568,8 @@ class PlayState extends MusicBeatState
 		comboGroup.cameras = [camHUD];
 
 		startingSong = true;
+
+		stagesFunc(function(stage:BaseStage) stage.createPost());
 
 		#if LUA_ALLOWED
 		for (notetype in noteTypes)
@@ -1268,12 +1270,12 @@ class PlayState extends MusicBeatState
 			}
 		}
 		catch(e:Dynamic) {}
-		if (vocals == null) (vocals = FlxG.sound.list.recycle(FlxSound)).reset();
-		if (opponentVocals == null) (opponentVocals = FlxG.sound.list.recycle(FlxSound)).reset();
+		if (vocals == null) vocals = new FlxSound();
+		if (opponentVocals == null) opponentVocals = new FlxSound();
 
 		try {inst = FlxG.sound.load(Paths.inst(songData.song));}
 		catch(e:Dynamic) {}
-		if (inst == null) (inst = FlxG.sound.list.recycle(FlxSound)).reset();
+		if (inst == null) inst = new FlxSound();
 
 		notes = new FlxTypedGroup<Note>();
 		noteGroup.add(notes);

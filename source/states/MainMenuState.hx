@@ -59,6 +59,7 @@ class MainMenuState extends MusicBeatState {
 
 		if (wasTitleState) FlxTransitionableState.skipNextTransOut = true;
 		super.create();
+		FlxG.camera.bgColor = 0xFF004499;
 		if (wasTitleState) fromTitleState();
 
 		changeItem();
@@ -79,8 +80,6 @@ class MainMenuState extends MusicBeatState {
 	var arrowWidth:Int;
 
 	function make() {
-		FlxG.camera.bgColor = 0xFF004499;
-
 		var antialiasing = ClientPrefs.data.antialiasing;
 
 		bg = new FlxBackdrop(Paths.image('mainmenu/checker'));

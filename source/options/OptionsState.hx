@@ -46,7 +46,6 @@ class OptionsState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		FlxG.camera.bgColor = 0xFF004499;
 		var antialiasing = ClientPrefs.data.antialiasing;
 
 		var bg = new FlxBackdrop(Paths.image('mainmenu/checker'));
@@ -85,6 +84,7 @@ class OptionsState extends MusicBeatState
 
 		makeShaders();
 		super.create();
+		FlxG.camera.bgColor = 0xFF004499;
 	}
 
 	var shadersya:Bool = false;

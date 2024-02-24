@@ -93,7 +93,6 @@ class FreeplayState extends MusicBeatState
 		}
 		Mods.loadTopMod();
 
-		FlxG.camera.bgColor = 0xFF004499;
 		var antialiasing = ClientPrefs.data.antialiasing;
 
 		bg = new FlxBackdrop(Paths.image('mainmenu/checker'));
@@ -200,6 +199,7 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		updateTexts();
 		super.create();
+		FlxG.camera.bgColor = 0xFF004499;
 	}
 
 	override function closeSubState() {

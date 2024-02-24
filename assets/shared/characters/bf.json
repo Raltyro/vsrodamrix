@@ -5,10 +5,10 @@
 				-5,
 				0
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "idle",
-			"loop": false,
+			"indices": [],
 			"name": "BFIdle"
 		},
 		{
@@ -16,10 +16,10 @@
 				2,
 				4
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
+			"indices": [],
 			"name": "BFLeft"
 		},
 		{
@@ -27,21 +27,21 @@
 				-22,
 				-26
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
+			"indices": [],
 			"name": "BFDown"
 		},
 		{
 			"offsets": [
 				-42,
-				45
+				50
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
+			"indices": [],
 			"name": "BFUp"
 		},
 		{
@@ -49,10 +49,10 @@
 				-53,
 				4
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
+			"indices": [],
 			"name": "BFRight"
 		},
 		{
@@ -60,10 +60,10 @@
 				4,
 				22
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singLEFTmiss",
-			"loop": false,
+			"indices": [],
 			"name": "MissLeft"
 		},
 		{
@@ -71,43 +71,43 @@
 				-23,
 				5
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singDOWNmiss",
-			"loop": false,
+			"indices": [],
 			"name": "MissDown"
 		},
 		{
 			"offsets": [
 				-47,
-				89
+				93
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singUPmiss",
-			"loop": false,
+			"indices": [],
 			"name": "MissUp"
 		},
 		{
 			"offsets": [
 				-57,
-				46
+				50
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singRIGHTmiss",
-			"loop": false,
+			"indices": [],
 			"name": "MissRight"
 		},
 		{
 			"offsets": [
 				0,
-				16
+				17
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "hey",
-			"loop": false,
+			"indices": [],
 			"name": "VPose"
 		}
 	],
@@ -115,8 +115,8 @@
 	"no_antialiasing": false,
 	"image": "characters/New_Bf",
 	"position": [
-		10,
-		370
+		0,
+		360
 	],
 	"healthicon": "bf",
 	"flip_x": true,
@@ -126,10 +126,10 @@
 		209
 	],
 	"camera_position": [
-		0,
-		0
+		100,
+		10
 	],
 	"sing_duration": 4,
-	"scale": 1,
+	"scale": 1.1,
 	"_editor_isPlayer": true
 }

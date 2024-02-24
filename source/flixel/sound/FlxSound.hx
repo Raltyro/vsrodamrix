@@ -324,7 +324,6 @@ class FlxSound extends FlxBasic
 		amplitudeLeft = 0;
 		amplitudeRight = 0;
 		autoDestroy = false;
-		exists = true;
 
 		if (_transform == null)
 			_transform = new SoundTransform();
@@ -400,6 +399,12 @@ class FlxSound extends FlxBasic
 
 		_volumeAdjust = radialMultiplier;
 		updateTransform();
+	}
+
+	override public function revive():Void
+	{
+		super.revive();
+		reset();
 	}
 
 	override public function kill():Void

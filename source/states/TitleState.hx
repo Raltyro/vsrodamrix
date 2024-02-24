@@ -141,7 +141,6 @@ class TitleState extends MusicBeatState {
 			state.wasTitleState = true;
 
 			MusicBeatState.switchState(state);
-			FlxG.camera.bgColor = 0xFF00000;
 		}});
 	}
 
@@ -219,7 +218,7 @@ class TitleState extends MusicBeatState {
 	}
 
 	function getIntroTextShit():Array<Array<String>>
-		return [for (i in Assets.getText(Paths.txt('introText')).split('\n')) i.split('--')];
+		return [for (i in Paths.getTextFromFile('introText.txt').split('\n')) i.split('--')];
 
 	function createCoolText(textArray:Array<String>, ?offset:Float = 0) {
 		for (i in 0...textArray.length) {

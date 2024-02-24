@@ -275,7 +275,7 @@ class Paths {
 		#end
 
 		var path:String = getPath(key, TEXT);
-		if (OpenFlAssets.exists(path, TEXT)) return Assets.getText(path);
+		if (#if sys FileSystem.exists(path) || #end OpenFlAssets.exists(path, TEXT)) return Assets.getText(path);
 		return null;
 	}
 
@@ -337,13 +337,11 @@ class Paths {
 
 	inline static public function getSparrowAtlas(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxAtlasFrames {
 		#if MODS_ALLOWED
-		var imageLoaded:FlxGraphic = image(key, library, allowGPU);
 		var xmlExists:Bool = false;
-
 		var xml:String = modsXml(key);
-		if (FileSystem.exists(xml)) xmlExists = true;
+		if (FileSystem.exists(xml) || FileSystem.exists(xml = getPath('images/$key.xml', library))) xmlExists = true;
 
-		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library, allowGPU)), (xmlExists ? File.getContent(xml) : getPath('images/$key.xml', library)));
+		return FlxAtlasFrames.fromSparrow(image(key, library, allowGPU), (xmlExists ? File.getContent(xml) : getPath('images/$key.xml', library)));
 		#else
 		return FlxAtlasFrames.fromSparrow(image(key, library, allowGPU), getPath('images/$key.xml', library));
 		#end
@@ -351,13 +349,11 @@ class Paths {
 
 	inline static public function getPackerAtlas(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxAtlasFrames {
 		#if MODS_ALLOWED
-		var imageLoaded:FlxGraphic = image(key, allowGPU);
 		var txtExists:Bool = false;
-		
 		var txt:String = modsTxt(key);
-		if (FileSystem.exists(txt)) txtExists = true;
+		if (FileSystem.exists(txt) || FileSystem.exists(txt = getPath('images/$key.txt', library))) txtExists = true;
 
-		return FlxAtlasFrames.fromSpriteSheetPacker((imageLoaded != null ? imageLoaded : image(key, library, allowGPU)), (txtExists ? File.getContent(txt) : getPath('images/$key.txt', library)));
+		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library, allowGPU), (txtExists ? File.getContent(txt) : getPath('images/$key.txt', library)));
 		#else
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library, allowGPU), getPath('images/$key.txt', library));
 		#end
@@ -369,7 +365,7 @@ class Paths {
 		var jsonExists:Bool = false;
 
 		var json:String = modsImagesJson(key);
-		if (FileSystem.exists(json)) jsonExists = true;
+		if (FileSystem.exists(json) || FileSystem.exists(json = getPath('images/$key.json', library))) jsonExists = true;
 
 		return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, (jsonExists ? File.getContent(json) : getPath('images/$key.json', library)));
 		#else
@@ -395,7 +391,7 @@ class Paths {
 				localTrackedAssets.push(file);
 				return currentTrackedAssets.get(file);
 			}
-			else if (!OpenFlAssets.exists(file, IMAGE)) {
+			else if (#if sys !FileSystem.exists(file) && #end !OpenFlAssets.exists(file, IMAGE)) {
 				trace('no such image $file exists');
 				return null;
 			}
@@ -459,7 +455,7 @@ class Paths {
 		}
 		var track:String = file.substr(file.indexOf(':') + 1);
 
-		if (#if MODS_ALLOWED modExists || #end OpenFlAssets.exists(file, SOUND)) {
+		if (#if MODS_ALLOWED modExists || #end #if sys FileSystem.exists(track) || #end OpenFlAssets.exists(file, SOUND)) {
 			var sound:Sound = currentTrackedSounds.get(track);
 			localTrackedAssets.push(track);
 

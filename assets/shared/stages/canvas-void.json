@@ -1,0 +1,15 @@
+{
+	"directory": "rodamrix",
+	"defaultZoom": 0.75,
+	"stageUI": "",
+
+	"boyfriend": [979, -10],
+	"girlfriend": [120, -100],
+	"opponent": [-106, -10],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [-160, -50],
+	"camera_opponent": [180, -50],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 1
+}
