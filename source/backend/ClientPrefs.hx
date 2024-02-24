@@ -9,6 +9,7 @@ import flixel.input.gamepad.FlxGamepadInputID;
 	// psike
 	public var streamMusic:Bool = true;
 	public var fullscreen:Bool = false;
+	public var showRatingTxt:Bool = false;
 
 	// psych
 	public var downScroll:Bool = false;
@@ -19,7 +20,7 @@ import flixel.input.gamepad.FlxGamepadInputID;
 	public var autoPause:Bool = true;
 	public var antialiasing:Bool = true;
 	public var noteSkin:String = 'Default';
-	public var splashSkin:String = 'Psych';
+	public var splashSkin:String = 'Vanilla';
 	public var splashAlpha:Float = 0.6;
 	public var lowQuality:Bool = false;
 	public var shaders:Bool = true;
@@ -29,10 +30,10 @@ import flixel.input.gamepad.FlxGamepadInputID;
 	public var hideHud:Bool = false;
 	public var noteOffset:Int = 0;
 	public var arrowRGB:Array<Array<FlxColor>> = [
-		[0xFFC24B99, 0xFFFFFFFF, 0xFF3C1F56],
-		[0xFF00FFFF, 0xFFFFFFFF, 0xFF1542B7],
-		[0xFF12FA05, 0xFFFFFFFF, 0xFF0A4447],
-		[0xFFF9393F, 0xFFFFFFFF, 0xFF651038]];
+		[0xFF651492, 0xFFA3A6BB, 0xFF2B0B2E],
+		[0xFF2B5EB7, 0xFF858CB5, 0xFF00152E],
+		[0xFF368068, 0xFFA3A1B3, 0xFF01260A],
+		[0xFF950C37, 0xFFA296AD, 0xFF2F0000]];
 	public var arrowRGBPixel:Array<Array<FlxColor>> = [
 		[0xFFE276FF, 0xFFFFF9FF, 0xFF60008D],
 		[0xFF3DCAFF, 0xFFF4FFFF, 0xFF003060],

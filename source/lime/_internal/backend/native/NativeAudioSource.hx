@@ -373,9 +373,9 @@ class NativeAudioSource {
 		}
 		else {
 			AL.sourceRewind(handle);
-			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED));
+			AL.sourceUnqueueBuffers(handle, AL.getSourcei(handle, AL.BUFFERS_QUEUED) + AL.getSourcei(handle, AL.BUFFERS_PROCESSED));
 			AL.sourceQueueBuffer(handle, parent.buffer.__srcBuffer);
-			AL.sourcei(handle, AL.BYTE_OFFSET, Std.int(getFloat(dataLength) * ratio));
+			AL.sourcei(handle, AL.BYTE_OFFSET, Int64.fromFloat(getFloat(dataLength) * ratio));
 		}
 
 		if (playing) {

@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 24,
-			"name": "GreenIdle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "GreenIdle"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				18,
+				26,
 				1
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "GreenLeft0",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "GreenLeft0"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				0,
+				-1,
 				0
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "GreenRight0",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "GreenRight0"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				50,
 				91
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "GreenUp0",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "GreenUp0"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				-14
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "GreenDown0",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "GreenDown0"
 		}
 	],
 	"vocals_file": "green",

@@ -324,6 +324,7 @@ class FlxSound extends FlxBasic
 		amplitudeLeft = 0;
 		amplitudeRight = 0;
 		autoDestroy = false;
+		exists = true;
 
 		if (_transform == null)
 			_transform = new SoundTransform();
@@ -340,10 +341,14 @@ class FlxSound extends FlxBasic
 		artist = null;
 
 		if (_channel != null)
-		{
+		@:privateAccess {
 			_channel.removeEventListener(Event.SOUND_COMPLETE, stopped);
 			_channel.removeEventListener(Event.SOUND_LOOP, ev_looped);
 			_channel.stop();
+			#if lime
+			_channel.__dispose();
+			if (_source.buffer != null) _source.dispose();
+			#end
 			_channel = null;
 		}
 

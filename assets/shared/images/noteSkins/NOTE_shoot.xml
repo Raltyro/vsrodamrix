@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="NOTE_shoot.png">
+	<!-- Created with Adobe Animate version 23.0.1.70 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="shoot down0000" x="0" y="0" width="151" height="137"/>
+	<SubTexture name="shoot left0000" x="153" y="0" width="137" height="151"/>
+	<SubTexture name="shoot right0000" x="0" y="139" width="137" height="151"/>
+	<SubTexture name="shoot up0000" x="139" y="153" width="151" height="136"/>
+</TextureAtlas>

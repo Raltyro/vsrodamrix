@@ -95,7 +95,7 @@ class AudioBuffer
 		#end
 		#if lime_cffi
 		if (__srcBuffer != null) {
-			AL.bufferData(__srcBuffer, AL.FORMAT_MONO8, null, 1, 2);
+			AL.bufferData(__srcBuffer, AL.FORMAT_MONO8, new UInt8Array(Bytes.alloc(0)), 1, 2);
 			AL.deleteBuffer(__srcBuffer);
 		}
 		__srcBuffer = null;
