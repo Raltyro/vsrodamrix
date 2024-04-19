@@ -1,0 +1,15 @@
+{
+	"animations": [
+		["firstDeath", "BF dies", [], 24, false, [37, 11]],
+		["deathLoop", "BF Dead Loop", [], 24, true, [37, 5]],
+		["deathConfirm", "BF Dead confirm", [], 24, false, [37, 69]]
+	],
+	"position": [0, 350],
+	"camera_points": [0, 0],
+	"flip_x": true,
+	"icon": "bf",
+	"sprite": "characters/BOYFRIEND_DEAD",
+	"antialiasing": true,
+	"sing_duration": 4,
+	"scale": 1
+}

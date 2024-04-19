@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Rodamrix.png">
+	<!-- Created with Adobe Animate version 23.0.1.70 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="RodaDown0000" x="0" y="600" width="438" height="265" frameX="0" frameY="-7" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0001" x="0" y="600" width="438" height="265" frameX="0" frameY="-7" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0002" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0003" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0004" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0005" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0006" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0007" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0008" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0009" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0010" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0011" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0012" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaDown0013" x="440" y="600" width="429" height="269" frameX="-7" frameY="0" frameWidth="438" frameHeight="272"/>
+	<SubTexture name="RodaIdle0000" x="1016" y="0" width="469" height="294" frameX="0" frameY="-7" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0001" x="1016" y="0" width="469" height="294" frameX="0" frameY="-7" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0002" x="1016" y="296" width="460" height="297" frameX="0" frameY="-4" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0003" x="1016" y="296" width="460" height="297" frameX="0" frameY="-4" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0004" x="1487" y="0" width="456" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0005" x="1487" y="0" width="456" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0006" x="0" y="297" width="452" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0007" x="0" y="297" width="452" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0008" x="454" y="297" width="446" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0009" x="454" y="297" width="446" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0010" x="454" y="297" width="446" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0011" x="454" y="297" width="446" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0012" x="454" y="297" width="446" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaIdle0013" x="454" y="297" width="446" height="301" frameX="0" frameY="0" frameWidth="469" frameHeight="301"/>
+	<SubTexture name="RodaLeft0000" x="1633" y="637" width="355" height="306" frameX="0" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0001" x="1633" y="637" width="355" height="306" frameX="0" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0002" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0003" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0004" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0005" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0006" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0007" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0008" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0009" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0010" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0011" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0012" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaLeft0013" x="1272" y="637" width="359" height="306" frameX="-3" frameY="0" frameWidth="362" frameHeight="306"/>
+	<SubTexture name="RodaUp0000" x="1478" y="303" width="364" height="332" frameX="-1" frameY="0" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0001" x="1478" y="303" width="364" height="332" frameX="-1" frameY="0" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0002" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0003" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0004" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0005" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0006" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0007" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0008" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0009" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0010" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0011" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0012" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="RodaUp0013" x="902" y="595" width="368" height="326" frameX="0" frameY="-6" frameWidth="368" frameHeight="332"/>
+	<SubTexture name="rodaRight0000" x="0" y="0" width="511" height="295"/>
+	<SubTexture name="rodaRight0001" x="0" y="0" width="511" height="295"/>
+	<SubTexture name="rodaRight0002" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0003" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0004" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0005" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0006" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0007" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0008" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0009" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0010" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0011" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0012" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+	<SubTexture name="rodaRight0013" x="513" y="0" width="501" height="295" frameX="-5" frameY="0" frameWidth="511" frameHeight="295"/>
+</TextureAtlas>

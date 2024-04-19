@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="arrows.png">
+	<!-- Created with Adobe Animate version 22.0.8.217 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="ArrowIdle0000" x="2" y="2" width="97" height="176" frameX="0" frameY="-1" frameWidth="100" frameHeight="181"/>
+	<SubTexture name="ArrowIdle0001" x="101" y="2" width="100" height="181"/>
+	<SubTexture name="ArrowIdle0002" x="203" y="2" width="100" height="178" frameX="0" frameY="-2" frameWidth="100" frameHeight="181"/>
+	<SubTexture name="ArrowPressed0000" x="305" y="2" width="87" height="174"/>
+	<SubTexture name="ArrowPressed0001" x="394" y="2" width="87" height="174"/>
+	<SubTexture name="ArrowPressed0002" x="483" y="2" width="87" height="174"/>
+</TextureAtlas>

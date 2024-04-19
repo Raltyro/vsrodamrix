@@ -1,0 +1,10 @@
+{
+	"name": "THE SkelD",
+	"songs": [
+		"Double Attack",
+		"Good Leader"
+	],
+	"characters": ["", "", ""],
+	"sprite": "chapter1",
+	"locked": false
+}

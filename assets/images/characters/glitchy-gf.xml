@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="glitchy.png">
+	<!-- Created with Adobe Animate version 23.0.1.70 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Glitchy0000" x="295" y="0" width="140" height="170" frameX="0" frameY="-17" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0001" x="295" y="0" width="140" height="170" frameX="0" frameY="-17" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0002" x="148" y="0" width="145" height="179" frameX="-2" frameY="-8" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0003" x="148" y="0" width="145" height="179" frameX="-2" frameY="-8" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0004" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0005" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0006" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0007" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0008" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0009" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0010" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0011" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0012" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0013" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+	<SubTexture name="Glitchy0014" x="0" y="0" width="146" height="187" frameX="-4" frameY="0" frameWidth="150" frameHeight="187"/>
+</TextureAtlas>
