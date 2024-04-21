@@ -18,7 +18,7 @@ ClientPrefs.data = {
 	gameOverInfos = true,
 
 	-- audio
-	pauseMusic = 'railways',
+	pauseMusic = 'ambience',
 	hitSound = 0,
 	songOffset = 0,
 	menuMusicVolume = 80,

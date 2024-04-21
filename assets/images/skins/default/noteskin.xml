@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="noteskin.png" width="387" height="757">
+	<SubTexture name="confirm0000" x="209" y="294" width="178" height="165" frameX="-0" frameY="-0" frameWidth="178" frameHeight="165"/>
+	<SubTexture name="confirm0001" x="209" y="294" width="178" height="165" frameX="-0" frameY="-0" frameWidth="178" frameHeight="165"/>
+	<SubTexture name="confirm0002" x="201" y="460" width="172" height="160" frameX="-3" frameY="-2" frameWidth="178" frameHeight="165"/>
+	<SubTexture name="confirm0003" x="201" y="460" width="172" height="160" frameX="-3" frameY="-2" frameWidth="178" frameHeight="165"/>
+	<SubTexture name="confirm glow0000" x="0" y="221" width="208" height="201" frameX="-15" frameY="-19" frameWidth="241" frameHeight="230"/>
+	<SubTexture name="confirm glow0001" x="0" y="423" width="200" height="189" frameX="-19" frameY="-19" frameWidth="241" frameHeight="230"/>
+	<SubTexture name="confirm glow0002" x="0" y="0" width="228" height="220" frameX="-5" frameY="-4" frameWidth="241" frameHeight="230"/>
+	<SubTexture name="confirm glow0003" x="0" y="0" width="228" height="220" frameX="-5" frameY="-4" frameWidth="241" frameHeight="230"/>
+	<SubTexture name="hold end0000" x="302" y="621" width="52" height="68" frameX="-0" frameY="-0" frameWidth="52" frameHeight="68"/>
+	<SubTexture name="hold piece0000" x="302" y="690" width="52" height="64" frameX="-0" frameY="-0" frameWidth="52" frameHeight="64"/>
+	<SubTexture name="note0000" x="229" y="0" width="158" height="146" frameX="-0" frameY="-0" frameWidth="158" frameHeight="147"/>
+	<SubTexture name="press0000" x="0" y="613" width="150" height="138" frameX="-4" frameY="-4" frameWidth="158" frameHeight="146"/>
+	<SubTexture name="press0001" x="0" y="613" width="150" height="138" frameX="-4" frameY="-4" frameWidth="158" frameHeight="146"/>
+	<SubTexture name="press0002" x="229" y="147" width="157" height="146" frameX="-0" frameY="-0" frameWidth="158" frameHeight="146"/>
+	<SubTexture name="press0003" x="229" y="147" width="157" height="146" frameX="-0" frameY="-0" frameWidth="158" frameHeight="146"/>
+	<SubTexture name="shoot0000" x="151" y="621" width="150" height="136" frameX="-0" frameY="-0" frameWidth="151" frameHeight="136"/>
+</TextureAtlas>

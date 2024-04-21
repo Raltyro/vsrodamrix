@@ -1,82 +1,68 @@
-local MainMenuState = State:extend("MainMenuState")
+local TransMenu = TransitionData:extend("TransMenu")
+TransMenu.update, TransMenu.draw = __NULL__, __NULL__
 
+function TransMenu:new(duration, tween)
+	self.duration, self.tween = duration, tween
+end
+
+function TransMenu:start()
+	if self.status == "in" then
+		game.camera.scroll.y = game.height - 200
+		Timer.tween(self.duration, game.camera.scroll, {y = 0}, "out-"..self.tween, function()self:finish()end)
+	else
+		Timer.tween(self.duration, game.camera.scroll, {y = game.height - 200}, "in-"..self.tween, function()self:finish()end)
+	end
+end
+
+local MainMenuState = State:extend("MainMenuState")
 MainMenuState.curSelected = 1
+
+function MainMenuState:new(skipTrans)
+	MainMenuState.super.new(self)
+
+	self.skipTransIn = skipTrans
+	--self.transIn = TransMenu(0.7, "quad")
+	--self.transOut = TransMenu(1, "sine")
+	self.optionShit = {'story_mode', 'freeplay', 'donate', 'options'}
+	self.selectedSomethin = false
+end
 
 function MainMenuState:enter()
 	MainMenuState.super.enter(self)
 
-	self.notCreated = false
-
-	self.script = Script("data/states/mainmenu", false)
-	local event = self.script:call("create")
-	if event == Script.Event_Cancel then
-		self.notCreated = true
-		return
-	end
-
-	-- Update Presence
 	if Discord then
 		Discord.changePresence({details = "In the Menus", state = "Main Menu"})
 	end
 
-	self.optionShit = {'story_mode', 'freeplay', 'donate', 'options'}
+	self:add(Graphic(0, 0, game.width, game.height, {0, 68 / 255, 153 / 255}))
 
-	self.selectedSomethin = false
+	local bg = Backdrop(paths.getImage('menus/checker'))
+	bg.velocity = {x = 50, y = 50}
+	bg.scrollFactor = {x = .4, y = .4}
+	bg.moves = true
 
-	game.camera.target = {x = 0, y = 0}
+	local blob = Sprite(0, 0, paths.getImage('menus/MainMenuBackBlob'))
+	blob:screenCenter()
+	blob.scrollFactor = {x = 0, y = .1}
+	blob.alpha = 0.5
+	blob.y = blob.y + 70
 
-	local yScroll = math.max(0.25 - (0.05 * (#self.optionShit - 4)), 0.1)
-	self.menuBg = Sprite()
-	self.menuBg:loadTexture(paths.getImage('menus/menuBG'))
-	self.menuBg:setScrollFactor(0, yScroll)
-	self.menuBg:setGraphicSize(math.floor(self.menuBg.width * 1.175))
-	self.menuBg:updateHitbox()
-	self.menuBg:screenCenter()
-	self:add(self.menuBg)
+	local versionFormat = "Vs Rodamrix v%version\nFNF LÖVE v%engineVersion\nFriday Night Funkin' v0.2.8"
+	local versionText = Text(12, 0, versionFormat:gsub("%%engineVersion", Project.engineVersion):gsub("%%version", Project.version),
+		paths.getFont("continum.ttf", 18))
+	versionText.y = game.height - versionText:getHeight() - 8
+	versionText.antialiasing = false
+	versionText.outline.width = 1
+	versionText:setScrollFactor()
 
-	self.magentaBg = Sprite()
-	self.magentaBg:loadTexture(paths.getImage('menus/menuBGMagenta'))
-	self.magentaBg.visible = false
-	self.magentaBg:setScrollFactor(0, yScroll)
-	self.magentaBg:setGraphicSize(math.floor(self.magentaBg.width * 1.175))
-	self.magentaBg:updateHitbox()
-	self.magentaBg:screenCenter()
-	self:add(self.magentaBg)
+	self:add(bg)
+	self:add(blob)
+	self:add(versionText)
 
-	self.menuItems = Group()
-	self:add(self.menuItems)
-
-	local scale = 1
-	for i = 0, #self.optionShit - 1 do
-		local offset = 98 - (math.max(#self.optionShit, 4) - 4) * 80
-		local menuItem = Sprite(0, (i * 140) + offset)
-		menuItem.scale = {x = scale, y = scale}
-		menuItem:setFrames(paths.getSparrowAtlas(
-			'menus/mainmenu/menu_' .. self.optionShit[i + 1]))
-		menuItem:addAnimByPrefix('idle', self.optionShit[i + 1] .. ' basic', 24)
-		menuItem:addAnimByPrefix('selected', self.optionShit[i + 1] .. ' white',
-			24)
-		menuItem:play('idle')
-		menuItem.ID = (i + 1)
-		menuItem:screenCenter('x')
-		self.menuItems:add(menuItem)
-		local scr = (#self.optionShit - 4) * 0.135
-		if #self.optionShit < 6 then scr = 0 end
-		menuItem:setScrollFactor(0, scr)
-		menuItem:updateHitbox()
+	if ClientPrefs.data.shader then
+		self.wiggle = WiggleEffect(WiggleEffect.HEAT_WAVE_VERTICAL, 1.2, 30, .02)
+		blob.shader = self.wiggle.shader
 	end
-
-	self.camFollow = {x = 0, y = 0}
-	game.camera:follow(self.camFollow, nil, 10)
-
-	self.versionFormat = "FNF LÖVE v%version\nFriday Night Funkin' v0.2.8"
-	self.versionText = Text(12, 0, self.versionFormat:gsub("%%version", Project.version),
-		paths.getFont("vcr.ttf", 16))
-	self.versionText.y = game.height - self.versionText:getHeight() - 8
-	self.versionText.antialiasing = false
-	self.versionText.outline.width = 1
-	self.versionText:setScrollFactor()
-	self:add(self.versionText)
 
 	self.throttles = {}
 	self.throttles.up = Throttle:make({controls.down, controls, "ui_up"})
@@ -106,26 +92,17 @@ function MainMenuState:enter()
 		self:add(self.buttons)
 	end
 
-	self:changeSelection()
-
-	self.script:call("postCreate")
+	util.playMenuMusic()
 end
 
 function MainMenuState:update(dt)
-	self.script:call("update", dt)
-	if self.notCreated then return end
-
 	if not self.selectedSomethin and self.throttles then
 		if self.throttles.up:check() then self:changeSelection(-1) end
 		if self.throttles.down:check() then self:changeSelection(1) end
 
 		if controls:pressed("back") then
-			game.sound.play(paths.getSound('cancelMenu'))
+			game.sound.play(paths.getSound('cancelMenu')).persist = true
 			game.switchState(TitleState())
-		end
-
-		if controls:pressed("pick_mods") then
-			game.switchState(ModsState())
 		end
 
 		if controls:pressed("accept") then
@@ -141,12 +118,11 @@ function MainMenuState:update(dt)
 		end
 	end
 
-	for _, spr in ipairs(self.menuItems.members) do spr:screenCenter('x') end
+	if self.wiggle then self.wiggle:update(dt) end
 
 	MainMenuState.super.update(self, dt)
-
-	self.script:call("postUpdate", dt)
 end
+
 
 local triggerChoices = {
 	story_mode = {true, function(self)
@@ -217,32 +193,7 @@ function MainMenuState:enterSelection(choice)
 	end
 end
 
-function MainMenuState:changeSelection(huh)
-	if huh == nil then huh = 0 end
-	game.sound.play(paths.getSound('scrollMenu'))
-
-	MainMenuState.curSelected = MainMenuState.curSelected + huh
-	MainMenuState.curSelected = (MainMenuState.curSelected - 1) % #self.optionShit + 1
-
-	for _, spr in ipairs(self.menuItems.members) do
-		spr:play('idle')
-		spr:updateHitbox()
-
-		if spr.ID == MainMenuState.curSelected then
-			spr:play('selected')
-			local add = 0
-			if #self.menuItems > 4 then add = #self.menuItems * 8 end
-			local x, y = spr:getGraphicMidpoint()
-			self.camFollow.x, self.camFollow.y = x, y - add
-			spr:fixOffsets()
-		end
-	end
-end
-
 function MainMenuState:leave()
-	self.script:call("leave")
-	if self.notCreated then return end
-
 	if self.optionsUI then self.optionsUI:destroy() end
 	self.optionsUI = nil
 
@@ -251,8 +202,6 @@ function MainMenuState:leave()
 
 	for _, v in ipairs(self.throttles) do v:destroy() end
 	self.throttles = nil
-
-	self.script:call("postLeave")
 end
 
 return MainMenuState

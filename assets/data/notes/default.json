@@ -1,6 +1,6 @@
 {
 	"notes": {
-		"sprite": "NOTE_assets",
+		"sprite": "noteskin",
 
 		"animations": [
 			["note", "note", 24, true]
@@ -25,7 +25,7 @@
 	},
 
 	"sustains": {
-		"sprite": "NOTE_assets",
+		"sprite": "noteskin",
 
 		"animations": [
 			["hold", "hold piece", 24, true]
@@ -51,7 +51,7 @@
 	},
 
 	"sustainends": {
-		"sprite": "NOTE_assets",
+		"sprite": "noteskin",
 
 		"animations": [
 			["end", "hold end", 24, true]
@@ -77,7 +77,7 @@
 	},
 
 	"receptors": {
-		"sprite": "NOTE_assets",
+		"sprite": "noteskin",
 
 		"animations": [
 			["static", "note", 24, true],
@@ -101,7 +101,7 @@
 	},
 
 	"glow": {
-		"sprite": "NOTE_assets",
+		"sprite": "noteskin",
 
 		"animations": [
 			["glow", "confirm glow", 24, false]

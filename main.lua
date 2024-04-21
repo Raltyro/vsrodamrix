@@ -77,9 +77,10 @@ CharacterEditor = require "funkin.states.editors.character"
 ChartingState = require "funkin.states.editors.charting"
 
 RGBShader = require "funkin.shaders.rgb"
+ColorShader = require "funkin.shaders.color"
+WiggleEffect = require "funkin.shaders.wiggle"
 
 local TransitionFade = loxreq "transition.transitionfade"
-local SplashScreen = require "funkin.states.splash"
 
 function love.load()
 	game.save.init('funkin')
@@ -142,8 +143,7 @@ function love.load()
 	game:add(SoundTray)
 	SoundTray.new()
 
-	--game.init(Project, SplashScreen)
-	game.init(Project, PlayState, true, 'mix-up', 'normal')
+	game.init(Project, TitleState)
 
 	if ClientPrefs.data.resolution == -1 then
 		Camera.defaultResolution = love.graphics.getFixedScale()
@@ -306,12 +306,12 @@ function love.errorhandler(msg)
 	local bgMusic, missSfx
 
 	function firstPass()
+		funkinLogo = paths.getImage("logo")
 		menuDesat = paths.getImage("menus/menuDesat")
-		funkinLogo = paths.getImage("menus/splashscreen/FNFLOVE_logo")
 		fnfFont18 = paths.getFont("phantommuff.ttf", 18) or love.graphics.setNewFont(18)
 		fnfFont20 = paths.getFont("phantommuff.ttf", 35) or love.graphics.setNewFont(35)
 
-		bgMusic = paths.getMusic("pause/railways", "static")
+		bgMusic = paths.getMusic("pause/ambience", "static")
 		missSfx = love.audio.newSource(paths.getSound("gameplay/missnote" .. love.math.random(1, 3)), "static")
 
 		bgMusic:setLooping(true)
@@ -340,6 +340,8 @@ function love.errorhandler(msg)
 
 		love.graphics.setColor(0.2, 0.2, 0.2)
 		love.graphics.draw(menuDesat, hgameW, hgameH, 0, scale1, scale1, menuDesatW / 2, menuDesatH / 2)
+
+		love.graphics.setColor(0.5, 0.5, 0.5)
 		love.graphics.draw(funkinLogo, (hgameW * 2) - (scale2 * funkinLogoW / 1.8) - 64, hgameH, 0, scale2, scale2, funkinLogoW / 2, funkinLogoH / 2)
 
 		love.graphics.setColor(1, 1, 1)

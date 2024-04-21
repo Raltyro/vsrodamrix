@@ -1,122 +1,112 @@
--- bad code, rewrite needed but I'm lazy to
--- vi
-
-local BackDrop = Object:extend("BackDrop")
-
-function BackDrop:new(x, y, width, height, size, color, color2, speed)
-	BackDrop.super.new(self, x or 0, y or 0)
-	self.width = width or 500
-	self.height = height or 400
-	self.size = size or 50
-	self.color = color or Color.WHITE
-	self.color2 = color2 or {0.5, 0.5, 0.5}
-	self.speed = {
-		x = type(speed) == "table" and speed.x or speed or 0,
-		y = type(speed) == "table" and speed.y or speed or 0
-	}
-	self.round = {0, 0}
-	self.squares = {x = {}, y = {}}
-
-	self.__x, self.__y = 0, 0
-	self:_updateSquares()
-end
-
-function BackDrop:update(dt)
-	self.__x = self.__x + self.speed.x * dt
-	self.__y = self.__y + self.speed.y * dt
-
-	if self.speed.x > 0 then
-		if self.__x >= self.size then
-			self.__x = -self.size
-		end
-	else
-		if self.__x + self.size <= self.size then
-			self.__x = self.size
-		end
-	end
-	if self.speed.y > 0 then
-		if self.__y >= self.size then
-			self.__y = -self.size
-		end
-	else
-		if self.__y + self.size <= self.size then
-			self.__y = self.size
-		end
+local stencilSprite, stencilX, stencilY = nil, 0, 0
+local function stencil()
+	if stencilSprite then
+		love.graphics.push()
+		love.graphics.translate(stencilX + stencilSprite.clipRect.x +
+			stencilSprite.clipRect.width / 2,
+			stencilY + stencilSprite.clipRect.y +
+			stencilSprite.clipRect.height / 2)
+		love.graphics.rotate(stencilSprite.angle)
+		love.graphics.translate(-stencilSprite.clipRect.width / 2,
+			-stencilSprite.clipRect.height / 2)
+		love.graphics.rectangle("fill", -stencilSprite.width / 2,
+			-stencilSprite.height / 2,
+			stencilSprite.clipRect.width,
+			stencilSprite.clipRect.height)
+		love.graphics.pop()
 	end
 end
 
-function BackDrop:updateSize(width, height, size)
-	self.width = width or self.width
-	self.height = height or self.height
-	self.size = size or self.size
-	self:_updateSquares()
+local Backdrop = Sprite:extend("Backdrop")
+
+function Backdrop:new(texture, repeatAxes, spacingX, spacingY)
+	Backdrop.super.new(self, 0, 0, texture)
+
+	self.repeatAxes = repeatAxes or "xy"
+	self.spacingX = spacingX or 0
+	self.spacingY = spacingY or 0
 end
 
-function BackDrop:_updateSquares()
-	self.squares.x = {}
-	self.squares.y = {}
-	local amountX = math.floor(self.width / self.size) + 3
-	local amountY = math.floor(self.height / self.size) + 3
-
-	for i = 1, amountX do
-		for j = 1, amountY do
-			local idx = (i + j) % 2 + 1
-			local square = {
-				x = (i - 2) * self.size,
-				y = (j - 2) * self.size,
-				size = self.size
-			}
-			if idx == 1 then
-				table.insert(self.squares.x, square)
-			else
-				table.insert(self.squares.y, square)
-			end
-		end
-	end
+local function modMin(value, step, min)
+	return value - math.floor((value - min) / step) * step
 end
 
-function BackDrop:__render(camera)
+local function modMax(value, step, max)
+	return value - math.ceil((value - max) / step) * step
+end
+
+function Backdrop:_isOnScreen()
+	return true
+end
+
+function Backdrop:_getBoundary()
+	return 0, 0, 0, 0, 1, 1, 0, 0
+end
+
+function Backdrop:__render(camera)
 	local r, g, b, a = love.graphics.getColor()
 	local shader = self.shader and love.graphics.getShader()
 	local blendMode, alphaMode = love.graphics.getBlendMode()
+	local min, mag, anisotropy, mode
 
-	local x, y, w, h = self.x, self.y, self.width, self.height
-	local sx, sy = self.scale.x * self.zoom.x, self.scale.y * self.zoom.y
+	mode = self.antialiasing and "linear" or "nearest"
+	min, mag, anisotropy = self.texture:getFilter()
+	self.texture:setFilter(mode, mode, anisotropy)
+
+	local f = self:getCurrentFrame()
+
+	local x, y, rad, sx, sy, ox, oy = self.x, self.y, math.rad(self.angle),
+		self.scale.x * self.zoom.x, self.scale.y * self.zoom.y,
+		self.origin.x, self.origin.y
+
 	if self.flipX then sx = -sx end
 	if self.flipY then sy = -sy end
 
-	x, y = x - self.offset.x - (camera.scroll.x * self.scrollFactor.x),
-		y - self.offset.y - (camera.scroll.y * self.scrollFactor.y)
+	x, y = x + ox - self.offset.x - (camera.scroll.x * self.scrollFactor.x),
+		y + oy - self.offset.y - (camera.scroll.y * self.scrollFactor.y)
 
-	love.graphics.setShader(self.shader)
-	love.graphics.setBlendMode(self.blend)
+	if f then ox, oy = ox + f.offset.x, oy + f.offset.y end
 
-	love.graphics.push()
-	love.graphics.scale(sx, sy)
+	local frameWidth, frameHeight = self:getFrameDimensions()
+	local tilesX, tilesY, tileSizeX, tileSizeY = 1, 1, self.spacingX + frameWidth, self.spacingY + frameHeight
 
-	love.graphics.stencil(function()
-		love.graphics.rectangle("fill", x, y, w, h, self.round[1], self.round[2])
-	end, "replace", 1)
-	love.graphics.setStencilTest("greater", 0)
+	if self.repeatAxes:find("x") then
+		local left, right = modMin(x + frameWidth, tileSizeX, 0) - frameWidth,
+			modMax(x, tileSizeX, camera.width) + tileSizeX
 
-	love.graphics.translate(x + self.__x, y + self.__y)
-	for _, square in ipairs(self.squares.x) do
-		love.graphics.setColor(self.color[1], self.color[2], self.color[3],
-			(self.color[4] or 1) * self.alpha)
-		love.graphics.rectangle("fill", square.x, square.y, square.size, square.size)
+		tilesX, x = math.round((right - left) / tileSizeX), modMin(x + frameWidth, frameWidth + self.spacingX, 0) - frameWidth
 	end
 
-	for _, square in ipairs(self.squares.y) do
-		love.graphics.setColor(self.color2[1], self.color2[2], self.color2[3],
-			(self.color2[4] or 1) * self.alpha)
-		love.graphics.rectangle("fill", square.x, square.y, square.size, square.size)
+	if self.repeatAxes:find("y") then
+		local top, bottom = modMin(y + frameHeight, tileSizeY, 0) - frameHeight,
+			modMax(y, tileSizeY, camera.height) + tileSizeY
+
+		tilesY, y = math.round((bottom - top) / tileSizeY), modMin(y + frameHeight, frameHeight + self.spacingY, 0) - frameHeight
 	end
-	love.graphics.setStencilTest()
-	love.graphics.pop()
+
+	love.graphics.setShader(self.shader); love.graphics.setBlendMode(self.blend)
+	love.graphics.setColor(self.color[1], self.color[2], self.color[3], self.alpha)
+
+	for tileX = 0, tilesX do
+		for tileY = 0, tilesY do
+			local xx, yy = x + tileSizeX * tileX, y + tileSizeY * tileY
+			if self.clipRect then
+				stencilSprite, stencilX, stencilY = self, xx, yy
+				love.graphics.stencil(stencil, "replace", 1, false)
+				love.graphics.setStencilTest("greater", 0)
+			end
+
+			if f then love.graphics.draw(self.texture, f.quad, xx, yy, rad, sx, sy, ox, oy)
+			else love.graphics.draw(self.texture, xx, yy, rad, sx, sy, ox, oy) end
+		end
+	end
+
+	self.texture:setFilter(min, mag, anisotropy)
 
 	love.graphics.setColor(r, g, b, a)
 	love.graphics.setBlendMode(blendMode, alphaMode)
-	if self.shader then love.graphics.setShader(shader) end
+	if shader then love.graphics.setShader(shader) end
+	if self.clipRect then love.graphics.setStencilTest() end
 end
 
-return BackDrop
+return Backdrop

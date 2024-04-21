@@ -21,7 +21,7 @@ local paths = {
 	audio = {},
 	atlases = {},
 	fonts = {},
-	persistantAssets = {"music/freakyMenu.ogg"}
+	persistantAssets = {"music/colorSplash.ogg"}
 }
 
 function paths.addPersistant(path)

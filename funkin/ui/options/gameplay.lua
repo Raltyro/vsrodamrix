@@ -26,7 +26,7 @@ local data = {
 	{"gameOverInfos", "Show game over info", "boolean"},
 
 	{"AUDIO"},
-	{"pauseMusic",    "Pause music",         "string", {"railways", "breakfast"}},
+	{"pauseMusic",    "Pause music",         "string", {"ambience", "breakfast"}},
 	{"hitSound", "Hit sound volume", "number", function(add)
 		local value = math.clamp(ClientPrefs.data.hitSound + add, 0, 100)
 		ClientPrefs.data.hitSound = value

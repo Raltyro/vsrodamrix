@@ -28,7 +28,9 @@ RGBShader.actorCode = [[
 ]]
 
 function RGBShader.set(shader, r, g, b)
-	shader:send("r", r); shader:send("g", g); shader:send("b", b)
+	if r then shader:send("r", r) end
+	if g then shader:send("g", g) end
+	if b then shader:send("b", b) end
 	return shader
 end
 
@@ -40,6 +42,7 @@ function RGBShader.getKey(r, g, b)
 end
 
 function RGBShader.create(r, g, b, unique)
+	if r == true then return RGBShader.set(love.graphics.newShader(RGBShader.code), 0, 0, 0) end
 	r, g, b = r or Color.RED, g or Color.GREEN, b or Color.BLUE
 
 	local key = RGBShader.getKey(r, g, b)
