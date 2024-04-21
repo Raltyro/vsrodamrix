@@ -36,17 +36,19 @@ function TitleState:enter()
 	end
 
 	self.curWacky = self:getIntroTextShit()
-	self.bbg = Graphic(0, 0, game.width, game.height, {0, 68 / 255, 153 / 255})
+	self.wa = Graphic(0, 0, game.width, game.height, {0, 68 / 255, 153 / 255})
+	self.wa:setScrollFactor()
+
 	self.bg = Backdrop(paths.getImage('menus/checker'))
 	self.bg.velocity = {x = 50, y = 50}
-	self.bg.scrollFactor = {x = .4, y = .4}
+	self.bg:setScrollFactor(.4, .4)
 	self.bg.moves = true
 
 	local blob = Sprite(0, 0, paths.getImage('menus/MainMenuBackBlob')); self.blob = blob
 	blob:screenCenter()
-	blob.scrollFactor = {x = 0, y = .1}
+	blob:setScrollFactor(0, .1)
 	blob.alpha = 0.5
-	blob.y = blob.y + 30
+	blob.y = blob.y + 23
 
 	self.borderTop = Graphic(0, -game.height, game.width, game.height + 120, Color.BLACK)
 	self.borderTop:updateHitbox()
@@ -135,7 +137,7 @@ function TitleState:update(dt)
 		self.confirmed = true
 		self.titleText:play("press")
 		util.playSfx(paths.getSound("confirmMenu")).persist = true
-		game.camera:flash(Color.WHITE, 1)
+		game.camera:flash(Color.WHITE, 1, nil, true)
 		Timer.after(0.2, function() game.switchState(MainMenuState(true)) end)
 	end
 
@@ -256,7 +258,7 @@ function TitleState:skipIntro(flash)
 	if flash then game.camera:flash(Color.WHITE, 3) end
 	self.skippedIntro = true
 
-	self:add(self.bbg)
+	self:add(self.wa)
 	self:add(self.bg)
 	self:add(self.blob)
 	self:add(self.borderTop)

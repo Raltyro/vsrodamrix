@@ -1,6 +1,7 @@
 ---@class ColorTable
 local colorTable = {
 	WHITE = {1, 1, 1},
+	GRAY = {.5, .5, .5},
 	BLACK = {0, 0, 0},
 	RED = {1, 0, 0},
 	GREEN = {0, 1, 0},
