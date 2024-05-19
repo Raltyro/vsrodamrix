@@ -13,9 +13,8 @@ ClientPrefs.data = {
 	backgroundDim = 0,
 	notesBelowHUD = true,
 	botplayMode = false,
-	timeType = 'left',
+	--timeType = 'left',
 	playback = 1,
-	gameOverInfos = true,
 
 	-- audio
 	pauseMusic = 'ambience',
@@ -62,7 +61,7 @@ ClientPrefs.controls = {
 	reset = {"key:r"},
 
 	fullscreen = {"key:f11"},
-	pick_mods = {"key:6"},
+	pick_mods = {},
 
 	debug_1 = {"key:7"},
 	debug_2 = {"key:6"},

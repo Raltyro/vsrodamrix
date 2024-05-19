@@ -1,0 +1,13 @@
+{
+	"animations": [
+		["idle", "Glitchy", [], 24, false, [0, 1]]
+	],
+	"position": [0, 0],
+	"camera_points": [-350, -100],
+	"flip_x": false,
+	"icon": "glitchy",
+	"sprite": "characters/glitchy-gf",
+	"antialiasing": true,
+	"sing_duration": 4,
+	"scale": 1
+}

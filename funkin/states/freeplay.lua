@@ -34,13 +34,28 @@ function FreeplayState:enter()
 
 	FreeplayState.curSelected = math.min(FreeplayState.curSelected, #self.songsData)
 
-	self.bg = Sprite()
-	self.bg:loadTexture(paths.getImage('menus/menuDesat'))
+	self.bg = Graphic(0, 0, game.width, game.height, {0, 68 / 255, 153 / 255})
+	self.bg:setScrollFactor()
 	self:add(self.bg)
-	self.bg:screenCenter()
-	self.bg:setGraphicSize(math.floor(self.bg.width * (game.width / self.bg.width)))
-	self.bg:updateHitbox()
-	self.bg:screenCenter()
+
+	local tiles = Backdrop(paths.getImage('menus/checker'))
+	tiles.velocity = {x = 50, y = 40}
+	tiles:setScrollFactor(.4, .4)
+	tiles.moves = true
+	self:add(tiles)
+
+	local blob = Sprite(0, 0, paths.getImage('menus/MainMenuBackBlob'))
+	blob:screenCenter()
+	blob:setScrollFactor(0, .1)
+	blob.alpha = 0.5
+	blob.y = blob.y + 70
+	self:add(blob)
+
+	if ClientPrefs.data.shader then
+		self.wiggle = WiggleEffect(WiggleEffect.HEAT_WAVE_VERTICAL, 1.2, 30, .02)
+		blob.shader = self.wiggle.shader
+	end
+
 	if #self.songsData > 0 then
 		self.bg.color = Color.fromString(self.songsData[FreeplayState.curSelected].color)
 	end
@@ -75,6 +90,9 @@ function FreeplayState:enter()
 			local icon = HealthIcon(self.songsData[i + 1].icon)
 			icon.sprTracker = songText
 			icon:updateHitbox()
+
+			songText.offset.y = songText.offset.y - 30
+			icon.offset.y = icon.offset.y + 30
 
 			table.insert(self.iconTable, icon)
 			self:add(icon)
@@ -134,6 +152,8 @@ end
 function FreeplayState:update(dt)
 	self.script:call("update", dt)
 	if self.notCreated then return end
+
+	if self.wiggle then self.wiggle:update(dt) end
 
 	self.lerpScore = util.coolLerp(self.lerpScore, self.intendedScore, 24, dt)
 	if math.abs(self.lerpScore - self.intendedScore) <= 10 then
@@ -230,7 +250,7 @@ function FreeplayState:changeSelection(change)
 	for _, icon in next, self.iconTable do icon.alpha = 0.6 end
 	self.iconTable[FreeplayState.curSelected].alpha = 1
 
-	if #self.songsData > 1 then util.playSfx(paths.getSound('scrollMenu')) end
+	if change ~= 0 then util.playSfx(paths.getSound('scrollMenu')) end
 
 	self:changeDiff(0)
 end
@@ -256,9 +276,6 @@ function FreeplayState:checkSongAssets(song, diff)
 	end
 	if paths.getInst(song) == nil then
 		table.insert(errorList, 'songs/' .. song .. '/Inst.ogg')
-	end
-	if hasVocals and paths.getVoices(song) == nil then
-		table.insert(errorList, 'songs/' .. song .. '/Voices.ogg')
 	end
 	if #errorList <= 0 then return true end
 

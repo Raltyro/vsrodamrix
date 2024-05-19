@@ -22,7 +22,7 @@ function MainMenuState:enter()
 	self:add(wa)
 
 	local bg = Backdrop(paths.getImage('menus/checker'))
-	bg.velocity = {x = 50, y = 50}
+	bg.velocity = {x = 50, y = 40}
 	bg:setScrollFactor(.4, .4)
 	bg.moves = true
 	self:add(bg)
@@ -95,7 +95,7 @@ function MainMenuState:enter()
 	local versionFormat = "FNF LÖVE v%engineVersion\nFNF: Vs Rodamrix v%version"
 	local versionText = Text(12, 0, versionFormat:gsub("%%engineVersion", Project.engineVersion):gsub("%%version", Project.version),
 		paths.getFont("continum.ttf", 18))
-	versionText.y = self.border.y - versionText:getHeight() - 4
+	versionText.y = self.border.y - versionText:getHeight() - 8
 	versionText.antialiasing = false
 	versionText.outline.width = 1
 	versionText:setScrollFactor(0, 0.4)

@@ -6,7 +6,6 @@ function GameOverSubstate.resetVars()
 	GameOverSubstate.deathSoundName = 'gameplay/fnf_loss_sfx'
 	GameOverSubstate.loopSoundName = 'gameOver'
 	GameOverSubstate.endSoundName = 'gameOverEnd'
-	GameOverSubstate.loseImageName = 'skins/default/lose'
 end
 
 GameOverSubstate.resetVars()
@@ -55,21 +54,6 @@ function GameOverSubstate:new(x, y)
 		self.buttons:set({cameras = {camButtons}})
 
 		self:add(self.buttons)
-	end
-
-	if ClientPrefs.data.gameOverInfos then
-		local lose = Sprite(game.width / 2, 23); self.lose = lose
-		lose:setFrames(paths.getSparrowAtlas(GameOverSubstate.loseImageName))
-		lose:addAnimByPrefix("lose", "lose", 24, false)
-
-		local frame = lose.__animations.lose.frames; frame = frame[#frame]
-		if frame then
-			lose.offset.x, lose.offset.y = frame.width / 2, -frame.offset.y
-			lose.antialiasing = ClientPrefs.data.antialiasing
-		else
-			lose:destroy()
-			lose = nil
-		end
 	end
 end
 

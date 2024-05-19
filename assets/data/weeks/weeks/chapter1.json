@@ -4,7 +4,7 @@
 		"Double Attack",
 		"Good Leader"
 	],
-	"characters": ["", "", ""],
+	"bg": "chapter1",
 	"sprite": "chapter1",
 	"locked": false
 }

@@ -80,7 +80,7 @@
 		"sprite": "noteskin",
 
 		"animations": [
-			["static", "note", 24, true],
+			["static", "receptor", 24, true],
 			["pressed", "press", 24, false, true],
 			["confirm", "confirm0", 24, false]
 		],

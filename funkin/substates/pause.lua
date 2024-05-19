@@ -102,13 +102,15 @@ function PauseSubstate:update(dt)
 		switch(daChoice, {
 			["Resume"] = function()
 				Timer.setSpeed(self.parent.playback)
+				self.music:stop()
 				self:close()
 			end,
 			["Restart Song"] = function()
-				game.resetState(true)
+				self.music:stop()
 				if self.buttons then
 					self.buttons:destroy()
 				end
+				game.resetState(true)
 			end,
 			["Options"] = function()
 				if self.buttons then
@@ -137,6 +139,7 @@ function PauseSubstate:update(dt)
 				end
 			end,
 			["Exit to menu"] = function()
+				self.music:stop()
 				game.sound.music:setPitch(1)
 				util.playMenuMusic()
 				PlayState.chartingMode = false

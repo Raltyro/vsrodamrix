@@ -23,7 +23,7 @@ local data = {
 
 	{"MISCELLANEOUS"},
 	{"fullscreen",   "Fullscreen"},
-	{"pick_mods",    "Mods"},
+	--{"pick_mods",    "Mods"},
 	{"asyncInput", "Asynchronous input", "boolean", function()
 		love.asyncInput = not ClientPrefs.data.asyncInput
 		ClientPrefs.data.asyncInput = love.asyncInput
@@ -81,6 +81,7 @@ function Controls:enterOption(id, optionsUI)
 	optionsUI.changingOption = false
 	self.onBinding = true
 	self.dontAcceptYet, self.dontBackYet = true, true
+	self.holdingBackKey = 0
 
 	if not self.bg then
 		self.bg = Graphic(0, 0, game.width, game.height, Color.BLACK)
@@ -124,7 +125,7 @@ function Controls:setNewBind(key, optionsUI)
 
 	controlsTable[keyName][self.curBind] = key and ("key:" .. key:lower()) or nil
 
-	if controlsTable[keyName][self.curBind] == controlsTable[keyName][secBind] then
+	if controlsTable[keyName][self.curBind] == controlsTable[keyName][secBind] and key ~= nil then
 		controlsTable[keyName][secBind] = oldBind
 	end
 

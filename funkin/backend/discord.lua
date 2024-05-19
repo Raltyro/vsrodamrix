@@ -4,7 +4,7 @@ local discordRPC = require "lib.discordRPC"
 local Discord = {}
 
 Discord.isInitialized = false
-Discord.clientID = "1098761843956273304"
+Discord.clientID = "1241689533876277248"
 
 local __options = {
 	details = "Starting",
@@ -43,7 +43,7 @@ function Discord.shutdown() discordRPC.shutdown() end
 function Discord.changePresence(options)
 	__options = options
 	__options.largeImageKey = options.largeImageKey or "icon"
-	__options.largeImageText = options.largeImageText or "FNF LÖVE"
+	__options.largeImageText = options.largeImageText or "FNF Vs Rodamrix"
 
 	discordRPC.updatePresence(__options)
 end

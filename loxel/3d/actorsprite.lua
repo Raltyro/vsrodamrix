@@ -8,11 +8,19 @@ local ActorSprite = Actor:extend("ActorSprite")
 ActorSprite:implement(Sprite)
 
 -- Actors have their own shader format, to avoid uv affine.
-ActorSprite.vertexFormat = {
-	{"VertexPosition", "float", 2},
-	{"VertexTexCoord", "float", 3},
-	{"VertexColor",    "byte",  4}
-}
+if love.getVersion() >= 12 then
+	ActorSprite.vertexFormat = {
+		{name = "VertexPosition", format = "floatvec2"},
+		{name = "VertexTexCoord", format = "floatvec3"},
+		{name = "VertexColor", format = "unorm8vec4"}
+	}
+else
+	ActorSprite.vertexFormat = {
+		{"VertexPosition", "float", 2},
+		{"VertexTexCoord", "float", 3},
+		{"VertexColor", "byte", 4}
+	}
+end
 
 local defaultShader
 function ActorSprite.init()
@@ -79,7 +87,7 @@ end
 
 function ActorSprite:makeUniqueMesh()
 	if self.mesh and self.mesh ~= ActorSprite.allMesh then return end
-	self.mesh = love.graphics.newMesh(ActorSprite.vertexFormat, self.__vertices, "fan")
+	self.mesh = love.graphics.newMesh(ActorSprite.vertexFormat, #self.__vertices, "fan")
 end
 
 function ActorSprite:setDrawMode(mode)

@@ -32,6 +32,13 @@ function Graphic:_canDraw()
 		self.config.vertices) and Graphic.super._canDraw(self)
 end
 
+function Graphic:setGraphicSize(width, height)
+	if width == nil then width = 0 end
+	if height == nil then height = 0 end
+
+	self.width, self.height = width, height
+end
+
 function Graphic:__render(camera)
 	local r, g, b, a = love.graphics.getColor()
 	local shader = self.shader and love.graphics.getShader()

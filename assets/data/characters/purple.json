@@ -1,0 +1,17 @@
+{
+	"animations": [
+		["idle", "PurpleIdle", [], 24, false, [-5, -103]],
+		["singLEFT", "PurpleLeft", [], 24, false, [-66, -111]],
+		["singRIGHT", "PurpleRight", [], 24, false, [-152, 0]],
+		["singUP", "PurpleUp", [], 24, false, [-115, -45]],
+		["singDOWN", "PurpleDown", [], 24, false, [-182, -145]]
+	],
+	"position": [-290, 270],
+	"camera_points": [40, 130],
+	"flip_x": false,
+	"icon": "purple",
+	"sprite": "characters/Purple",
+	"antialiasing": true,
+	"sing_duration": 5,
+	"scale": 1
+}

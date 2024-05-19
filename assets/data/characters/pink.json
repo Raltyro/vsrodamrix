@@ -1,0 +1,17 @@
+{
+	"animations": [
+		["idle", "PinkIdle", [], 24, false, [-109, -131]],
+		["singLEFT", "PinkLeft", [], 24, false, [5, -134]],
+		["singRIGHT", "PinkRight", [], 24, false, [-100, -172]],
+		["singUP", "PinkUp", [], 24, false, [-94, 9]],
+		["singDOWN", "PinkDown", [], 24, false, [-159, -56]]
+	],
+	"position": [-330, 250],
+	"camera_points": [20, 100],
+	"flip_x": false,
+	"icon": "pink",
+	"sprite": "characters/pink",
+	"antialiasing": true,
+	"sing_duration": 5,
+	"scale": 1
+}

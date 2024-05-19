@@ -40,7 +40,7 @@ function TitleState:enter()
 	self.wa:setScrollFactor()
 
 	self.bg = Backdrop(paths.getImage('menus/checker'))
-	self.bg.velocity = {x = 50, y = 50}
+	self.bg.velocity = {x = 50, y = 40}
 	self.bg:setScrollFactor(.4, .4)
 	self.bg.moves = true
 

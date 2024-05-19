@@ -22,8 +22,7 @@ local data = {
 		local value = math.clamp(ClientPrefs.data.playback + (add * 0.05), 0.1, 5)
 		ClientPrefs.data.playback = value
 	end, function(value) return "x" .. value end},
-	{"timeType",      "Song time type",      "string", {"left", "elapsed"}},
-	{"gameOverInfos", "Show game over info", "boolean"},
+	--{"timeType",      "Song time type",      "string", {"left", "elapsed"}},
 
 	{"AUDIO"},
 	{"pauseMusic",    "Pause music",         "string", {"ambience", "breakfast"}},

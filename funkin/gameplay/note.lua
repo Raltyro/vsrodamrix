@@ -273,6 +273,8 @@ function Note:__render(camera)
 
 	local sus = self.sustain
 	if sus then
+		nx, ny = nx - (camera.scroll.x * self.scrollFactor.x), ny - (camera.scroll.y * self.scrollFactor.y)
+
 		local dshader, shader, r, g, b, a = ActorSprite.defaultShader, love.graphics.getShader(), love.graphics.getColor()
 		local blendMode, alphaMode = love.graphics.getBlendMode()
 

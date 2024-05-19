@@ -1,9 +1,9 @@
 {
     "name": "Canvas Void",
     "songs": [
-        "Dial it Back"
+        "Scripted Fight"
     ],
-    "characters": ["", "", ""],
-    "sprite": "chapter1",
+    "bg": "canvas-void",
+    "sprite": "canvas-void",
     "locked": false
 }

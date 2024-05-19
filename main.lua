@@ -34,7 +34,7 @@ end
 Receptor = require "funkin.gameplay.receptor"
 Note = require "funkin.gameplay.note"
 Notefield = require "funkin.gameplay.notefield"
-Countdown = require "funkin.gameplay.ui.Countdown"
+Countdown = require "funkin.gameplay.ui.countdown"
 
 HealthIcon = require "funkin.gameplay.ui.healthicon"
 HealthBar = require "funkin.gameplay.ui.healthbar"
@@ -76,8 +76,8 @@ CutsceneState = require "funkin.states.editors.cutscene"
 CharacterEditor = require "funkin.states.editors.character"
 ChartingState = require "funkin.states.editors.charting"
 
-RGBShader = require "funkin.shaders.rgb"
 ColorShader = require "funkin.shaders.color"
+RGBShader = require "funkin.shaders.rgb"
 WiggleEffect = require "funkin.shaders.wiggle"
 
 local TransitionFade = loxreq "transition.transitionfade"

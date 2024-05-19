@@ -1,0 +1,17 @@
+{
+	"animations": [
+		["idle", "GreenIdle", [], 24, false, [0, 0]],
+		["singLEFT", "GreenLeft", [], 24, false, [26, 1]],
+		["singRIGHT", "GreenRight", [], 24, false, [-1, 0]],
+		["singUP", "GreenUp", [], 24, false, [50, 91]],
+		["singDOWN", "GreenDown", [], 24, false, [0, -14]]
+	],
+	"position": [0, 0],
+	"camera_points": [-20, 0],
+	"flip_x": false,
+	"icon": "green",
+	"sprite": "characters/green-good-leader",
+	"antialiasing": true,
+	"sing_duration": 4,
+	"scale": 1
+}

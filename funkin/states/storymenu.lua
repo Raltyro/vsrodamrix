@@ -1,7 +1,7 @@
 local StoryMenuState = State:extend("StoryMenuState")
 
 StoryMenuState.curWeek = 1
-StoryMenuState.curDifficulty = 2
+StoryMenuState.curDifficulty = 3
 
 function StoryMenuState:enter()
 	StoryMenuState.super.enter(self)
@@ -43,10 +43,9 @@ function StoryMenuState:enter()
 	self.txtWeekTitle.alpha = 0.7
 	self.txtWeekTitle.antialiasing = false
 
-	local ui_tex = paths.getSparrowAtlas(
-		'menus/storymenu/campaign_menu_UI_assets');
-	local bgYellow =
-		Graphic(0, 56, game.width, 386, Color.fromRGB(249, 207, 81))
+	local ui_tex = paths.getSparrowAtlas('menus/storymenu/campaign_menu_UI_assets');
+	self.bgYellow = Graphic(0, 56, game.width, 386, Color.fromRGB(249, 207, 81))
+	self.customBG = Sprite(0, 56)
 
 	self.grpWeekText = Group()
 	self:add(self.grpWeekText)
@@ -66,13 +65,13 @@ function StoryMenuState:enter()
 	if #self.weeksData > 0 then
 		for i, week in pairs(self.weeksData) do
 			local isLocked = (week.locked == true)
-			local weekThing = MenuItem(0, bgYellow.y + bgYellow.height + 10,
+			local weekThing = MenuItem(0, self.bgYellow.y + self.bgYellow.height + 10,
 				week.sprite)
 			weekThing.y = weekThing.y + ((weekThing.height + 20) * (i - 1))
 			weekThing.targetY = num
 			self.grpWeekText:add(weekThing)
 
-			weekThing:screenCenter("x")
+			weekThing.x = (1000 - weekThing.width) / 2
 
 			if isLocked then
 				local lock = Sprite(weekThing.width + 10 + weekThing.x)
@@ -84,16 +83,16 @@ function StoryMenuState:enter()
 			end
 		end
 
-		local charTable = self.weeksData[StoryMenuState.curWeek].characters
+		local charTable = self.weeksData[StoryMenuState.curWeek].characters or {}
 		for char = 0, 2 do
 			local weekCharThing = MenuCharacter(
 				(game.width * 0.25) * (1 + char) - 150,
-				charTable[char + 1])
+				charTable[char + 1] or '')
 			weekCharThing.y = weekCharThing.y + 70
 			self.grpWeekCharacters:add(weekCharThing)
 		end
 
-		self.difficultySelector = SpriteGroup()
+		--[[self.difficultySelector = SpriteGroup()
 		self:add(self.difficultySelector)
 
 		self.leftArrow = Sprite(0, self.grpWeekText.members[1].y + 10)
@@ -114,10 +113,11 @@ function StoryMenuState:enter()
 		self.difficultySelector:add(self.rightArrow)
 
 		local grp = self.grpWeekText.members[1]
-		self.difficultySelector.x = grp.x + grp.width + 10
+		self.difficultySelector.x = grp.x + grp.width + 10]]
 	end
 
-	self:add(bgYellow)
+	self:add(self.bgYellow)
+	self:add(self.customBG)
 	self:add(self.grpWeekCharacters)
 
 	if #self.weeksData == 0 then
@@ -126,8 +126,7 @@ function StoryMenuState:enter()
 		self:add(self.noWeeksTxt)
 	end
 
-	self.txtTrackList = Text(game.width * 0.05,
-		bgYellow.x + bgYellow.height + 100, "TRACKS",
+	self.txtTrackList = Text(game.width * 0.85, self.bgYellow.height + 100, "TRACKS",
 		paths.getFont('vcr.ttf', 32),
 		Color.fromRGB(229, 87, 119), 'center')
 	self.txtTrackList.visible = (#self.weeksData > 0)
@@ -169,7 +168,7 @@ function StoryMenuState:enter()
 
 	if #self.weeksData > 0 then
 		self:changeWeek()
-		self:changeDifficulty()
+		--self:changeDifficulty()
 	end
 
 	self.script:call("postCreate")
@@ -188,7 +187,7 @@ function StoryMenuState:update(dt)
 		if self.throttles.up:check() then self:changeWeek(-1) end
 		if self.throttles.down:check() then self:changeWeek(1) end
 
-		if controls:down("ui_left") then
+		--[[if controls:down("ui_left") then
 			self.leftArrow:play('press')
 		else
 			self.leftArrow:play('idle')
@@ -197,10 +196,10 @@ function StoryMenuState:update(dt)
 			self.rightArrow:play('press')
 		else
 			self.rightArrow:play('idle')
-		end
+		end]]
 
-		if self.throttles.left:check() then self:changeDifficulty(-1) end
-		if self.throttles.right:check() then self:changeDifficulty(1) end
+		--if self.throttles.left:check() then self:changeDifficulty(-1) end
+		--if self.throttles.right:check() then self:changeDifficulty(1) end
 
 		if controls:pressed("accept") then self:selectWeek() end
 	end
@@ -260,6 +259,7 @@ function StoryMenuState:selectWeek()
 	end
 end
 
+--[[
 function StoryMenuState:changeDifficulty(change)
 	if change == nil then change = 0 end
 	local songdiffs = self.weeksData[StoryMenuState.curWeek].difficulties or
@@ -289,6 +289,7 @@ function StoryMenuState:changeDifficulty(change)
 	local weekName = self.weeksData[StoryMenuState.curWeek].file
 	self.intendedScore = Highscore.getWeekScore(weekName, diff)
 end
+]]
 
 function StoryMenuState:changeWeek(change)
 	if change == nil then change = 0 end
@@ -311,26 +312,34 @@ function StoryMenuState:changeWeek(change)
 		if item.targetY == 0 then item.alpha = 1 end
 	end
 
-	for _, spr in pairs(self.difficultySelector.members) do
-		spr.visible = not leWeek.locked
-	end
+	--for _, spr in pairs(self.difficultySelector.members) do
+	--	spr.visible = not leWeek.locked
+	--end
 
-	if #self.weeksData > 1 then util.playSfx(paths.getSound('scrollMenu')) end
+	if change ~= 0 then util.playSfx(paths.getSound('scrollMenu')) end
 
 	self:updateText()
 end
 
 function StoryMenuState:updateText()
-	local weekTable = self.weeksData[StoryMenuState.curWeek].characters
-	for i = 1, #weekTable do
-		self.grpWeekCharacters.members[i]:changeCharacter(weekTable[i])
+	local leWeek = self.weeksData[StoryMenuState.curWeek]
+	local chars = leWeek.characters or {}
+	for i = 1, #chars do
+		self.grpWeekCharacters.members[i]:changeCharacter(chars[i] or '')
 	end
 
-	local leWeek = self.weeksData[StoryMenuState.curWeek]
+	self.customBG.visible = leWeek.bg and leWeek.bg ~= ''
+	self.bgYellow.visible = not self.customBG.visible
+	if self.customBG.visible then
+		self.customBG:loadTexture(paths.getImage('menus/storymenu/backgrounds/' .. leWeek.bg))
+		self.customBG:screenCenter('x')
+		self.customBG:updateHitbox()
+	end
+
 	local songs = table.concat(leWeek.songs, "\n")
 	self.txtTrackList.content = 'TRACKS\n\n' .. songs:upper()
 	self.txtTrackList:screenCenter("x")
-	self.txtTrackList.x = self.txtTrackList.x - game.width * 0.35
+	self.txtTrackList.x = self.txtTrackList.x + game.width * 0.35
 
 	local diff = (leWeek.difficulties and leWeek.difficulties[StoryMenuState.curDifficulty] or
 		self.diffs[StoryMenuState.curDifficulty]):lower()
@@ -364,11 +373,6 @@ function StoryMenuState:checkSongsAssets(songs, diff)
 		end
 		if paths.getInst(song) == nil then
 			local path = 'songs/' .. song .. '/Inst.ogg'
-			table.insert(audioList, path)
-			table.insert(errorList, path)
-		end
-		if hasVocals and paths.getVoices(song) == nil then
-			local path = 'songs/' .. song .. '/Voices.ogg'
 			table.insert(audioList, path)
 			table.insert(errorList, path)
 		end

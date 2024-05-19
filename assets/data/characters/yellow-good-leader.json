@@ -1,0 +1,17 @@
+{
+	"animations": [
+		["idle", "YellowIdle", [], 24, false, [0, 0]],
+		["singLEFT", "YellowLeft", [], 24, false, [-22, -79]],
+		["singRIGHT", "YellowRight", [], 24, false, [-44, -77]],
+		["singUP", "YellowUp", [], 24, false, [-100, -53]],
+		["singDOWN", "YellowDown", [], 24, false, [-52, -114]]
+	],
+	"position": [10, 0],
+	"camera_points": [0, 90],
+	"flip_x": true,
+	"icon": "yellow",
+	"sprite": "characters/yellow-good-leader",
+	"antialiasing": true,
+	"sing_duration": 4,
+	"scale": 1
+}

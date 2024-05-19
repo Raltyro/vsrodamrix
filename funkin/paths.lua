@@ -201,6 +201,14 @@ function paths.getLua(key)
 	return nil
 end
 
+function paths.getVideo(key)
+	local path = paths.getPath("videos/" .. key .. ".ogv")
+	if paths.exists(path, "file") then
+		return love.graphics.newVideo(path, {audio = true})
+	end
+	return nil
+end
+
 local invalidChars = '[~&\\;:<>#]'
 local hideChars = '[.,\'"%?!]'
 function paths.formatToSongPath(path)

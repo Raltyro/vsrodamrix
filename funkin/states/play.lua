@@ -6,6 +6,8 @@ local PauseSubstate = require "funkin.substates.pause"
 	-- NVM NVM, maybe do make a var conductor but keep props
 
 	rewrite timers. to just be dependancy to loxel,. just rewrite timers with new codes.
+
+	Note Hold are fucky, u can spam to get more healths
 ]]
 
 ---@class PlayState:State
@@ -106,7 +108,8 @@ function PlayState:enter()
 	Note.defaultSustainSegments = 1
 	NoteModifier.reset()
 
-	self.scoreFormat = "Score: %score // Combo Breaks: %misses // %accuracy% - %rating"
+	--self.scoreFormat = "Score: %score // Combo Breaks: %misses // %accuracy% - %rating"
+	self.scoreFormat = "Score: %score | Misses: %misses"
 	self.scoreFormatVariables = {score = 0, misses = 0, accuracy = 0, rating = 0}
 
 	self.timer = Timer.new()
@@ -237,7 +240,7 @@ function PlayState:enter()
 	self.camZooming = false
 
 	local y, center, keys, skin = game.height / 2, game.width / 2, 4, self.pixelStage and "pixel" or nil
-	self.enemyNotefield = Notefield(0, y, keys, skin, self.dad, self.dadVocals)
+	self.enemyNotefield = Notefield(0, y, keys, skin, self.dad, self.dadVocals or self.vocals)
 	self.enemyNotefield.x = math.max(center - self.enemyNotefield:getWidth() / 1.5, math.lerp(0, game.width, 0.25))
 	self.playerNotefield = Notefield(0, y, keys, skin, self.boyfriend, self.vocals)
 	self.playerNotefield.x = math.min(center + self.playerNotefield:getWidth() / 1.5, math.lerp(0, game.width, 0.75))
@@ -263,29 +266,29 @@ function PlayState:enter()
 	self.healthBar:screenCenter("x").y = game.height * 0.91
 	self:add(self.healthBar)
 
-	self.timeArc = ProgressArc(36, game.height - 81, 64, 20,
-		{Color.BLACK, Color.WHITE}, 0, game.sound.music:getDuration() / 1000)
-	self:add(self.timeArc)
-
-	local fontScore = paths.getFont("vcr.ttf", 17)
-	self.scoreText = Text(game.width / 2, self.healthBar.y + 28, "", fontScore, Color.WHITE, "center")
+	local fontScore = paths.getFont("continum.ttf", 20)
+	self.scoreText = Text(game.width / 2, self.healthBar.y + 32, "", fontScore, Color.WHITE, "center")
 	self.scoreText.outline.width = 1
 	self.scoreText.antialiasing = false
 	self:add(self.scoreText)
+
+	--[[self.timeArc = ProgressArc(36, game.height - 81, 64, 20,
+		{Color.BLACK, Color.WHITE}, 0, game.sound.music:getDuration() / 1000)
+	self:add(self.timeArc)
 
 	local songTime = 0
 	if ClientPrefs.data.timeType == "left" then
 		songTime = game.sound.music:getDuration() - songTime
 	end
 
-	local fontTime = paths.getFont("vcr.ttf", 24)
+	local fontTime = paths.getFont("continum.ttf", 24)
 	self.timeText = Text((self.timeArc.x + self.timeArc.width) + 4, 0, util.formatTime(songTime), fontTime, Color.WHITE, "left")
 	self.timeText.outline.width = 2
 	self.timeText.antialiasing = false
 	self.timeText.y = (self.timeArc.y + self.timeArc.width) - self.timeText:getHeight()
-	self:add(self.timeText)
+	self:add(self.timeText)]]
 
-	self.botplayText = Text(0, self.timeText.y, 'BOTPLAY MODE',
+	self.botplayText = Text(0, game.height - 48, 'BOTPLAY MODE',
 		fontTime, Color.WHITE)
 	self.botplayText.x = game.width - self.botplayText:getWidth() - 36
 	self.botplayText.outline.width = 2
@@ -294,8 +297,8 @@ function PlayState:enter()
 	self:add(self.botplayText)
 
 	for _, o in ipairs({
-		self.countdown, self.healthBar, self.timeArc,
-		self.scoreText, self.timeText, self.botplayText,
+		self.countdown, self.healthBar,
+		self.scoreText, self.botplayText,
 	}) do o.cameras = {self.camHUD} end
 
 	self.score = 0
@@ -353,8 +356,7 @@ function PlayState:enter()
 	if self.downScroll then
 		for _, notefield in ipairs(self.notefields) do notefield.downscroll = true end
 		for _, o in ipairs({
-			self.healthBar, self.timeArc,
-			self.scoreText, self.timeText, self.botplayText
+			self.healthBar, self.scoreText, self.botplayText
 		}) do
 			o.y = -o.y + (o.offset.y * 2) + game.height - (
 				o.getHeight and o:getHeight() or o.height)
@@ -609,6 +611,7 @@ function PlayState:section(s)
 end
 
 function PlayState:focus(f)
+	PlayState.super.focus(self, f)
 	if Discord and love.autoPause then self:updateDiscordRPC(not f) end
 end
 
@@ -799,10 +802,10 @@ function PlayState:update(dt)
 		songTime = game.sound.music:getDuration() - songTime
 	end
 
-	if PlayState.conductor.time > 0 and PlayState.conductor.time < game.sound.music:getDuration() * 1000 then
+	--[[if PlayState.conductor.time > 0 and PlayState.conductor.time < game.sound.music:getDuration() * 1000 then
 		self.timeText.content = util.formatTime(songTime)
 		self.timeArc.tracker = PlayState.conductor.time / 1000
-	end
+	end]]
 
 	if self.health <= 0 and not self.isDead then self:tryGameOver() end
 
@@ -842,8 +845,7 @@ function PlayState:onSettingChange(category, setting)
 
 					if downscroll ~= self.downScroll then
 						for _, o in ipairs({
-							self.healthBar, self.timeArc,
-							self.scoreText, self.timeText, self.botplayText
+							self.healthBar, self.scoreText, self.botplayText
 						}) do
 							o.y = -o.y + (o.offset.y * 2) + game.height - (
 								o.getHeight and o:getHeight() or o.height)
@@ -854,8 +856,7 @@ function PlayState:onSettingChange(category, setting)
 
 					if downscroll ~= self.downScroll then
 						for _, o in ipairs({
-							self.healthBar, self.timeArc,
-							self.scoreText, self.timeText, self.botplayText
+							self.healthBar, self.scoreText, self.botplayText
 						}) do
 							o.y = (o.offset.y * 2) + game.height - (o.y +
 								(o.getHeight and o:getHeight() or o.height))
@@ -909,13 +910,13 @@ function PlayState:onSettingChange(category, setting)
 				if self.vocals then self.vocals:setPitch(self.playback) end
 				if self.dadVocals then self.dadVocals:setPitch(self.playback) end
 			end,
-			["timeType"] = function()
+			--[[["timeType"] = function()
 				local songTime = PlayState.conductor.time / 1000
 				if ClientPrefs.data.timeType == "left" then
 					songTime = game.sound.music:getDuration() - songTime
 				end
 				self.timeText.content = util.formatTime(songTime)
-			end,
+			end,]]
 			["ghostTap"] = function()
 				for _, n in ipairs(self.notefields) do
 					n.ghostTap = ClientPrefs.data.ghostTap

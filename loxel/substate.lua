@@ -7,6 +7,8 @@ function Substate:new()
 	self.parent = nil
 end
 
+function Substate:enter() end
+
 function Substate:belongsToParent()
 	return self.parent and self.parent.substate == self
 end

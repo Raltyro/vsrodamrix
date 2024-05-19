@@ -1,0 +1,17 @@
+{
+	"animations": [
+		["idle", "RodaIdle", [], 24, false, [2, 5]],
+		["singLEFT", "RodaLeft", [], 24, false, [12, 11]],
+		["singRIGHT", "rodaRight", [], 24, false, [-12, -1]],
+		["singUP", "RodaUp", [], 24, false, [-37, 36]],
+		["singDOWN", "RodaDown", [], 24, false, [-15, -30]]
+	],
+	"position": [-30, 450],
+	"camera_points": [40, -8],
+	"flip_x": false,
+	"icon": "rodamrix",
+	"sprite": "characters/rodamrix",
+	"antialiasing": true,
+	"sing_duration": 4,
+	"scale": 1
+}

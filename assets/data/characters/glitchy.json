@@ -1,0 +1,23 @@
+{
+	"animations": [
+		["idle", "GlitchyIdle", [], 24, false, [0, -1]],
+		["singLEFT", "GlitchyLeft0", [], 24, false, [33, 23]],
+		["singDOWN", "GlitchyDown0", [], 24, false, [-46, 120]],
+		["singUP", "GlitchyUp0", [], 24, false, [-2, 67]],
+		["singRIGHT", "GlitchyRight0", [], 24, false, [-67, 16]],
+		["singLEFTmiss", "GlitchyLeftMiss", [], 24, false, [38, 46]],
+		["singDOWNmiss", "GlitchyDownMiss", [], 24, false, [-38, 122]],
+		["singUPmiss", "GlitchyUpMiss", [], 24, false, [3, 62]],
+		["singRIGHTmiss", "GlitchyRightMiss", [], 24, false, [-64, 46]],
+		["hey", "GlitchyVPose", [], 24, false, [2, 14]],
+		["dodge", "GlitchyBlock", [], 24, false, [-118, -2]]
+	],
+	"position": [-50, 600],
+	"camera_points": [0, 0],
+	"flip_x": true,
+	"icon": "glitchy",
+	"sprite": "characters/glitchy",
+	"antialiasing": true,
+	"sing_duration": 4,
+	"scale": 1
+}

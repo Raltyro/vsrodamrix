@@ -98,6 +98,13 @@ function Group:update(dt)
 	end
 end
 
+function Group:focus(focus)
+	for _, member in ipairs(self.members) do
+		f = member.focus
+		if f then f(member, focus) end
+	end
+end
+
 function Group:kill()
 	for _, member in ipairs(self.members) do
 		f = member.kill

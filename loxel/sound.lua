@@ -206,8 +206,7 @@ end
 
 function Sound:getDuration()
 	if not self.__source then return -1 end
-	local success, duration = pcall(self.__source.getDuration, self.__source)
-	return success and duration or -1
+	return self.__duration
 end
 
 function Sound:setVolume(volume)
