@@ -54,6 +54,7 @@ MenuCharacter = require "funkin.ui.menucharacter"
 MenuItem = require "funkin.ui.menuitem"
 ModCard = require "funkin.ui.modcard"
 Options = require "funkin.ui.options"
+SkippableVideo = require "funkin.ui.skippablevideo"
 
 StatsCounter = require "funkin.ui.statscounter"
 SoundTray = require "funkin.ui.soundtray"
@@ -114,7 +115,6 @@ function love.load()
 	Camera.defaultResolution = res
 
 	love.window.setTitle(Project.title)
-	love.window.setIcon(love.image.newImageData(Project.icon))
 	love.window.setMode(Project.width * res, Project.height * res, {
 		fullscreen = isMobile or ClientPrefs.data.fullscreen,
 		resizable = not isMobile,
@@ -432,7 +432,7 @@ function love.errorhandler(msg)
 
 			done = true
 			collectgarbage(__step__)
-			sleep(0.1)
+			love.timer.sleep(0.1)
 		end
 	end
 

@@ -1,9 +1,9 @@
 {
 	"animations": [
-		["idle", "GreenIdle", [], 24, false, [0, 0]],
-		["singLEFT", "GreenLeft", [], 24, false, [26, 1]],
-		["singRIGHT", "GreenRight", [], 24, false, [-1, 0]],
-		["singUP", "GreenUp", [], 24, false, [50, 91]],
+		["idle", "GreenIdle", [], 24, false, [-6, 7]],
+		["singLEFT", "GreenLeft", [], 24, false, [20, 1]],
+		["singRIGHT", "GreenRight", [], 24, false, [-6, 0]],
+		["singUP", "GreenUp", [], 24, false, [-10, 34]],
 		["singDOWN", "GreenDown", [], 24, false, [0, -14]]
 	],
 	"position": [0, 0],

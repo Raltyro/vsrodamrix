@@ -130,8 +130,9 @@ function Video:update(dt)
 		end
 
 		if onComplete then onComplete() end
+	elseif self:isPlaying() then
+		self:setVolume()
 	end
-
 	self.__isFinished = isFinished
 
 	if self.moves then
@@ -190,14 +191,15 @@ end
 function Video:setVolume(volume)
 	self.__volume = volume or self.__volume
 	if not self.__handle then return false end
-	return pcall(self.__handle.setVolume, self.__handle, self:getActualVolume())
+	local s, source = pcall(self.__handle.getSource, self.__handle)
+	return s and pcall(source.setVolume, source, self:getActualVolume())
 end
 
 function Video:getActualVolume()
 	return self.__volume * (game.sound.__mute and 0 or 1) * (game.sound.__volume or 1)
 end
 
-function Sound:getVolume() return self.__volume end
+function Video:getVolume() return self.__volume end
 
 function Video:getFrameWidth()
 	return self.__handle and self.__handle:getWidth()

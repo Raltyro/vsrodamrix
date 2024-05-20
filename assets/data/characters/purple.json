@@ -4,7 +4,8 @@
 		["singLEFT", "PurpleLeft", [], 24, false, [-66, -111]],
 		["singRIGHT", "PurpleRight", [], 24, false, [-152, 0]],
 		["singUP", "PurpleUp", [], 24, false, [-115, -45]],
-		["singDOWN", "PurpleDown", [], 24, false, [-182, -145]]
+		["singDOWN", "PurpleDown", [], 24, false, [-182, -145]],
+		["attack", "PurpleShooting", [], 24, false, [-23, -12]]
 	],
 	"position": [-290, 270],
 	"camera_points": [40, 130],

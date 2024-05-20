@@ -2,7 +2,7 @@ local json = require "lib.json".encode
 local FreeplayState = State:extend("FreeplayState")
 
 FreeplayState.curSelected = 1
-FreeplayState.curDifficulty = 2
+FreeplayState.curDifficulty = 3
 
 function FreeplayState:enter()
 	FreeplayState.super.enter(self)
@@ -103,34 +103,31 @@ function FreeplayState:enter()
 		Color.WHITE, "right")
 	self.scoreText.antialiasing = false
 
-	self.scoreBG = Graphic(self.scoreText.x - 6, 0, 1, 66, Color.BLACK)
+	self.scoreBG = Graphic(self.scoreText.x - 6, 0, 1, 42, Color.BLACK)
 	self.scoreBG.alpha = 0.6
 	self:add(self.scoreBG)
 
-	self.diffText = Text(self.scoreText.x, self.scoreText.y + 36, "DIFFICULTY",
+	--[[self.diffText = Text(self.scoreText.x, self.scoreText.y + 36, "DIFFICULTY",
 		paths.getFont("vcr.ttf", 24))
 	self.diffText.antialiasing = false
-	self:add(self.diffText)
+	self:add(self.diffText)]]
+
 	self:add(self.scoreText)
 
 	if love.system.getDevice() == "Mobile" then
 		self.buttons = VirtualPadGroup()
 		local w = 134
 
-		local left = VirtualPad("left", 0, game.height - w)
-		local up = VirtualPad("up", left.x + w, left.y - w)
-		local down = VirtualPad("down", up.x, left.y)
-		local right = VirtualPad("right", down.x + w, left.y)
+		local down = VirtualPad("down", 0, game.height - w)
+		local up = VirtualPad("up", 0, down.y - w)
 
-		local enter = VirtualPad("return", game.width - w, left.y)
+		local enter = VirtualPad("return", game.width - w, down.y)
 		enter.color = Color.GREEN
-		local back = VirtualPad("escape", enter.x - w, left.y)
+		local back = VirtualPad("escape", enter.x - w, down.y)
 		back.color = Color.RED
 
-		self.buttons:add(left)
-		self.buttons:add(up)
 		self.buttons:add(down)
-		self.buttons:add(right)
+		self.buttons:add(up)
 
 		self.buttons:add(enter)
 		self.buttons:add(back)
@@ -167,17 +164,15 @@ function FreeplayState:update(dt)
 		if #self.songsData > 0 and self.throttles then
 			if self.throttles.up:check() then self:changeSelection(-1) end
 			if self.throttles.down:check() then self:changeSelection(1) end
-			if self.throttles.left:check() then self:changeDiff(-1) end
-			if self.throttles.right:check() then self:changeDiff(1) end
+			--if self.throttles.left:check() then self:changeDiff(-1) end
+			--if self.throttles.right:check() then self:changeDiff(1) end
 
 			if controls:pressed('accept') then
 				PlayState.storyMode = false
 
-				local daSong = paths.formatToSongPath(
-					self.songsData[FreeplayState.curSelected]
-					.name)
-				local diff =
-					self.songsData[self.curSelected].difficulties[FreeplayState.curDifficulty]:lower()
+				local daSong = paths.formatToSongPath(self.songsData[FreeplayState.curSelected].name)
+				--local diff = self.songsData[self.curSelected].difficulties[FreeplayState.curDifficulty]:lower()
+				local diff = self.songsData[self.curSelected].difficulties[#self.songsData[self.curSelected].difficulties]:lower()
 				if self:checkSongAssets(daSong, diff) then
 					if game.keys.pressed.SHIFT then
 						PlayState.loadSong(daSong, diff)
@@ -209,6 +204,7 @@ function FreeplayState:closeSubstate()
 	FreeplayState.super.closeSubstate(self)
 end
 
+--[[
 function FreeplayState:changeDiff(change)
 	if change == nil then change = 0 end
 	local songdiffs = self.songsData[self.curSelected].difficulties
@@ -228,7 +224,7 @@ function FreeplayState:changeDiff(change)
 		self.diffText.content = songdiffs[FreeplayState.curDifficulty]:upper()
 	end
 	self:positionHighscore()
-end
+end]]
 
 function FreeplayState:changeSelection(change)
 	if change == nil then change = 0 end
@@ -252,14 +248,17 @@ function FreeplayState:changeSelection(change)
 
 	if change ~= 0 then util.playSfx(paths.getSound('scrollMenu')) end
 
-	self:changeDiff(0)
+	--self:changeDiff(0)
+	local daSong = paths.formatToSongPath(self.songsData[self.curSelected].name)
+	self.intendedScore = Highscore.getScore(daSong, self.songsData[self.curSelected].difficulties[#self.songsData[self.curSelected].difficulties]:lower())
+	self:positionHighscore()
 end
 
 function FreeplayState:positionHighscore()
 	self.scoreText.x = game.width - self.scoreText:getWidth() - 6
 	self.scoreBG.width = self.scoreText:getWidth() + 12
 	self.scoreBG.x = self.scoreText.x - 6
-	self.diffText.x = math.floor(self.scoreBG.x + (self.scoreBG.width - self.diffText:getWidth()) / 2)
+	--self.diffText.x = math.floor(self.scoreBG.x + (self.scoreBG.width - self.diffText:getWidth()) / 2)
 end
 
 function FreeplayState:checkSongAssets(song, diff)

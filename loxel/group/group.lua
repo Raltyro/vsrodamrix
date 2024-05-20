@@ -101,7 +101,7 @@ end
 function Group:focus(focus)
 	for _, member in ipairs(self.members) do
 		f = member.focus
-		if f then f(member, focus) end
+		if f and type(f) == "function" then f(member, focus) end
 	end
 end
 

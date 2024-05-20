@@ -3,14 +3,15 @@
 		"sprite": "noteskin",
 
 		"animations": [
-			["note", "note", 24, true]
+			["note", "note", 24, true],
+			["shoot", "shoot", 24, true]
 		],
 
 		"colors": [
-			["#C24B99", "#FFFFFF", "#3C1F56"],
-			["#00FFFF", "#FFFFFF", "#1542B7"],
-			["#12FA05", "#FFFFFF", "#0A4447"],
-			["#F9393F", "#FFFFFF", "#651038"]
+			["#651492", "#A3A6BB", "#2B0B2E"],
+			["#2B5EB7", "#858CB5", "#00152E"],
+			["#368068", "#A3A1B3", "#01260A"],
+			["#950C37", "#A296AD", "#2F0000"]
 		],
 
 		"properties": [
@@ -32,10 +33,10 @@
 		],
 
 		"colors": [
-			["#C24B99", "#FFFFFF", "#3C1F56"],
-			["#00FFFF", "#FFFFFF", "#1542B7"],
-			["#12FA05", "#FFFFFF", "#0A4447"],
-			["#F9393F", "#FFFFFF", "#651038"]
+			["#651492", "#FFF5F5", "#2B0B2E"],
+			["#2B5EB7", "#FFF5F5", "#00152E"],
+			["#368068", "#FFF5F5", "#01260A"],
+			["#950C37", "#FFF5F5", "#2F0000"]
 		],
 
 		"properties": [
@@ -45,7 +46,6 @@
 			{}
 		],
 
-		"alpha": 0.6,
 		"scale": 0.7,
 		"antialiasing": true
 	},
@@ -58,20 +58,12 @@
 		],
 
 		"colors": [
-			["#C24B99", "#FFFFFF", "#3C1F56"],
-			["#00FFFF", "#FFFFFF", "#1542B7"],
-			["#12FA05", "#FFFFFF", "#0A4447"],
-			["#F9393F", "#FFFFFF", "#651038"]
+			["#651492", "#FFF5F5", "#2B0B2E"],
+			["#2B5EB7", "#FFF5F5", "#00152E"],
+			["#368068", "#FFF5F5", "#01260A"],
+			["#950C37", "#FFF5F5", "#2F0000"]
 		],
 
-		"properties": [
-			{},
-			{},
-			{"x": 1},
-			{}
-		],
-
-		"alpha": 0.6,
 		"scale": 0.7,
 		"antialiasing": true
 	},
@@ -80,13 +72,9 @@
 		"sprite": "noteskin",
 
 		"animations": [
-			["static", "receptor", 24, true],
+			["static", "receptor", 24, false],
 			["pressed", "press", 24, false, true],
 			["confirm", "confirm0", 24, false]
-		],
-
-		"colors": [
-			["#87A3AD", "#FFFFFF", "#000000"]
 		],
 
 		"properties": [

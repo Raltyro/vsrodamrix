@@ -10,7 +10,7 @@ function create()
 		state.camHUD.visible = false
 		game.camera.visible = false
 
-		local video = Video(paths.getVideo('Cutscene2'), true, function()
+		local video = SkippableVideo(paths.getVideo('Cutscene2'), true, function()
 			state:endSong(true)
 		end):fitToScreen()
 		video.cameras = {state.camOther}

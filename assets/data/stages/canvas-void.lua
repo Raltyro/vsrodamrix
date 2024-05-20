@@ -24,8 +24,23 @@ local shader = [[
 	}
 ]]
 
+local function makeTiles(tex, angle, size, y, x, z, x2, z2)
+	for x = x, x + x2 * size, size do
+		for z = z, z + z2 * size, size do
+			local tile = ActorSprite(x, y, z, tex)
+			tile:setGraphicSize(size, size)
+			Note.updateHitbox(tile)
+			tile.rotation.x, tile.rotation.y = 90, angle
+
+			self:add(tile)
+			table.insert(self.tiles, tile)
+		end
+	end
+end
+
 function create()
 	game.camera.bgColor = {245 / 255, 1, 1}
+	--game.camera.bgColor = {.2, .2, .2}
 	if ClientPrefs.data.shader then
 		shader = love.graphics.newShader(shader)
 		game.camera.shader = shader
@@ -42,24 +57,34 @@ function create()
 	self.gfCam = {x = 0, y = 0}
 	self.dadCam = {x = 180, y = -50}
 
-	self.floor = Sprite(-600, 456, paths.getImage(SCRIPT_PATH .. "floorgrad"))
-	self.floor:setGraphicSize(game.width * 2, 400)
-	self.floor:setScrollFactor(0, 0.3)
-	self.floor:updateHitbox()
+	self.floor = Sprite(0, 0, paths.getImage(SCRIPT_PATH .. "floorgrad"))
+	self.floor:setScrollFactor(0, 0)
+	self.floor.antialiasing = true
+	self.floor.alpha = .7
 	self:add(self.floor)
 
-	local tiles = paths.getImage(SCRIPT_PATH .. "floortiles")
-	self.tiley = ActorSprite(580, 725, 0, tiles)
-	self.tiley.scale.y, self.tiley.scale.x = 8000, 2
-	self.tiley.rotation.x, self.tiley.rotation.y = 90, 90
-	Note.updateHitbox(self.tiley)
-	self:add(self.tiley)
+	self.tiles = {}
+	local texTile = paths.getImage(SCRIPT_PATH .. "floortiles")
+	--local texTile = "silly.png"--paths.getImage("characters/ralt-gf")
+	makeTiles(texTile, 0, 4096, 725, -6000, 1200, 3, 2); makeTiles(texTile, 90, 4096, 725, -6000, 1200, 3, 2)
+	makeTiles(texTile, 0, 4096, -600, -6000, 2300, 3, 2); makeTiles(texTile, 90, 4096, -600, -6000, 2300, 3, 2)
 
-	self.tilex = ActorSprite(580, 725, 512, tiles)
-	self.tilex.scale.y, self.tilex.scale.x = 1024, 2
-	self.tilex.rotation.x = 90
-	Note.updateHitbox(self.tilex)
-	self:add(self.tilex)
+	self.grad1 = Sprite(-1700, 330, paths.getImage(SCRIPT_PATH .. "grad"))
+	self.grad1:setScrollFactor(0, 0.2)
+	self.grad1:setGraphicSize(4000, 500)
+	self.grad1:updateHitbox()
+	--self.grad1.blend = "add"
+	self.grad1.antialiasing = true
+	self:add(self.grad1)
+
+	self.grad2 = Sprite(-1700, 330 - 500, paths.getImage(SCRIPT_PATH .. "grad"))
+	self.grad2:setScrollFactor(0, 0.2)
+	self.grad2:setGraphicSize(4000, 500)
+	self.grad2:updateHitbox()
+	self.grad2.antialiasing = true
+	self.grad2.flipY = true
+	--self.grad2.blend = "add"
+	self:add(self.grad2)
 
 	self.door = Sprite(-180, -15, paths.getImage(SCRIPT_PATH .. "doorte"))
 	self.door:setScrollFactor(.7, .7); self.door:updateHitbox()
@@ -117,6 +142,11 @@ function update(dt)
 			obj.ogY + (math.noise(obj.floaty, floatyTime) / 2 + math.sin(obj.floaty + floatyTime * 1.4)) * factor * 43,
 			obj.ogAngle + (math.noise(0, obj.floaty, floatyTime / 2) + math.cos(floatyTime / 2 - obj.floaty)) * 15
 	end
+end
+
+function draw()
+	self.floor:setGraphicSize(game.width / game.camera.__zoom.x, game.height / game.camera.__zoom.y)
+	self.floor:updateHitbox(); self.floor:screenCenter()
 end
 
 function leave()

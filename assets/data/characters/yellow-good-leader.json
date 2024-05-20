@@ -1,6 +1,6 @@
 {
 	"animations": [
-		["idle", "YellowIdle", [], 24, false, [0, 0]],
+		["idle", "YellowIdle", [], 24, false, [-100, -54]],
 		["singLEFT", "YellowLeft", [], 24, false, [-22, -79]],
 		["singRIGHT", "YellowRight", [], 24, false, [-44, -77]],
 		["singUP", "YellowUp", [], 24, false, [-100, -53]],

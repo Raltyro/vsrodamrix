@@ -1,10 +1,10 @@
 return {
-	DEBUG_MODE = true,
+	DEBUG_MODE = false,
 
-	title = "Friday Night Funkin': Vs Rodamrix",
+	title = "Friday Night Funkin': Vs Rodamrix Demo",
 	file = "FNF-VsRodamrix",
 	icon = "art/icon.png",
-	version = "1.3.0",
+	version = "0.2.0 Demo",
 	engineVersion = "0.7.0",
 	package = "com.rodabeanzteam.fnfvsrodamrix",
 	width = 1280,

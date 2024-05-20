@@ -1230,7 +1230,7 @@ function PlayState:getKeyFromEvent(controls)
 end
 
 function PlayState:onKeyPress(key, type, scancode, isrepeat, time)
-	if self.substate and not self.persistentUpdate then return end
+	if not self.startedCountdown or self.substate and not self.persistentUpdate then return end
 	local controls = controls:getControlsFromSource(type .. ":" .. key)
 
 	if not controls then return end
@@ -1246,7 +1246,7 @@ function PlayState:onKeyPress(key, type, scancode, isrepeat, time)
 end
 
 function PlayState:onKeyRelease(key, type, scancode, time)
-	if self.substate and not self.persistentUpdate then return end
+	if not self.startedCountdown or self.substate and not self.persistentUpdate then return end
 	local controls = controls:getControlsFromSource(type .. ":" .. key)
 
 	if not controls then return end

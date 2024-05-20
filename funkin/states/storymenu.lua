@@ -145,20 +145,16 @@ function StoryMenuState:enter()
 		self.buttons = VirtualPadGroup()
 		local w = 134
 
-		local left = VirtualPad("left", 0, game.height - w)
-		local up = VirtualPad("up", left.x + w, left.y - w)
-		local down = VirtualPad("down", up.x, left.y)
-		local right = VirtualPad("right", down.x + w, left.y)
+		local down = VirtualPad("down", 0, game.height - w)
+		local up = VirtualPad("up", 0, down.y - w)
 
-		local enter = VirtualPad("return", game.width - w, left.y)
+		local enter = VirtualPad("return", game.width - w, down.y)
 		enter.color = Color.GREEN
-		local back = VirtualPad("escape", enter.x - w, left.y)
+		local back = VirtualPad("escape", enter.x - w, down.y)
 		back.color = Color.RED
 
-		self.buttons:add(left)
-		self.buttons:add(up)
 		self.buttons:add(down)
-		self.buttons:add(right)
+		self.buttons:add(up)
 
 		self.buttons:add(enter)
 		self.buttons:add(back)

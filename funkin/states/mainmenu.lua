@@ -121,19 +121,19 @@ function MainMenuState:enter()
 		self.buttons = VirtualPadGroup()
 		local w = 134
 
-		local down = VirtualPad("down", 0, game.height - w)
-		local up = VirtualPad("up", 0, down.y - w)
-		local mods = VirtualPad("6", game.width - w, 0)
-		mods:screenCenter("y")
+		local left = VirtualPad("left", 0, game.height - w)
+		local right = VirtualPad("right", w, left.y)
+		--local mods = VirtualPad("6", game.width - w, 0)
+		--mods:screenCenter("y")
 
-		local enter = VirtualPad("return", game.width - w, down.y)
+		local enter = VirtualPad("return", game.width - w, left.y)
 		enter.color = Color.GREEN
-		local back = VirtualPad("escape", enter.x - w, down.y)
+		local back = VirtualPad("escape", enter.x - w, left.y)
 		back.color = Color.RED
 
-		self.buttons:add(down)
-		self.buttons:add(up)
-		self.buttons:add(mods)
+		self.buttons:add(left)
+		self.buttons:add(right)
+		--self.buttons:add(mods)
 
 		self.buttons:add(enter)
 		self.buttons:add(back)
@@ -172,10 +172,6 @@ function MainMenuState:update(dt)
 
 		if controls:pressed("accept") then
 			self:enterSelection(self.optionShit[MainMenuState.curSelected])
-		end
-
-		if controls:pressed("debug_1") then
-			self:openEditorMenu()
 		end
 	end
 

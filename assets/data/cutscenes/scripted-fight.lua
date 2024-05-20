@@ -1,6 +1,8 @@
 local video
 
 local function after()
+	video:reset(true)
+
 	state.camNotes.visible = true
 	state.camHUD.visible = true
 	game.camera.visible = true
@@ -24,7 +26,9 @@ function create()
 	state.camHUD.visible = false
 	game.camera.visible = false
 
-	video = Video(paths.getVideo('Cutscene1'), true, after):fitToScreen()
+	video = SkippableVideo(paths.getVideo('Cutscene1'), false, function()
+		Timer.tween(.2, video, {alpha = 0}, "in-sine", after)
+	end):fitToScreen()
 	video.cameras = {state.camOther}
 	state:add(video)
 end

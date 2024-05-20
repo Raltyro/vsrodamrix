@@ -1,75 +1,76 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="yellow-good-leader.png">
-	<!-- Created with Adobe Animate version 23.0.1.70 -->
-	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="YellowDown0000" x="1449" y="858" width="465" height="392" frameX="-14" frameY="-12" frameWidth="479" frameHeight="449"/>
-	<SubTexture name="YellowDown0001" x="1449" y="858" width="465" height="392" frameX="-14" frameY="-12" frameWidth="479" frameHeight="449"/>
-	<SubTexture name="YellowDown0002" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0003" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0004" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0005" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0006" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0007" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0008" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0009" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0010" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0011" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0012" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowDown0013" x="506" y="505" width="479" height="449"/>
-	<SubTexture name="YellowIdle0000" x="994" y="858" width="453" height="429" frameX="-75" frameY="-73" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0001" x="994" y="858" width="453" height="429" frameX="-75" frameY="-73" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0002" x="0" y="505" width="504" height="479" frameX="-24" frameY="-23" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0003" x="0" y="505" width="504" height="479" frameX="-24" frameY="-23" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0004" x="0" y="0" width="528" height="503"/>
-	<SubTexture name="YellowIdle0005" x="0" y="0" width="528" height="503"/>
-	<SubTexture name="YellowIdle0006" x="1431" y="1289" width="421" height="441" frameX="-107" frameY="-62" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0007" x="1431" y="1289" width="421" height="441" frameX="-107" frameY="-62" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0008" x="414" y="1385" width="421" height="442" frameX="-107" frameY="-61" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0009" x="414" y="1385" width="421" height="442" frameX="-107" frameY="-61" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0010" x="414" y="1385" width="421" height="442" frameX="-107" frameY="-61" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0011" x="414" y="1385" width="421" height="442" frameX="-107" frameY="-61" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0012" x="1471" y="429" width="421" height="427" frameX="-107" frameY="-76" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowIdle0013" x="1471" y="429" width="421" height="427" frameX="-107" frameY="-76" frameWidth="528" frameHeight="503"/>
-	<SubTexture name="YellowLeft0000" x="987" y="429" width="482" height="427" frameX="0" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0001" x="987" y="429" width="482" height="427" frameX="0" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0002" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0003" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0004" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0005" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0006" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0007" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0008" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0009" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0010" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0011" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0012" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowLeft0013" x="1029" y="0" width="467" height="427" frameX="-25" frameY="0" frameWidth="492" frameHeight="427"/>
-	<SubTexture name="YellowRight0000" x="530" y="0" width="497" height="427" frameX="0" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0001" x="530" y="0" width="497" height="427" frameX="0" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0002" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0003" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0004" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0005" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0006" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0007" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0008" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0009" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0010" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0011" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0012" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowRight0013" x="506" y="956" width="486" height="427" frameX="-21" frameY="0" frameWidth="507" frameHeight="427"/>
-	<SubTexture name="YellowUp0000" x="0" y="986" width="412" height="497" frameX="-10" frameY="0" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0001" x="0" y="986" width="412" height="497" frameX="-10" frameY="0" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0002" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0003" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0004" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0005" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0006" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0007" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0008" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0009" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0010" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0011" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0012" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
-	<SubTexture name="YellowUp0013" x="994" y="1289" width="435" height="429" frameX="0" frameY="-26" frameWidth="435" frameHeight="497"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Funkin Packer v0.1.3 https://neeeoo.github.io/funkin-packer/
+-->
+<TextureAtlas imagePath="yellow-good-leader.png" width="2256" height="1744">
+	<SubTexture name="YellowDown0000" x="0" y="1343" width="464" height="401" frameX="-14" frameY="-9" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0001" x="0" y="1343" width="464" height="401" frameX="-14" frameY="-9" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0002" x="0" y="0" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0003" x="0" y="0" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0004" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0005" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0006" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0007" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0008" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0009" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0010" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0011" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0012" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowDown0013" x="0" y="457" width="478" height="455" frameX="-0" frameY="-0" frameWidth="479" frameHeight="455"/>
+	<SubTexture name="YellowIdle0000" x="1809" y="1301" width="434" height="419" frameX="-0" frameY="-30" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0001" x="1809" y="1301" width="434" height="419" frameX="-0" frameY="-30" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0002" x="1374" y="1289" width="433" height="422" frameX="-1" frameY="-27" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0003" x="1374" y="1289" width="433" height="422" frameX="-1" frameY="-27" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0004" x="946" y="1287" width="426" height="437" frameX="-8" frameY="-12" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0005" x="946" y="1287" width="426" height="437" frameX="-8" frameY="-12" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0006" x="1834" y="858" width="422" height="441" frameX="-12" frameY="-8" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0007" x="1834" y="858" width="422" height="441" frameX="-12" frameY="-8" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0008" x="974" y="499" width="421" height="449" frameX="-13" frameY="-0" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0009" x="974" y="499" width="421" height="449" frameX="-13" frameY="-0" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0010" x="974" y="499" width="421" height="449" frameX="-13" frameY="-0" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0011" x="974" y="499" width="421" height="449" frameX="-13" frameY="-0" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0012" x="974" y="499" width="421" height="449" frameX="-13" frameY="-0" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowIdle0013" x="974" y="499" width="421" height="449" frameX="-13" frameY="-0" frameWidth="434" frameHeight="450"/>
+	<SubTexture name="YellowLeft0000" x="480" y="429" width="492" height="427" frameX="-0" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0001" x="480" y="429" width="492" height="427" frameX="-0" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0002" x="509" y="858" width="455" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0003" x="509" y="858" width="455" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0004" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0005" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0006" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0007" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0008" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0009" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0010" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0011" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0012" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowLeft0013" x="1407" y="429" width="461" height="427" frameX="-25" frameY="-0" frameWidth="492" frameHeight="427"/>
+	<SubTexture name="YellowRight0000" x="0" y="914" width="507" height="427" frameX="-0" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0001" x="0" y="914" width="507" height="427" frameX="-0" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0002" x="480" y="0" width="497" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0003" x="480" y="0" width="497" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0004" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0005" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0006" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0007" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0008" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0009" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0010" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0011" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0012" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowRight0013" x="1407" y="0" width="488" height="427" frameX="-21" frameY="-0" frameWidth="518" frameHeight="427"/>
+	<SubTexture name="YellowUp0000" x="979" y="0" width="426" height="497" frameX="-9" frameY="-0" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0001" x="979" y="0" width="426" height="497" frameX="-9" frameY="-0" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0002" x="1397" y="858" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0003" x="1397" y="858" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0004" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0005" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0006" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0007" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0008" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0009" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0010" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0011" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0012" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
+	<SubTexture name="YellowUp0013" x="509" y="1287" width="435" height="429" frameX="-0" frameY="-26" frameWidth="435" frameHeight="497"/>
 </TextureAtlas>
