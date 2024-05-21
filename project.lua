@@ -4,12 +4,12 @@ return {
 	title = "Friday Night Funkin': Vs Rodamrix Demo",
 	file = "FNF-VsRodamrix",
 	icon = "art/icon.png",
-	version = "0.2.0 Demo",
+	version = "0.2.1 Demo",
 	engineVersion = "0.7.0",
 	package = "com.rodabeanzteam.fnfvsrodamrix",
 	width = 1280,
 	height = 720,
-	company = "ZelRakker",
+	company = "Qski",
 
 	flags = {
 		CheckForUpdates = false,

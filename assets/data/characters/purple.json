@@ -11,7 +11,7 @@
 	"camera_points": [40, 130],
 	"flip_x": false,
 	"icon": "purple",
-	"sprite": "characters/Purple",
+	"sprite": "characters/purple",
 	"antialiasing": true,
 	"sing_duration": 5,
 	"scale": 1

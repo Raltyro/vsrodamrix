@@ -218,8 +218,8 @@ function Video:fitToScreen()
 	local scale = math.min(game.width / self:getFrameWidth(), game.height / self:getFrameHeight())
 	self.scale.x, self.scale.y = scale, scale
 
-	self:screenCenter()
 	self:updateHitbox()
+	self:screenCenter()
 	return self
 end
 

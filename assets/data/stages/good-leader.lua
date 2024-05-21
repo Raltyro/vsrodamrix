@@ -4,7 +4,7 @@ function create()
 	self.ratingPos = {x = 450, y = 500}
 
 	self.boyfriendPos = {x = 611, y = 120}
-	self.gfPos = {x = 1154, y = 437}
+	self.gfPos = {x = 1130, y = 437}
 	self.dadPos = {x = 12, y = 196}
 
 	self.boyfriendCam = {x = -110, y = -1}
@@ -29,6 +29,7 @@ function postCreate()
 
 	state:remove(state.gf)
 	self:add(state.gf, true)
+	state.gf:setScrollFactor(1.08, 1.08)
 
 	self.viewbarrier = Sprite(552, -34); self.viewbarrier:setFrames(paths.getSparrowAtlas(SCRIPT_PATH .. 'line'))
 	self.viewbarrier.antialiasing = true

@@ -11,6 +11,7 @@ function create()
 	game.camera:snapToTarget()
 
 	Timer.tween(1.5, game.camera, {zoom = zoom}, "out-quad", function()
+		state.conductor.time = 0
 		state:startCountdown()
 		close()
 	end)

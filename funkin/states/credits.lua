@@ -351,7 +351,9 @@ function CreditSectionSubstate:update(dt)
 			util.playSfx(paths.getSound('cancelMenu'))
 			self:close()
 		elseif controls:pressed("accept") then
-			love.system.openURL("https://" .. self.grpOptions.members[self.curSelect].link)
+			if love.system.getDevice() ~= "Mobile" then
+				love.system.openURL("https://" .. self.grpOptions.members[self.curSelect].link)
+			end
 		end
 	end
 

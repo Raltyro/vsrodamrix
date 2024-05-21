@@ -26,9 +26,10 @@ function create()
 	state.camHUD.visible = false
 	game.camera.visible = false
 
-	video = SkippableVideo(paths.getVideo('Cutscene1'), false, function()
-		Timer.tween(.2, video, {alpha = 0}, "in-sine", after)
-	end):fitToScreen()
+	--video = SkippableVideo(paths.getVideo('Cutscene1'), false, function()
+	--	Timer.tween(.2, video, {alpha = 0}, "in-sine", after)
+	--end):fitToScreen()
+	video = SkippableVideo(paths.getVideo('Cutscene1'), true, after)
 	video.cameras = {state.camOther}
 	state:add(video)
 end

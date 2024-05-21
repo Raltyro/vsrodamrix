@@ -13,14 +13,12 @@ NoteModBeat.getAmplitude = getAmplitude
 
 function NoteModBeat:new(x, y, z)
 	NoteModBeat.super.new(self)
-	self:set(x or 1, y or 0, z or 0)
+	self.x = x or 1
+	self.y = y or 0
+	self.z = z or 0
 	self.beat = 1
-	self.speed = 1
 	self.beatOffset = 0
-end
-
-function NoteModBeat:set(x, y, z)
-	self.x, self.y, self.z = x or self.x, y or self.y, z or self.z
+	self.speed = 1
 end
 
 function NoteModBeat:apply(notefield)

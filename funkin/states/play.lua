@@ -531,6 +531,8 @@ function PlayState:startCountdown()
 		self.countdown.scale = {x = 7, y = 7}
 		self.countdown.antialiasing = false
 	end
+
+	self.scripts:call("postStartCountdown")
 end
 
 function PlayState:cameraMovement()
@@ -742,7 +744,7 @@ function PlayState:update(dt)
 
 		PlayState.conductor:update()
 
-		if self.startingSong and self.doCountdownAtBeats then
+		if self.doCountdownAtBeats then
 			self:doCountdown(math.floor(PlayState.conductor.currentBeatFloat - self.doCountdownAtBeats + 1))
 		end
 	end
@@ -1386,6 +1388,8 @@ function PlayState:endSong(skip)
 			Highscore.saveWeekScore(self.storyWeekFile, self.storyScore, self.songDifficulty)
 			game.switchState(StoryMenuState())
 			GameOverSubstate.deaths = 0
+
+			game.save.data.playedDemo = true -- REMOVE THIS FOR NEXT UPDATE
 
 			util.playMenuMusic()
 		end

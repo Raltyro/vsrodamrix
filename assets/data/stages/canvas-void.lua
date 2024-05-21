@@ -13,11 +13,11 @@ local shader = [[
 		coord.xy *= vec2(fakesin(coord.y + PI2) / 2. + .5, fakesin(coord.x + PI2) / 2. + .5);
 
 		vec4 frag = Texel(tex, coord + vec2(.5));
-		for (float i = 0.; i < 4; i++) { 
+		for (float i = 0.; i < 4.; i++) { 
 			coord.xy *= vec2(fakesin(coord.y + PI2) / 20. + .95, fakesin(coord.x + PI2) / 20. + .95);
 			vec4 c = Texel(tex, coord + vec2(.5));
 
-			frag += vec4(c.rgb * vec3(1, -i / 20. + 1.05, i / 10. + .9), c.a);
+			frag += vec4(c.rgb * vec3(1., -i / 20. + 1.05, i / 10. + .9), c.a);
 		}
 
 		return frag / 5.;
@@ -41,11 +41,15 @@ end
 function create()
 	game.camera.bgColor = {245 / 255, 1, 1}
 	--game.camera.bgColor = {.2, .2, .2}
-	if ClientPrefs.data.shader then
-		shader = love.graphics.newShader(shader)
-		game.camera.shader = shader
-	else shader = nil
-	end
+	local s, w = pcall(function()
+		if ClientPrefs.data.shader then
+			shader = love.graphics.newShader(shader)
+			game.camera.shader = shader
+		else
+			shader = nil
+		end
+	end)
+	if not s then print(w) shader = nil end
 
 	self.camZoom = .75
 
@@ -66,7 +70,7 @@ function create()
 	self.tiles = {}
 	local texTile = paths.getImage(SCRIPT_PATH .. "floortiles")
 	--local texTile = "silly.png"--paths.getImage("characters/ralt-gf")
-	makeTiles(texTile, 0, 4096, 725, -6000, 1200, 3, 2); makeTiles(texTile, 90, 4096, 725, -6000, 1200, 3, 2)
+	makeTiles(texTile, 0, 4096, 725, -6000, 1600, 3, 2); makeTiles(texTile, 90, 4096, 725, -6000, 1600, 3, 2)
 	makeTiles(texTile, 0, 4096, -600, -6000, 2300, 3, 2); makeTiles(texTile, 90, 4096, -600, -6000, 2300, 3, 2)
 
 	self.grad1 = Sprite(-1700, 330, paths.getImage(SCRIPT_PATH .. "grad"))

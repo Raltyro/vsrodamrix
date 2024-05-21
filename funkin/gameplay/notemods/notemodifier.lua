@@ -27,15 +27,15 @@ function NoteModifier.reset()
 	table.clear(ocache)
 end
 
-function NoteModifier:new(beatTime, strength, approach, beatDuration, dontUpdatePercent)
+function NoteModifier:new(beatTime, beatDuration, strength, approach, dontUpdatePercent)
 	self:setModifier(strength or 1, approach or 1, dontUpdatePercent)
 	self.beatTime = 0
-	self.beatDuration = beatDuration
+	self.beatDuration = nil
 	self.percent = 0
 end
 
 function NoteModifier:setModifier(strength, approach, dontUpdatePercent)
-	self.strength = strength or self.strength
+	self.strength = strength
 	self.approach = approach or self.approach
 	if dontUpdatePercent ~= nil then self.dontUpdatePercent = dontUpdatePercent end
 
@@ -57,7 +57,6 @@ function NoteModifier:update(curBeat)
 	self._lastBeat = curBeat
 end
 
--- functions you can use in your modifier
 --[[
 function NoteModifier:apply(notefield)
 	

@@ -20,7 +20,7 @@ function postCreate()
 end
 
 local function susAnim()
-	state.dad:playAnim("attack")
+	state.dad:playAnim("attack", true)
 	state.dad.lastHit = state.conductor.time
 
 	util.playSfx(paths.getSound('gameplay/gunfire'), .8)
@@ -31,13 +31,13 @@ function onNoteHit(e)
 		susAnim()
 
 		e.cancelledAnim = true
-		e.notefield.character:playAnim("dodge")
+		e.notefield.character:playAnim("dodge", true)
 		e.notefield.character.lastHit = state.conductor.time
-	else
+	--[[else
 		local char = e.notefield.character
 		if char and char.curAnim and char.curAnim.name == "attack" and not char.animFinished then
 			e.cancelledAnim = true
-		end
+		end]]
 	end
 end
 
@@ -47,7 +47,7 @@ function onMiss(e)
 		susAnim()
 		state.health = state.health - 0.3
 		if state.health <= 0 then die, state.health = true, state.health + 0.25 end
-		util.playSfx(paths.getSound('gameplay/damageSfx'), .9)
+		util.playSfx(paths.getSound('gameplay/damagesfx'), .9)
 	end
 end
 

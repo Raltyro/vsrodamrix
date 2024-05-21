@@ -103,6 +103,10 @@ end
 function Sound:play(volume, looped, pitch, restart)
 	if not self.active or not self.__source then return self end
 
+	self:setVolume(volume)
+	self:setLooping(looped)
+	self:setPitch(pitch)
+
 	if restart then
 		pcall(self.__source.stop, self.__source)
 	elseif self:isPlaying() then
@@ -111,9 +115,6 @@ function Sound:play(volume, looped, pitch, restart)
 
 	self.__paused = false
 	self.__isFinished = false
-	self:setVolume(volume)
-	self:setLooping(looped)
-	self:setPitch(pitch)
 	pcall(self.__source.play, self.__source)
 	return self
 end
@@ -216,7 +217,8 @@ function Sound:setVolume(volume)
 end
 
 function Sound:getActualVolume()
-	return self.__volume * (game.sound.__mute and 0 or 1) * (game.sound.__volume or 1)
+	if game.sound.__mute then return 0 end
+	return self.__volume * (game.sound.__volume or 1)
 end
 
 function Sound:getVolume() return self.__volume end

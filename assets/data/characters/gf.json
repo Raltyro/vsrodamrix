@@ -7,7 +7,7 @@
 	"camera_points": [0, 0],
 	"flip_x": false,
 	"icon": "gf",
-	"sprite": "characters/Girlfriend",
+	"sprite": "characters/girlfriend",
 	"antialiasing": true,
 	"sing_duration": 4,
 	"scale": 0.9

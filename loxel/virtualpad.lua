@@ -52,13 +52,8 @@ function VirtualPad:destroy()
 	VirtualPad.super.destroy(self)
 	if table.find(VirtualPad.instances, self) then
 		table.delete(VirtualPad.instances, self)
-	end
-	for id, actived in pairs(VirtualPad.active) do
-		if actived == self then
-			VirtualPad._release(self.key, love.timer.getTime())
-			VirtualPad.active[id] = nil
-			break
-		end
+		table.delete(VirtualPad.active, self)
+		VirtualPad._release(self.key, love.timer.getTime())
 	end
 end
 

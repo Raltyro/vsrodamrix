@@ -7,13 +7,23 @@ function SkippableVideo:new(...)
 	self.label.outline.width = 1
 
 	self.text = "Press ACCEPT key to Skip the Video Cutscene"
+	if love.system.getDevice() == "Mobile" then
+		self.text = "Tap to Skip the Video Cutscene"
+		self.vpad = VirtualPad("return", 0, 0, game.width, game.height, false)
+		self.vpad.stunned = true
+	end
 end
 
 function SkippableVideo:showText()
+	if not self.textActive and love.system.getDevice() == "Mobile" then
+		game.bound:add(self.vpad)
+		self.vpad.stunned = false
+	end
+	self.textActive = true
+
 	if self.shownText then return end
 	self.shownText = true
 
-	self.textActive = true
 	self.label.content = self.text
 	self.label.alpha = 0
 	Timer.tween(1, self.label, {alpha = 1}, "out-quad", function()
@@ -39,11 +49,13 @@ end
 
 function SkippableVideo:leave()
 	self.parent = nil
+	if self.vpad then game.bound:remove(self.vpad) self.vpad.stunned = true end
 	if self.textActive then game.bound:remove(self.label) end
 end
 
 function SkippableVideo:reset(cleanup)
 	SkippableVideo.super.reset(self, cleanup)
+	if self.vpad then game.bound:remove(self.vpad) self.vpad.stunned = true end
 	if self.textActive then game.bound:remove(self.label) end
 end
 

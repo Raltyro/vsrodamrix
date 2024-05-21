@@ -1,3 +1,5 @@
+local DemoState = require "funkin.states.demo"
+
 local TransTitle = TransitionData:extend("TransTitle")
 TransTitle.update, TransTitle.draw = __NULL__, __NULL__
 
@@ -18,6 +20,15 @@ local TitleState = State:extend("TitleState")
 TitleState.initialized = false
 
 function TitleState:new()
+	if not game.save.data.seenDemoSafe then
+		math.randomseed(love.timer.getTime())
+		local ran = math.random(0, 1000)
+		if not game.save.data.seenDemo or ran == 21 then
+			setmetatable(self, DemoState)
+			return DemoState.new(self)
+		end
+	end
+
 	TitleState.super.new(self)
 	self.transIn = TransTitle(0.7, "quad")
 	self.transOut = TransTitle(1, "sine")

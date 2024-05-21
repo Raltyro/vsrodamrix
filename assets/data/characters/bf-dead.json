@@ -8,7 +8,7 @@
 	"camera_points": [0, 0],
 	"flip_x": true,
 	"icon": "bf",
-	"sprite": "characters/BoyfriendDead",
+	"sprite": "characters/boyfrienddead",
 	"antialiasing": true,
 	"sing_duration": 4,
 	"scale": 1
