@@ -187,7 +187,9 @@ function CreditsState:update(dt)
 		elseif controls:pressed("accept") then
 			local selected = self.grpOptions.members[self.curSelect]
 			if selected.hasLink then
-				love.system.openURL("https://" .. selected.link)
+				if love.system.getDevice() ~= "Mobile" then
+					love.system.openURL("https://" .. selected.link)
+				end
 			else
 				if self.buttons then self.buttons:disable() end
 				self.inSection = true
