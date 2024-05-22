@@ -1,38 +1,6 @@
 local DemoState = State:extend("DemoState")
 
 function DemoState:enter()
-	if game.save.data.seenDemo then
-		local s = pcall(function() -- im so sorry its just too funny
-			DemoState.super.enter(self)
-			self.update = function()end
-			local fps, aupa, paup, mem, vid = love.FPScap, love.autoPause, love.parallelUpdate, game.members
-			vid = Video(love.graphics.newVideo("tire.ogv", {audio = true}), true, function()
-				game.save.data.seenDemoSafe = true
-				game.members, love.FPScap, love.autoPause, love.parallelUpdate = mem, fps, aupa, paup
-				game.switchState(TitleState())
-			end):fitToScreen()
-			local vidmem = {}
-			local nah = 0
-			vid.update = function(self, dt)
-				nah = nah + dt
-				if nah > 30 then
-					local onComplete = self.onComplete
-					self:kill()
-					if onComplete then onComplete() end
-				end
-				Video.update(self, dt)
-				if self:isPlaying() then for _,v in pairs(vidmem)do if v~=vid then table.insert(mem,v)end end table.clear(vidmem); table.insert(vidmem, vid) end
-			end
-			vid:play(.7)
-			vid:seek(math.random(0, vid:getDuration() - 30))
-
-			game.members = vidmem
-			game:add(vid)
-			love.FPScap, love.autoPause, love.parallelUpdate = 30, false, false
-		end)
-		if s then return else self.update = nil end
-	end
-
 	self.transIn = TransitionData(0.6)
 	self.transOut = TransitionData(2)
 	DemoState.super.enter(self)
