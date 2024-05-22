@@ -239,7 +239,7 @@ function TitleState:nextStep()
 		[1] = function() self:addMoreText('Rodabeanz team', -40) end,
 		[6] = function()
 			self:addMoreText('Qski', 14)
-			self:addMoreText('The Rainbow Bubble', 14)
+			self:addMoreText('Crystalline', 14)
 			self:addMoreText('N3okto', 14)
 		end,
 		[8] = function() self:addMoreText('and more!', 14) end,
